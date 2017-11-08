@@ -52,6 +52,83 @@
  *
  */
 
+ var document = document || { location: { hostname: '/' } };
+
+var engineSettings = {
+    isWeb: !cc.sys.isNative,
+    isLocalHost: !cc.sys.isNative && document.location.hostname === 'localhost',
+    isDevDesktop: cc.sys.isNative && !cc.sys.isMobile,
+    isRelease: cc.sys.isNative && cc.sys.isMobile
+}
+
+var cdnLocation = 'http://128.199.254.229:9000/content/';
+if (engineSettings.isLocalHost) {
+    cdnLocation = '_dist/';
+} else if (engineSettings.isWeb) {
+    cdnLocation = 'content/';
+}
+
+var _localResPath = null;
+
+var getLocalResPath = function() {
+    if (_localResPath) {
+        return _localResPath;
+    }
+
+    _localResPath = '';
+    if (cc.sys.isNative) {
+        _localResPath = jsb.fileUtils.getWritablePath() + 'res';        
+    }    
+
+    return _localResPath;
+}
+
+var bundleFilePath = getLocalResPath();
+if (engineSettings.isLocalHost) {
+    bundleFilePath = "_dist";
+} else if (engineSettings.isDevDesktop) {
+    bundleFilePath = getLocalResPath() + "/../_dist";
+} else if (engineSettings.isWeb) {
+    bundleFilePath = "content";
+}
+
+var _jsBundleHash = '';
+var setJSBundleHash = function(hash) {
+    _jsBundleHash = hash;
+}
+
+var window = window || {};
+var WebSocket = WebSocket || window.WebSocket || window.MozWebSocket;
+
+if (!cc.log) {
+    cc.log = function (value) {
+        console.log && console.log(typeof (value) === 'string' ? value : JSON.stringify(value));
+    }
+}
+
+if (!cc.error) {
+    cc.error = function (value) {
+        if (console.error) {
+            console.error(typeof (value) === 'string' ? value : JSON.stringify(value));   
+        } else {
+            cc.log(typeof (value) === 'string' ? value : JSON.stringify(value));   
+        }        
+    }
+}
+
+function downloadBundleJs(cb) {        
+    // download the bundle js file from local dev server
+    if (engineSettings.isDevDesktop) {
+        var url = "http://localhost:8080/_dist/bundle.js";
+        var saveTo = bundleFilePath + '/bundle.js';
+        jsb.saveRemoteFile(url, saveTo, function(downloadedSize) {        
+            cb && cb();        
+        }); 
+    } else {
+       cb && cb();
+    }
+}
+
 cc.game.onStart = function(){
     var sys = cc.sys;
     if(!sys.isNative && document.getElementById("cocosLoading")) //If referenced loading.js, please remove it
@@ -74,14 +151,61 @@ cc.game.onStart = function(){
     // cc.view.setOrientation(cc.ORIENTATION_PORTRAIT);
 
     // Setup the resolution policy and design resolution size
-    cc.view.setDesignResolutionSize(960, 640, cc.ResolutionPolicy.SHOW_ALL);
+    // Setup the resolution policy and design resolution size
+    if (cc.sys.isNative) {
+        cc.view.setDesignResolutionSize(1920, 1080, cc.ResolutionPolicy.NO_BORDER);
+    } else {
+        cc.view.setDesignResolutionSize(1920, 1080, cc.ResolutionPolicy.SHOW_ALL);
+    }
 
     // The game will be resized when browser size change
     cc.view.resizeWithBrowserSize(true);
 
-    //load resources
-    cc.LoaderScene.preload(g_resources, function () {
-        cc.director.runScene(new HelloWorldScene());
-    }, this);
+    cc.log('is running on native? ' + cc.sys.isNative);
+    cc.log('cdn location ' + cdnLocation);
+
+    var resToLoad = [
+        bootstrapResources.bootstrapUI_plist,
+        bootstrapResources.bootstrapUI_png
+    ];  
+
+    // Preload default resources
+    cc.loader.load(resToLoad, function() {}, function() {
+        // Override cdn url if necessary
+        var writablePath = cc.sys.isNative ? jsb.fileUtils.getWritablePath() : '';
+
+        cc.log('Downloading to: ' + writablePath);
+        if (cc.sys.isNative) {
+            cc.loader.loadTxt(writablePath + 'cdnLocation.txt', function (err, txt) {
+                if (!err && txt && txt.length > 0) {
+                    cdnLocation = txt;
+                }
+
+                bootstrap(cdnLocation, function() {  
+                    downloadBundleJs(function() {
+                        cc.loader.loadJs(bundleFilePath, ["bundle.js"], function () {
+                            // Run the game
+                            window.initApp();
+                            cc.director.runScene(new window.SplashScene());        
+                        });
+                    });
+                });
+            });
+        } else {
+            bootstrap(cdnLocation, function() {
+                var bundleFileName = "bundle.js?_v=" + _jsBundleHash;
+                if (document.location.hostname === 'localhost') {
+                    bundleFileName = "bundle.js";
+                }
+
+                cc.log('loading bundle: ' + bundleFileName);
+                cc.loader.loadJs(bundleFilePath, [bundleFileName], function (err) {
+                    // Run the game
+                    window.initApp();
+                    cc.director.runScene(new window.SplashScene());        
+                });
+            });
+        }        
+    });
 };
 cc.game.run();

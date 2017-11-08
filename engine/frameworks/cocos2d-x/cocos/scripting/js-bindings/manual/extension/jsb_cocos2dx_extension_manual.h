@@ -33,6 +33,7 @@ class __JSDownloaderDelegator : cocos2d::Ref
 {
 public:
     void downloadAsync();
+    void downloadSaveFileAsync(const std::string& saveFile);
     void download();
     
     static __JSDownloaderDelegator *create(JSContext *cx, JS::HandleObject obj, const std::string &url, JS::HandleObject callback);
@@ -42,15 +43,18 @@ protected:
     ~__JSDownloaderDelegator();
     
     void startDownload();
+    void startDownloadSaveFile();
     
 private:
     void onSuccess(cocos2d::Texture2D *tex);
     void onError();
     std::shared_ptr<cocos2d::network::Downloader> _downloader;
     std::string _url;
+    std::string _saveFile;
     JSContext *_cx;
     JS::Heap<JSObject*> _jsCallback;
     JS::Heap<JSObject*> _obj;
+    int _downloadedBytes;
 };
 
 void register_all_cocos2dx_extension_manual(JSContext* cx, JS::HandleObject global);

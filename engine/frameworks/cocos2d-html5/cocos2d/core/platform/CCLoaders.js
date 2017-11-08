@@ -90,6 +90,7 @@ cc._fontLoader = {
         ".eot": "embedded-opentype",
         ".ttf": "truetype",
         ".ttc": "truetype",
+        ".otf": "truetype",
         ".woff": "woff",
         ".svg": "svg"
     },
@@ -147,7 +148,7 @@ cc._fontLoader = {
         }
     }
 };
-cc.loader.register(["font", "eot", "ttf", "woff", "svg", "ttc"], cc._fontLoader);
+cc.loader.register(["font", "eot", "ttf", "otf", "woff", "svg", "ttc"], cc._fontLoader);
 
 cc._binaryLoader = {
     load: function (realUrl, url, res, cb) {

@@ -263,6 +263,24 @@
 		83A5661A18DA878400FC31A0 /* jsb_socketio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 83A5661718DA878400FC31A0 /* jsb_socketio.cpp */; };
 		83A5661B18DA878400FC31A0 /* jsb_socketio.h in Headers */ = {isa = PBXBuildFile; fileRef = 83A5661818DA878400FC31A0 /* jsb_socketio.h */; };
 		83A5661C18DA878400FC31A0 /* jsb_socketio.h in Headers */ = {isa = PBXBuildFile; fileRef = 83A5661818DA878400FC31A0 /* jsb_socketio.h */; };
+		84365D161EF1A1C200E018F5 /* jsb_analytics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84365D0A1EF1A1C200E018F5 /* jsb_analytics.cpp */; };
+		84365D171EF1A1C200E018F5 /* jsb_analytics.h in Headers */ = {isa = PBXBuildFile; fileRef = 84365D0B1EF1A1C200E018F5 /* jsb_analytics.h */; };
+		84365D181EF1A1C200E018F5 /* jsb_crashReport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84365D0C1EF1A1C200E018F5 /* jsb_crashReport.cpp */; };
+		84365D191EF1A1C200E018F5 /* jsb_crashReport.h in Headers */ = {isa = PBXBuildFile; fileRef = 84365D0D1EF1A1C200E018F5 /* jsb_crashReport.h */; };
+		84365D1A1EF1A1C200E018F5 /* jsb_facebook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84365D0E1EF1A1C200E018F5 /* jsb_facebook.cpp */; };
+		84365D1B1EF1A1C200E018F5 /* jsb_facebook.h in Headers */ = {isa = PBXBuildFile; fileRef = 84365D0F1EF1A1C200E018F5 /* jsb_facebook.h */; };
+		84365D1C1EF1A1C200E018F5 /* jsb_firebaseMessaging.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84365D101EF1A1C200E018F5 /* jsb_firebaseMessaging.cpp */; };
+		84365D1D1EF1A1C200E018F5 /* jsb_firebaseMessaging.h in Headers */ = {isa = PBXBuildFile; fileRef = 84365D111EF1A1C200E018F5 /* jsb_firebaseMessaging.h */; };
+		84365D1E1EF1A1C200E018F5 /* jsb_iab.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84365D121EF1A1C200E018F5 /* jsb_iab.cpp */; };
+		84365D1F1EF1A1C200E018F5 /* jsb_iab.h in Headers */ = {isa = PBXBuildFile; fileRef = 84365D131EF1A1C200E018F5 /* jsb_iab.h */; };
+		84365D201EF1A1C200E018F5 /* jsb_nativeDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84365D141EF1A1C200E018F5 /* jsb_nativeDevice.cpp */; };
+		84365D211EF1A1C200E018F5 /* jsb_nativeDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 84365D151EF1A1C200E018F5 /* jsb_nativeDevice.h */; };
+		84365D371EF1A67700E018F5 /* jsb_analytics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84365D0A1EF1A1C200E018F5 /* jsb_analytics.cpp */; };
+		84365D381EF1A68200E018F5 /* jsb_crashReport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84365D0C1EF1A1C200E018F5 /* jsb_crashReport.cpp */; };
+		84365D391EF1A68900E018F5 /* jsb_facebook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84365D0E1EF1A1C200E018F5 /* jsb_facebook.cpp */; };
+		84365D3A1EF1A68900E018F5 /* jsb_firebaseMessaging.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84365D101EF1A1C200E018F5 /* jsb_firebaseMessaging.cpp */; };
+		84365D3B1EF1A68F00E018F5 /* jsb_iab.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84365D121EF1A1C200E018F5 /* jsb_iab.cpp */; };
+		84365D3C1EF1A69400E018F5 /* jsb_nativeDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84365D141EF1A1C200E018F5 /* jsb_nativeDevice.cpp */; };
 		ADAC23EE1C2044DC0049A6A2 /* js_module_register.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADD1C0D91C196BDF00733781 /* js_module_register.cpp */; };
 		ADD1C0DC1C196BDF00733781 /* js_module_register.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ADD1C0D91C196BDF00733781 /* js_module_register.cpp */; };
 		ADD1C0DD1C196BDF00733781 /* js_module_register.h in Headers */ = {isa = PBXBuildFile; fileRef = ADD1C0DA1C196BDF00733781 /* js_module_register.h */; };
@@ -401,6 +419,18 @@
 		50864CF51C7CA95200B3BAB1 /* js_bindings_chipmunk_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_functions.h; sourceTree = "<group>"; };
 		83A5661718DA878400FC31A0 /* jsb_socketio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_socketio.cpp; sourceTree = "<group>"; };
 		83A5661818DA878400FC31A0 /* jsb_socketio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_socketio.h; sourceTree = "<group>"; };
+		84365D0A1EF1A1C200E018F5 /* jsb_analytics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_analytics.cpp; sourceTree = "<group>"; };
+		84365D0B1EF1A1C200E018F5 /* jsb_analytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_analytics.h; sourceTree = "<group>"; };
+		84365D0C1EF1A1C200E018F5 /* jsb_crashReport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_crashReport.cpp; sourceTree = "<group>"; };
+		84365D0D1EF1A1C200E018F5 /* jsb_crashReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_crashReport.h; sourceTree = "<group>"; };
+		84365D0E1EF1A1C200E018F5 /* jsb_facebook.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_facebook.cpp; sourceTree = "<group>"; };
+		84365D0F1EF1A1C200E018F5 /* jsb_facebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_facebook.h; sourceTree = "<group>"; };
+		84365D101EF1A1C200E018F5 /* jsb_firebaseMessaging.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_firebaseMessaging.cpp; sourceTree = "<group>"; };
+		84365D111EF1A1C200E018F5 /* jsb_firebaseMessaging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_firebaseMessaging.h; sourceTree = "<group>"; };
+		84365D121EF1A1C200E018F5 /* jsb_iab.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_iab.cpp; sourceTree = "<group>"; };
+		84365D131EF1A1C200E018F5 /* jsb_iab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_iab.h; sourceTree = "<group>"; };
+		84365D141EF1A1C200E018F5 /* jsb_nativeDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_nativeDevice.cpp; sourceTree = "<group>"; };
+		84365D151EF1A1C200E018F5 /* jsb_nativeDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_nativeDevice.h; sourceTree = "<group>"; };
 		ADD1C0D91C196BDF00733781 /* js_module_register.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_module_register.cpp; sourceTree = "<group>"; };
 		ADD1C0DA1C196BDF00733781 /* js_module_register.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_module_register.h; sourceTree = "<group>"; };
 		ADD1C0DB1C196BDF00733781 /* js-BindingsExport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "js-BindingsExport.h"; sourceTree = "<group>"; };
@@ -601,6 +631,18 @@
 		1A119E5918BDF19200352BAA /* extension */ = {
 			isa = PBXGroup;
 			children = (
+				84365D0A1EF1A1C200E018F5 /* jsb_analytics.cpp */,
+				84365D0B1EF1A1C200E018F5 /* jsb_analytics.h */,
+				84365D0C1EF1A1C200E018F5 /* jsb_crashReport.cpp */,
+				84365D0D1EF1A1C200E018F5 /* jsb_crashReport.h */,
+				84365D0E1EF1A1C200E018F5 /* jsb_facebook.cpp */,
+				84365D0F1EF1A1C200E018F5 /* jsb_facebook.h */,
+				84365D101EF1A1C200E018F5 /* jsb_firebaseMessaging.cpp */,
+				84365D111EF1A1C200E018F5 /* jsb_firebaseMessaging.h */,
+				84365D121EF1A1C200E018F5 /* jsb_iab.cpp */,
+				84365D131EF1A1C200E018F5 /* jsb_iab.h */,
+				84365D141EF1A1C200E018F5 /* jsb_nativeDevice.cpp */,
+				84365D151EF1A1C200E018F5 /* jsb_nativeDevice.h */,
 				1A119E5B18BDF19200352BAA /* jsb_cocos2dx_extension_manual.cpp */,
 				1A119E5C18BDF19200352BAA /* jsb_cocos2dx_extension_manual.h */,
 			);
@@ -816,7 +858,9 @@
 				4B22F4AB1B159A7A0044C14E /* jsb_cocos2dx_experimental_webView_manual.h in Headers */,
 				1A119ED118BDF19200352BAA /* js_bindings_config.h in Headers */,
 				1A119EB518BDF19200352BAA /* js_bindings_chipmunk_manual.h in Headers */,
+				84365D1D1EF1A1C200E018F5 /* jsb_firebaseMessaging.h in Headers */,
 				1A119EF918BDF19200352BAA /* jsb_websocket.h in Headers */,
+				84365D171EF1A1C200E018F5 /* jsb_analytics.h in Headers */,
 				1A119E9118BDF19200352BAA /* jsb_cocos2dx_extension_auto.hpp in Headers */,
 				50864CF61C7CA95200B3BAB1 /* js_bindings_chipmunk_auto_classes_registration.h in Headers */,
 				1A119E8B18BDF19200352BAA /* jsb_cocos2dx_builder_auto.hpp in Headers */,
@@ -829,7 +873,9 @@
 				1A119ED518BDF19200352BAA /* js_bindings_core.h in Headers */,
 				ADD1C0DE1C196BDF00733781 /* js-BindingsExport.h in Headers */,
 				1A119EC318BDF19200352BAA /* js_bindings_ccbreader.h in Headers */,
+				84365D1F1EF1A1C200E018F5 /* jsb_iab.h in Headers */,
 				1A119EDF18BDF19200352BAA /* jsb_helper.h in Headers */,
+				84365D191EF1A1C200E018F5 /* jsb_crashReport.h in Headers */,
 				1A119ECB18BDF19200352BAA /* jsb_cocos2dx_extension_manual.h in Headers */,
 				1A119EEF18BDF19200352BAA /* js_bindings_system_functions.h in Headers */,
 				BAFA590B1B319F7E004F9246 /* jsb_cocos2dx_navmesh_conversions.h in Headers */,
@@ -851,9 +897,11 @@
 				1A119EC718BDF19200352BAA /* jsb_cocos2dx_studio_manual.h in Headers */,
 				BA9FD5D41BAC0A7600996C85 /* CCComponentJS.h in Headers */,
 				1A119EB918BDF19200352BAA /* js_bindings_chipmunk_registration.h in Headers */,
+				84365D211EF1A1C200E018F5 /* jsb_nativeDevice.h in Headers */,
 				420BBCF21AA48EDE00493976 /* jsb_cocos2dx_3d_auto.hpp in Headers */,
 				BAF638DE1B5F5DC900CDB43A /* jsb_cocos2dx_audioengine_auto.hpp in Headers */,
 				1A119EF118BDF19200352BAA /* js_bindings_system_functions_registration.h in Headers */,
+				84365D1B1EF1A1C200E018F5 /* jsb_facebook.h in Headers */,
 				50864CFF1C7CA95200B3BAB1 /* js_bindings_chipmunk_functions_registration.h in Headers */,
 				1A119E8518BDF19200352BAA /* jsb_cocos2dx_auto.hpp in Headers */,
 				1A119F0718BDF19200352BAA /* jsb_cocos2dx_spine_manual.h in Headers */,
@@ -1065,13 +1113,16 @@
 			files = (
 				1A119E8918BDF19200352BAA /* jsb_cocos2dx_builder_auto.cpp in Sources */,
 				50864D021C7CA95200B3BAB1 /* js_bindings_chipmunk_functions.cpp in Sources */,
+				84365D161EF1A1C200E018F5 /* jsb_analytics.cpp in Sources */,
 				1A119EED18BDF19200352BAA /* js_bindings_system_functions.cpp in Sources */,
+				84365D201EF1A1C200E018F5 /* jsb_nativeDevice.cpp in Sources */,
 				426390041B0EC1C6004C53A2 /* jsb_cocos2dx_physics3d_manual.cpp in Sources */,
 				0541A7501973876100E45470 /* JavaScriptObjCBridge.mm in Sources */,
 				1A119EB318BDF19200352BAA /* js_bindings_chipmunk_manual.cpp in Sources */,
 				1A119EE918BDF19200352BAA /* jsb_opengl_registration.cpp in Sources */,
 				1A119EF718BDF19200352BAA /* jsb_websocket.cpp in Sources */,
 				1A119ED318BDF19200352BAA /* js_bindings_core.cpp in Sources */,
+				84365D1A1EF1A1C200E018F5 /* jsb_facebook.cpp in Sources */,
 				BAFA59031B319F38004F9246 /* jsb_cocos2dx_navmesh_manual.cpp in Sources */,
 				1A119EC118BDF19200352BAA /* js_bindings_ccbreader.cpp in Sources */,
 				1A119EFB18BDF19200352BAA /* XMLHTTPRequest.cpp in Sources */,
@@ -1080,9 +1131,12 @@
 				1A119E8F18BDF19200352BAA /* jsb_cocos2dx_extension_auto.cpp in Sources */,
 				ADD1C0DC1C196BDF00733781 /* js_module_register.cpp in Sources */,
 				1A119ED718BDF19200352BAA /* js_bindings_opengl.cpp in Sources */,
+				84365D1E1EF1A1C200E018F5 /* jsb_iab.cpp in Sources */,
 				1AB5E62B18D05BC80088DAA4 /* jsb_cocos2dx_ui_auto.cpp in Sources */,
 				BA6249B51E77FBB30096291C /* jsb_cocos2dx_network_auto.cpp in Sources */,
 				1A119E9B18BDF19200352BAA /* jsb_cocos2dx_spine_auto.cpp in Sources */,
+				84365D181EF1A1C200E018F5 /* jsb_crashReport.cpp in Sources */,
+				84365D1C1EF1A1C200E018F5 /* jsb_firebaseMessaging.cpp in Sources */,
 				1A119EF318BDF19200352BAA /* js_bindings_system_registration.cpp in Sources */,
 				1A119EBB18BDF19200352BAA /* cocos2d_specifics.cpp in Sources */,
 				BAF638DC1B5F5DC900CDB43A /* jsb_cocos2dx_audioengine_auto.cpp in Sources */,
@@ -1114,6 +1168,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84365D3C1EF1A69400E018F5 /* jsb_nativeDevice.cpp in Sources */,
+				84365D3B1EF1A68F00E018F5 /* jsb_iab.cpp in Sources */,
+				84365D391EF1A68900E018F5 /* jsb_facebook.cpp in Sources */,
+				84365D3A1EF1A68900E018F5 /* jsb_firebaseMessaging.cpp in Sources */,
+				84365D381EF1A68200E018F5 /* jsb_crashReport.cpp in Sources */,
+				84365D371EF1A67700E018F5 /* jsb_analytics.cpp in Sources */,
 				ADAC23EE1C2044DC0049A6A2 /* js_module_register.cpp in Sources */,
 				0541A75B19738AD200E45470 /* JavaScriptObjCBridge.mm in Sources */,
 				BA6249B61E77FBB30096291C /* jsb_cocos2dx_network_auto.cpp in Sources */,

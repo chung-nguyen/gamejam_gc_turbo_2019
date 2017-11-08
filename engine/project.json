@@ -9,10 +9,23 @@
     "renderMode" : 0,
     "engineDir":"frameworks/cocos2d-html5",
 
-    "modules" : ["cocos2d"],
+    "modules" : ["cocos2d", "extensions"],
 
     "jsList" : [
         "src/resource.js",
-        "src/app.js"
+        "src/bootstrap.js",
+        "src/asyncLock.js",
+        "src/msgpack.js",
+        "src/lz-string.js",
+        "src/fastxmlparser.js",
+        "src/dfSpriteSheet.js",
+        "src/dfSpriteAnimation.js",
+        "src/dfSpriteAnimationInstance.js",
+        "src/cocos_html5_facebook.js",
+        "src/cocos_html5_nativeDevice.js",
+        "src/cocos_html5_analytic.js",
+        "src/cocos_html5_firebaseMessaging.js",
+        "src/cocos_html5_crashReport.js",
+        "src/cocos_html5_iab.js"
     ]
 }

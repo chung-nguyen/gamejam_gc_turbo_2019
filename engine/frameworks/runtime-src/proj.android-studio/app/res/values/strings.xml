@@ -1,3 +1,6 @@
 <resources>
-    <string name="app_name">goldfish</string>
+    <string name="app_name">Gold Fish</string>
+	<string name="facebook_app_id">138773520019597</string>
+    <string name="google_play_iap_key">MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmHoNgSuGscCdYhTIcBBnAgsBeUZXjPh7CQeK3dwnvcPP3L6J4Rfd3SCf/NYFEy426IX23TemTcw+ozMa9JsdkvAkhfTrStwmN5b4SflV+RrPjetqy/qiWbHENCuqEaJH+y/3a0L5c3+QNtrIffv+8x+oXz7LeKcaKMa5N5PJaHFCUVao+cnxodpCRW5JzFKdK/MMoJn/82XAr0MhYq5BB571CNoKHLNfDTtRUWW1PE00S0OLM41DkMIQpAyKhM4HeqRmuH6Zwy7j98FmWJ5dJWTPCcnKgD64ZeAmWKYgQA7GnQ3qzGcI6u2rpRFQ8/WTETr9HohEUH56Y9/zxVNiDwIDAQAB</string>
 </resources>
+

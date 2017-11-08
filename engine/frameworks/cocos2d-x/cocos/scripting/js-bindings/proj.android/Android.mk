@@ -71,6 +71,12 @@ LOCAL_SRC_FILES := ../auto/jsb_cocos2dx_3d_auto.cpp \
                    ../manual/cocostudio/jsb_cocos2dx_studio_conversions.cpp \
                    ../manual/cocostudio/jsb_cocos2dx_studio_manual.cpp \
                    ../manual/extension/jsb_cocos2dx_extension_manual.cpp \
+                   ../manual/extension/jsb_nativeDevice.cpp \
+                   ../manual/extension/jsb_facebook.cpp \
+                   ../manual/extension/jsb_analytics.cpp \
+                   ../manual/extension/jsb_firebaseMessaging.cpp \
+                   ../manual/extension/jsb_crashReport.cpp \
+                   ../manual/extension/jsb_iab.cpp \
                    ../manual/localstorage/js_bindings_system_functions.cpp \
                    ../manual/localstorage/js_bindings_system_registration.cpp \
                    ../manual/network/jsb_socketio.cpp \

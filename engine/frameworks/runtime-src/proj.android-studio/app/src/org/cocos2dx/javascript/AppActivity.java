@@ -27,6 +27,18 @@ import android.os.Bundle;
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.view.View;
+
+import android.util.Log;
+import java.util.Arrays;
+
+import com.aux.AndroidFacebook;
+import com.aux.MyFirebaseMessaging;
+import com.aux.MyFirebaseAnalytics;
+import com.aux.MyIAB;
+
 public class AppActivity extends Cocos2dxActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +54,24 @@ public class AppActivity extends Cocos2dxActivity {
         }
 
         // DO OTHER INITIALIZATION BELOW
+        AndroidFacebook.register(this);
+        MyFirebaseAnalytics.register(this);        
+        MyIAB.register(this);
+        MyFirebaseMessaging.registerMessageHandler(this);   
+    }
+
+    @Override
+    protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        AndroidFacebook.onActivityResult(requestCode, resultCode, data);
+        MyIAB.onActivityResult(requestCode, resultCode, data);
+    }   
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
         
+        MyIAB.onDestroy();
     }
 }
+

@@ -979,6 +979,73 @@ void __JSDownloaderDelegator::onSuccess(Texture2D *tex)
     }//);
 }
 
+void __JSDownloaderDelegator::downloadSaveFileAsync(const std::string& saveFile)
+{
+    this->_saveFile = saveFile;
+
+    retain();
+    auto t = std::thread(&__JSDownloaderDelegator::startDownloadSaveFile, this);
+    t.detach();
+}
+
+void __JSDownloaderDelegator::startDownloadSaveFile()
+{
+    _downloader = std::make_shared<cocos2d::network::Downloader>();
+//        _downloader->setConnectionTimeout(8);
+    _downloader->onTaskError = [this](const cocos2d::network::DownloadTask& task,
+                                        int errorCode,
+                                        int errorCodeInternal,
+                                        const std::string& errorStr)
+    {
+        Director::getInstance()->getScheduler()->performFunctionInCocosThread([this]
+        {
+            JS::RootedValue callback(_cx, OBJECT_TO_JSVAL(_jsCallback));
+            if (!callback.isNull()) {
+                JS::RootedObject global(_cx, ScriptingCore::getInstance()->getGlobalObject());
+                JSAutoCompartment ac(_cx, global);
+
+                jsval succeed = INT_TO_JSVAL(0);
+                JS::RootedValue retval(_cx);
+                JS_CallFunctionValue(_cx, global, callback, JS::HandleValueArray::fromMarkedLocation(1, &succeed), &retval);
+            }
+            release();
+        });
+    };
+
+    _downloader->onTaskProgress = [this](const cocos2d::network::DownloadTask& task,
+                                   int64_t bytesReceived,
+                                   int64_t totalBytesReceived,
+                                   int64_t totalBytesExpected)
+    {
+        this->_downloadedBytes = totalBytesReceived;
+    };
+
+    _downloader->onFileTaskSuccess = [this](const cocos2d::network::DownloadTask& task)
+    {
+        /*cocos2d::Data ccdata;
+        ccdata.copy((unsigned char*)data.data(), data.size());
+        FileUtils::getInstance()->writeDataToFile(ccdata, this->_saveFile);*/
+
+        //Director::getInstance()->getScheduler()->performFunctionInCocosThread([this, tex]
+        {
+            JS::RootedObject global(_cx, ScriptingCore::getInstance()->getGlobalObject());
+            JSAutoCompartment ac(_cx, global);
+
+            jsval succeed = INT_TO_JSVAL(this->_downloadedBytes);
+
+            JS::RootedValue callback(_cx, OBJECT_TO_JSVAL(_jsCallback));
+            if (!callback.isNull())
+            {
+                JS::RootedValue retval(_cx);
+                JS_CallFunctionValue(_cx, global, callback, JS::HandleValueArray::fromMarkedLocation(1, &succeed), &retval);
+            }
+            release();
+        }//);
+    };
+
+    _downloader->createDownloadFileTask(_url, this->_saveFile);
+}
+
 // jsb.loadRemoteImg(url, function(succeed, result) {})
 bool js_load_remote_image(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -999,6 +1066,33 @@ bool js_load_remote_image(JSContext *cx, uint32_t argc, jsval *vp)
     }
 
     JS_ReportError(cx, "js_load_remote_image : wrong number of arguments");
+    return false;
+}
+
+bool js_save_remote_file(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    if (argc == 3)
+    {
+        std::string url;
+        std::string saveFile;
+        bool ok = jsval_to_std_string(cx, args.get(0), &url);
+        JSB_PRECONDITION2(ok, cx, false, "js_save_remote_file : Error processing arguments");
+
+        ok = jsval_to_std_string(cx, args.get(1), &saveFile);
+        JSB_PRECONDITION2(ok, cx, false, "js_save_remote_file : Error processing arguments");
+
+        JS::RootedObject callback(cx, args.get(2).toObjectOrNull());
+
+        __JSDownloaderDelegator *delegate = __JSDownloaderDelegator::create(cx, obj, url, callback);
+        delegate->downloadSaveFileAsync(saveFile);
+
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_save_remote_file : wrong number of arguments");
     return false;
 }
 
@@ -1057,6 +1151,7 @@ void register_all_cocos2dx_extension_manual(JSContext* cx, JS::HandleObject glob
     JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCTableView_create, 3, JSPROP_READONLY | JSPROP_PERMANENT);
 
     JS_DefineFunction(cx, jsbObj, "loadRemoteImg", js_load_remote_image, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, jsbObj, "saveRemoteFile", js_save_remote_file, 3, JSPROP_READONLY | JSPROP_PERMANENT);
 
     JS::RootedObject performance(cx);
     get_or_create_js_obj(cx, global, "performance", &performance);

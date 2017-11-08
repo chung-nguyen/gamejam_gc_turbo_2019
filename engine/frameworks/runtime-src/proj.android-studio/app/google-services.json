@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "644656350161",
+    "firebase_url": "https://douchebag-brothers.firebaseio.com",
+    "project_id": "douchebag-brothers",
+    "storage_bucket": "douchebag-brothers.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:644656350161:android:4be5611138d9f260",
+        "android_client_info": {
+          "package_name": "org.cocos2dx.douchebag"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "644656350161-7n2e1b150bln39o79v0levufqu1e589l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4bCUWf-Z1NTzWgFcLKdBL_CpGBbaWaNQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

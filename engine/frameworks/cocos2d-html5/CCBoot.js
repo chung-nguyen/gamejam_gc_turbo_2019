@@ -1081,7 +1081,7 @@ cc.loader = (function () {
             }
             loader.load(realUrl, url, item, function (err, data) {
                 if (err) {
-                    cc.log(err);
+                    cc.error(err);
                     self.cache[url] = null;
                     delete self.cache[url];
                     cb({status: 520, errorMessage: err}, null);

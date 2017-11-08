@@ -89,6 +89,9 @@ include_directories(
   ${COCOS2D_X_ROOT}/external
   ${COCOS2D_X_ROOT}/external/spidermonkey/include/${PLATFORM_FOLDER}
   ${COCOS2D_X_ROOT}/cocos/editor-support
+  ${RUNTIME_SRC_ROOT}/douchebag_native
+  ${RUNTIME_SRC_ROOT}/douchebag_native/math
+  ${RUNTIME_SRC_ROOT}/douchebag_native/msgpack/include
 )
 
 if(USE_PREBUILT_LIBS)
@@ -105,7 +108,26 @@ if(WIN32)
 else()
   set(GAME_SRC
     ${RUNTIME_SRC_ROOT}/proj.linux/main.cpp
-    ${RUNTIME_SRC_ROOT}/Classes/AppDelegate.cpp
+    ${RUNTIME_SRC_ROOT}/proj.linux/nativeDevice.cpp
+    ${RUNTIME_SRC_ROOT}/proj.linux/facebook.cpp
+    ${RUNTIME_SRC_ROOT}/proj.linux/firebaseMessaging.cpp
+    ${RUNTIME_SRC_ROOT}/proj.linux/analytics.cpp
+    ${RUNTIME_SRC_ROOT}/proj.linux/crashReport.cpp
+    ${RUNTIME_SRC_ROOT}/proj.linux/iab.cpp
+    ${RUNTIME_SRC_ROOT}/proj.linux/deviceID.cpp
+    ${RUNTIME_SRC_ROOT}/Classes/AppDelegate.cpp        
+    ${RUNTIME_SRC_ROOT}/Classes/NativeEngineBinding.cpp    
+    ${RUNTIME_SRC_ROOT}/douchebag_native/GameDefs.cpp
+    ${RUNTIME_SRC_ROOT}/douchebag_native/MasterData.cpp
+    ${RUNTIME_SRC_ROOT}/douchebag_native/BaseGame.cpp
+    ${RUNTIME_SRC_ROOT}/douchebag_native/BattlePlayer.cpp
+    ${RUNTIME_SRC_ROOT}/douchebag_native/BattleArena.cpp
+    ${RUNTIME_SRC_ROOT}/douchebag_native/BattleEntity.cpp
+    ${RUNTIME_SRC_ROOT}/douchebag_native/DuelGame.cpp
+    ${RUNTIME_SRC_ROOT}/douchebag_native/TrainingGame.cpp
+    ${RUNTIME_SRC_ROOT}/douchebag_native/math/FPMath.cpp
+    ${RUNTIME_SRC_ROOT}/douchebag_native/json11/json11.cpp
+    ${RUNTIME_SRC_ROOT}/douchebag_native/entity/DefendTower.cpp
   )
 endif()
 
@@ -140,6 +162,7 @@ pre_build(${APP_NAME}
   COMMAND ${CMAKE_COMMAND} -E remove ${APP_BIN_DIR}${RES_PREFIX}/*.js
   COMMAND ${CMAKE_COMMAND} -E remove ${APP_BIN_DIR}${RES_PREFIX}/*.json
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${APP_BIN_DIR}${RES_PREFIX}/res
+  COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/_dist ${APP_BIN_DIR}${RES_PREFIX}/_dist
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/res ${APP_BIN_DIR}${RES_PREFIX}/res
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_CURRENT_SOURCE_DIR}/src ${APP_BIN_DIR}${RES_PREFIX}/src
   COMMAND ${CMAKE_COMMAND} -E copy_directory ${COCOS2D_X_ROOT}/cocos/scripting/js-bindings/script ${APP_BIN_DIR}${RES_PREFIX}/script

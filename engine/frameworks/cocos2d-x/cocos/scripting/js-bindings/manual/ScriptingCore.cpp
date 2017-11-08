@@ -33,6 +33,7 @@
 #include "scripting/js-bindings/manual/cocos2d_specifics.hpp"
 #include "scripting/js-bindings/auto/jsb_cocos2dx_auto.hpp"
 #include "scripting/js-bindings/manual/js_bindings_config.h"
+#include "scripting/js-bindings/manual/extension/jsb_crashReport.h"
 
 #include "cocos2d.h" // we used cocos2dVersion() ...
 
@@ -929,6 +930,14 @@ void ScriptingCore::reportError(JSContext *cx, const char *message, JSErrorRepor
             report->filename ? report->filename : "<no filename=\"filename\">",
             (unsigned int) report->lineno,
             message);
+
+    // NTChung hacks
+    sprintf(_js_log_buf, "%s:%u:%s\n",
+                report->filename ? report->filename : "<no filename=\"filename\">",
+                (unsigned int) report->lineno,
+                message);
+
+    nativeCrashReport(std::string(_js_log_buf));
 };
 
 
