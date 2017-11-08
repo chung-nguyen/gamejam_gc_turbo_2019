@@ -1,0 +1,7 @@
+{
+  "name": "spritepack",
+  "dependencies": {
+    "md5-file": "^3.1.1",
+    "minimist": "^1.2.0"
+  }
+}

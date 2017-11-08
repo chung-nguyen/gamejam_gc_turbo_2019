@@ -1,0 +1,13 @@
+{
+  "name": "spritepack",
+  "dependencies": {
+    "async": "^2.0.1",
+    "bluebird": "^3.4.7",
+    "graceful-fs": "^4.1.11",
+    "jimp": "^0.2.27",
+    "mime": "^1.3.4",
+    "minimist": "^1.2.0",
+    "plist": "^2.0.1",
+    "sleep": "^4.0.0"
+  }
+}

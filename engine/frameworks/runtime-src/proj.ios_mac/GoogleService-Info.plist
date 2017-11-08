@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AD_UNIT_ID_FOR_BANNER_TEST</key>
+	<string>ca-app-pub-3940256099942544/2934735716</string>
+	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
+	<string>ca-app-pub-3940256099942544/4411468910</string>
+	<key>CLIENT_ID</key>
+	<string>644656350161-rtu0k9lbe42v55e8e2ag5vdmf05voufk.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.644656350161-rtu0k9lbe42v55e8e2ag5vdmf05voufk</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBEroUEQUgE4JHZqbOMdOSg-NQOBFwbsdQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>644656350161</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>org.cocos2dx.douchebag</string>
+	<key>PROJECT_ID</key>
+	<string>douchebag-brothers</string>
+	<key>STORAGE_BUCKET</key>
+	<string>douchebag-brothers.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<true/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<false/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:644656350161:ios:4be5611138d9f260</string>
+	<key>DATABASE_URL</key>
+	<string>https://douchebag-brothers.firebaseio.com</string>
+</dict>
+</plist>

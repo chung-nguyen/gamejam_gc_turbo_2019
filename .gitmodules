@@ -1,0 +1,3 @@
+[submodule "engine/frameworks/runtime-src/douchebag_native"]
+	path = engine/frameworks/runtime-src/douchebag_native
+	url = ../douchebag_native

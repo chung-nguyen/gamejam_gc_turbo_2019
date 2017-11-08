@@ -1,0 +1,12 @@
+/build*
+
+/engine/CMakeLists.txt.user
+/engine/_dist
+/engine/publish
+/engine/frameworks/cocos2d-x/cocos/platform/android/libcocos2dx/build/
+
+/node_modules
+
+/engine/frameworks/runtime-src/proj.ios_mac/Pods
+/engine/frameworks/runtime-src/proj.ios_mac/build
+
