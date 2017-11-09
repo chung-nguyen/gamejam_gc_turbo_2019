@@ -16,7 +16,7 @@
 
 package com.aux;
 
-import org.cocos2dx.douchebag.R;
+import org.cocos2dx.goldfish.R;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;

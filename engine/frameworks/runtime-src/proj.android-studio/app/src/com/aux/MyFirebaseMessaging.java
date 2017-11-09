@@ -1,6 +1,6 @@
 package com.aux;
 
-import org.cocos2dx.douchebag.R;
+import org.cocos2dx.goldfish.R;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 import android.app.Activity;

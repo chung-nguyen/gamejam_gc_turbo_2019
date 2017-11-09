@@ -1,0 +1,22 @@
+Executable : /home/chung/android-ndk-r15c/ndk-build
+arguments : 
+NDK_PROJECT_PATH=null
+APP_BUILD_SCRIPT=/home/chung/Documents/goldfish/engine/frameworks/runtime-src/proj.android-studio/app/jni/Android.mk
+NDK_APPLICATION_MK=/home/chung/Documents/goldfish/engine/frameworks/runtime-src/proj.android-studio/app/jni/Application.mk
+APP_ABI=armeabi
+NDK_ALL_ABIS=armeabi
+NDK_DEBUG=0
+APP_PLATFORM=android-15
+NDK_OUT=/home/chung/Documents/goldfish/engine/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/release/obj
+NDK_LIBS_OUT=/home/chung/Documents/goldfish/engine/frameworks/runtime-src/proj.android-studio/app/build/intermediates/ndkBuild/release/lib
+NDK_TOOLCHAIN_VERSION=4.9
+APP_PLATFORM=android-10
+NDK_MODULE_PATH=/home/chung/Documents/goldfish/engine/frameworks/cocos2d-x:/home/chung/Documents/goldfish/engine/frameworks/cocos2d-x/cocos:/home/chung/Documents/goldfish/engine/frameworks/cocos2d-x/external
+-j4
+NDK_DEBUG=0
+APP_SHORT_COMMANDS=false
+LOCAL_SHORT_COMMANDS=false
+-B
+-n
+jvmArgs : 
+

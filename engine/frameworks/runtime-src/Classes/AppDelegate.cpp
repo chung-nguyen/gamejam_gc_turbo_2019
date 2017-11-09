@@ -117,8 +117,6 @@ bool AppDelegate::applicationDidFinishLaunching()
     sc->addRegisterCallback(register_crashReport);
     sc->addRegisterCallback(register_iab);
 
-    sc->addRegisterCallback(register_native_engine);
-
     // extension can be commented out to reduce the package
     sc->addRegisterCallback(register_all_cocos2dx_extension);
     sc->addRegisterCallback(register_all_cocos2dx_extension_manual);
