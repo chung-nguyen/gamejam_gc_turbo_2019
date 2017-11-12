@@ -1,22 +1,27 @@
+import { createStore } from "./store/store";
+import appState from "./reducer/appState";
+import authenticate from "./reducer/authenticate";
+import levelDesign from "./reducer/levelDesign";
+
 // @flow
 if (!window) {
     window = {};
 }
 
-window.SplashScene = require('./SplashScene');
+window.SplashScene = require("./SplashScene");
+window.InGameScene = require("./InGameScene");
 
 window.initApp = function() {
-    console.log('init app...');
+    console.log("init app...");
 
     // Injections
     if (!cc.sys.isNative) {
         sp._atlasLoader = {
-            spAtlasFile:null,
-            setAtlasFile:function(spAtlasFile){
+            spAtlasFile: null,
+            setAtlasFile: function(spAtlasFile) {
                 this.spAtlasFile = spAtlasFile;
             },
-            load:function(line){
-
+            load: function(line) {
                 // NTChung hacks
                 //var texturePath = cc.path.join(cc.path.dirname(this.spAtlasFile), line);
                 var texturePath = getResourceAlias(line);
@@ -27,8 +32,15 @@ window.initApp = function() {
                 tex.setRealTexture(texture);
                 return tex;
             },
-            unload:function(obj){
-            }
+            unload: function(obj) {}
         };
     }
-}
+
+    const store = createStore({
+        appState,
+        authenticate,
+        levelDesign
+    });
+
+    store.restoreState();
+};

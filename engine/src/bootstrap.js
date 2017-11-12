@@ -6,7 +6,6 @@ cc.LabelTTF._lastEnglish = /[a-zA-Z0-9ÄÖÜäöüßçîûÀÁÂÃÈÉÊÌÍÒÓ
 cc.LabelTTF._firsrEnglish = /^[a-zA-Z0-9ÄÖÜäöüßçîûÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]/;
 
 var bootstrapResources = {
-    background: "res/splash.jpg",
     normalFont: { type: "font", name: "Normal", srcs: ["res/normal.otf"] },
     mediumFont: { type: "font", name: "Medium", srcs: ["res/medium.otf"] },
     bigFont: { type: "font", name: "Big", srcs: ["res/big.otf"] },
@@ -138,20 +137,22 @@ var BootstrapScene = cc.Scene.extend({
         spinner.addChild(loadingDot, 1);
 
         self._spinAngle = 0;
-        self.addChild(spinner, 2);
+        //self.addChild(spinner, 2);
 
-        var resToLoad = [bootstrapResources.background, bootstrapResources.normalFont, bootstrapResources.mediumFont, bootstrapResources.bigFont];
+        var resToLoad = [bootstrapResources.normalFont, bootstrapResources.mediumFont, bootstrapResources.bigFont];
 
         cc.loader.load(
             resToLoad,
             function() {},
             function() {
                 // bg
-                var bg = new ccui.ImageView(bootstrapResources.background);
-                var bgSize = bg.getContentSize();
-                bg.setPosition(center);
-                bg.setScale(Math.max(size.width / bgSize.width, size.height / bgSize.height));
+                var bg = cc.LayerColor.create(cc.color(255, 255, 255), size.width, size.height);                
                 self.addChild(bg, 0);
+
+                var logo = new ccui.ImageView("logo.png", ccui.Widget.PLIST_TEXTURE);
+                var logoSize = logo.getContentSize();
+                logo.setPosition(center);                
+                self.addChild(logo, 1);
 
                 // Loading box
                 var loadingPanel = (self._loadingPanel = new ccui.ImageView("popup_frame.png", ccui.Widget.PLIST_TEXTURE));

@@ -405,6 +405,8 @@ public:
     void setVR(VRIRenderer* vrrenderer);
     VRIRenderer* getVR() const;
 
+    virtual bool isScaleFitDesignResolution(float);
+
 protected:
     void updateDesignResolutionSize();
     

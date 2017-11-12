@@ -151,7 +151,6 @@ cc.game.onStart = function(){
     // cc.view.setOrientation(cc.ORIENTATION_PORTRAIT);
 
     // Setup the resolution policy and design resolution size
-    // Setup the resolution policy and design resolution size
     if (cc.sys.isNative) {
         cc.view.setDesignResolutionSize(1920, 1080, cc.ResolutionPolicy.NO_BORDER);
     } else {
@@ -159,6 +158,7 @@ cc.game.onStart = function(){
     }
 
     // The game will be resized when browser size change
+    cc.view._orientationChanging = false; // hot fix
     cc.view.resizeWithBrowserSize(true);
 
     cc.log('is running on native? ' + cc.sys.isNative);

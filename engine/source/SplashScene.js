@@ -1,14 +1,16 @@
-import AvatarCache from './common/avatarCache';
-import BaseScene from './common/baseScene';
-import ui from './utils/ui';
+import AvatarCache from "./common/avatarCache";
+import BaseScene from "./common/baseScene";
+import ui from "./utils/ui";
 
-import Localize from './localize';
+import Localize from "./localize";
+import { storeDispatch } from "./store/store";
+import { fetchLevelDesign } from "./reducer/levelDesign";
 
 var SplashSceneLayer = cc.Layer.extend({
-    ctor: function () {
+    ctor: function() {
         this._super();
 
-        ui.makeImageView(this, { sprite: 'background.jpg', resizeMode: ui.RESIZE_COVER });
+        ui.makeImageView(this, { sprite: "background.jpg", resizeMode: ui.RESIZE_COVER });
 
         var btnInstantPlay = ui.makeButton(this, {
             normal: "button_green.png",
@@ -20,7 +22,7 @@ var SplashSceneLayer = cc.Layer.extend({
         });
 
         ui.makeText(btnInstantPlay, {
-            text: Localize.getCaps('instantPlay'),
+            text: Localize.getCaps("instantPlay"),
             font: getBigFontName(),
             fontSize: 40,
             position: ui.relativeTo(btnInstantPlay, ui.CENTER, 0, 0),
@@ -28,32 +30,36 @@ var SplashSceneLayer = cc.Layer.extend({
         });
     },
 
-    onInstantPlay: function (sender, type) {
+    onInstantPlay: function(sender, type) {
         if (type === ccui.Widget.TOUCH_ENDED) {
+            setImmediate(() => cc.director.runScene(new window.InGameScene()));
         }
     }
-})
+});
 
 var SplashScene = BaseScene.extend({
-    ctor: function () {
+    ctor: function() {
         this._super();
     },
 
-    onEnter: function () {
-        this._super();        
+    onEnter: function() {
+        this._super();
 
         this.showWaiting(true);
-        loadResources(['splash.plist'], () => {
-            addSpriteFramesFromResource('splash.plist');
+        loadResources(["splash.plist"], () => {
+            addSpriteFramesFromResource("splash.plist");
             this.addChild(new SplashSceneLayer());
-            this.showWaiting(false);
+
+            storeDispatch(fetchLevelDesign((action, state) => {
+                this.showWaiting(false);
+            }));            
         });
     },
 
-    onExit: function () {
+    onExit: function() {
         this._super();
 
-        removeSpriteFramesFromResource('splash.plist');
+        removeSpriteFramesFromResource("splash.plist");
     }
 });
 

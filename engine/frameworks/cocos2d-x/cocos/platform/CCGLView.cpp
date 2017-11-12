@@ -127,6 +127,13 @@ void GLView::pollEvents()
 {
 }
 
+bool GLView::isScaleFitDesignResolution(float factor)
+{
+    const float rw = _screenSize.width / factor;
+    const float rh = _screenSize.height / factor;
+    return rw >= _designResolutionSize.width && rh >= _designResolutionSize.height;
+}
+
 void GLView::updateDesignResolutionSize()
 {
     if (_screenSize.width > 0 && _screenSize.height > 0
@@ -137,7 +144,38 @@ void GLView::updateDesignResolutionSize()
         
         if (_resolutionPolicy == ResolutionPolicy::NO_BORDER)
         {
-            _scaleX = _scaleY = MAX(_scaleX, _scaleY);
+            // NTChung modified this
+            // _scaleX = _scaleY = MAX(_scaleX, _scaleY);
+            
+            const float logWidth = log2f(_scaleX);
+            const float logHeight = log2f(_scaleY);
+            const float t = 0.5f;
+            const float logWeightedAverage = logWidth * (1 - t) + logHeight * t;
+
+            float factor = powf(2, logWeightedAverage);
+            if (isScaleFitDesignResolution(factor))
+            {
+                _scaleX = _scaleY = factor;
+            }
+            else
+            {
+                factor = MAX(_scaleX, _scaleY);
+                if (isScaleFitDesignResolution(factor))
+                {
+                    _scaleX = _scaleY = factor;
+                }
+                else if (isScaleFitDesignResolution(_scaleX))
+                {
+                    _scaleY = _scaleX;
+                }
+                else if (isScaleFitDesignResolution(_scaleY))
+                {
+                    _scaleX = _scaleY;
+                }
+            }
+
+            _designResolutionSize.width = _screenSize.width / _scaleX;
+            _designResolutionSize.height = _screenSize.height / _scaleY;
         }
         
         else if (_resolutionPolicy == ResolutionPolicy::SHOW_ALL)
