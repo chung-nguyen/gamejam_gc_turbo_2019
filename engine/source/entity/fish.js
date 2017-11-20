@@ -5,6 +5,7 @@ var Fish = cc.Node.extend({
         this._super();
 
         this.sprite = new cc.Sprite("#fish1_swim_0.png");
+        this.sprite.setScale(opts.scale || 1);
         this.addChild(this.sprite, 0);
 
         this.name = opts.name;

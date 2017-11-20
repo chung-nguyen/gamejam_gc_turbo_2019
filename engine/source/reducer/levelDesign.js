@@ -1,25 +1,24 @@
 // @flow
-export const FETCH_LEVEL_DESIGN = 'FETCH_LEVEL_DESIGN';
+export const FETCH_LEVEL_DESIGN = "FETCH_LEVEL_DESIGN";
 
 // TODO: give api url to fetch level when we have a server
 export const fetchLevelDesign = (callback: Function) => ({
     type: FETCH_LEVEL_DESIGN,
     callback,
     next: {
-        persist: ['appState']
+        persist: ["appState"]
     }
 });
 
 const actionHandler = {
-    [FETCH_LEVEL_DESIGN]: (state, action) => {        
+    [FETCH_LEVEL_DESIGN]: (state, action) => {
         if (action.data) {
             return Object.assign({}, state, action.data);
         }
 
         return state;
     }
-}
-
+};
 
 const initialState = {
     levels: [
@@ -27,7 +26,7 @@ const initialState = {
         {
             players: [
                 // Player 1
-                { 
+                {
                     hookPosition: { x: 600, y: 140 }
                 },
                 // Player 1
@@ -39,36 +38,63 @@ const initialState = {
             lines: [
                 // Line 1
                 {
-                    area: { x: 0, y: 440, width: 1920, height: 10 },                    
+                    area: { x: 0, y: 440, width: 1920, height: 10 },
+                    direction: 1,
+                    speed: 100,
                     schools: [
                         {
                             type: "fish1",
-                            size: 40,
                             count: [1, 3],
-                            gap: [200, 400]
+                            gap: 200,
+                            nextSchoolGap: [200, 400]
                         },
                         {
                             type: "fish2",
-                            size: 40,
                             count: [1, 3],
-                            gap: [200, 400]
+                            gap: 200,
+                            nextSchoolGap: [200, 400]
                         },
                         {
                             type: "fish3",
-                            size: 40,
                             count: [1, 3],
-                            gap: [200, 400]
+                            gap: 200,
+                            nextSchoolGap: [200, 400]
                         }
                     ]
                 }
-            ]
+            ],
+            
+            // Fishes definition
+            fishDefs: {
+                fish1: {
+                    name: "fish1",
+                    scale: 0.4,
+                    swim: { alias: "swim", frameCount: 13, fps: 30 },
+                    bite: { alias: "swim", frameCount: 13, fps: 30 },
+                    sway: { alias: "swim", frameCount: 13, fps: 30 }
+                },
+                fish2: {
+                    name: "fish1",
+                    scale: 0.4,
+                    swim: { alias: "swim", frameCount: 13, fps: 30 },
+                    bite: { alias: "swim", frameCount: 13, fps: 30 },
+                    sway: { alias: "swim", frameCount: 13, fps: 30 }
+                },
+                fish3: {
+                    name: "fish1",
+                    scale: 0.4,
+                    swim: { alias: "swim", frameCount: 13, fps: 30 },
+                    bite: { alias: "swim", frameCount: 13, fps: 30 },
+                    sway: { alias: "swim", frameCount: 13, fps: 30 }
+                }
+            }
         }
     ]
-}
+};
 
 export const levelDesign = (state: any = initialState, action: any) => {
     const handler = action && actionHandler[action.type];
     return handler ? handler(state, action) : state;
-}
+};
 
 export default levelDesign;
