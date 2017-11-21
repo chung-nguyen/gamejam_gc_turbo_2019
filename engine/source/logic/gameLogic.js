@@ -2,6 +2,9 @@
 
 var GameLogic = function(opts: object) {
     this.level = opts.level;
+    this.bounds = opts.bounds;
+
+    this.idCounter = 0;
 
     this.boats = [];
     this.fishermen = [];
@@ -25,7 +28,19 @@ GameLogic.prototype.reset = function() {
             latestFish: null
         });
     }
+
+    this.idCounter = 0;
+    
+    this.boats = [];
+    this.fishermen = [];
+    this.hooks = [];
+    this.fishes = [];
 };
+
+GameLogic.prototype.getFishData = function (name: string) {
+    var fishDefs = this.level.fishDefs;
+    return fishDefs[name];
+}
 
 GameLogic.prototype.step = function(dt: Number) {
     var fishDefs = this.level.fishDefs;
@@ -34,7 +49,7 @@ GameLogic.prototype.step = function(dt: Number) {
 
     for (var i = 0; i < lines.length; ++i) {
         var fishLine = this.fishLines[i];
-        var { area, direction, schools } = fishLine.info;
+        var { area, direction, speed, schools } = fishLine.info;
 
         fishLine.nextTimeout -= dt;
         if (fishLine.nextTimeout <= 0) {
@@ -42,19 +57,24 @@ GameLogic.prototype.step = function(dt: Number) {
                 fishLine.nextTimeout = fishLine.currentSchool.gap;
                 var startingX = direction > 0 ? area.x : area.x + area.width;
 
-                // TODO...
+                ++this.idCounter;
                 var newFish = {
-                    x: startingX
+                    direction,
+                    speed,
+                    id: this.idCounter,
+                    type: fishLine.currentSchool.type[Math.min(Math.random() * fishLine.currentSchool.type.length, fishLine.currentSchool.type.length - 1)],
+                    x: startingX,
+                    y: area.y + Math.random() * area.height
                 };
 
                 this.fishes.push(newFish);
 
                 --fishLine.schoolCount;
                 if (fishLine.schoolCount <= 0) {
-                    fishLine.currentSchool = null;
                     fishLine.nextTimeout =
                         fishLine.currentSchool.nextSchoolGap[0] +
                         Math.floor(Math.random() * (fishLine.currentSchool.nextSchoolGap[1] - fishLine.currentSchool.nextSchoolGap[0]));
+                    fishLine.currentSchool = null;
                 }
             } else {
                 fishLine.currentSchool = schools[Math.min(Math.floor(Math.random() * schools.length), schools.length - 1)];
@@ -63,12 +83,14 @@ GameLogic.prototype.step = function(dt: Number) {
                 fishLine.nextTimeout = 0;
                 fishLine.latestFish = null;
             }
-        }
-        
-        for (var i = 0; i < this.fishes.length; ++i) {
-            var fish = this.fishes[i];
+        }        
+    }
 
-            // TODO
+    for (var i = this.fishes.length - 1; i >= 0; --i) {
+        var fish = this.fishes[i];        
+        fish.x += fish.direction * fish.speed;
+        console.log(fish);
+        if (fish.x > this.bounds.right) {
             // ...
         }
     }

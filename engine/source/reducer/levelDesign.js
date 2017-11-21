@@ -43,19 +43,19 @@ const initialState = {
                     speed: 100,
                     schools: [
                         {
-                            type: "fish1",
+                            type: ["fish1"],
                             count: [1, 3],
                             gap: 200,
                             nextSchoolGap: [200, 400]
                         },
                         {
-                            type: "fish2",
+                            type: ["fish2"],
                             count: [1, 3],
                             gap: 200,
                             nextSchoolGap: [200, 400]
                         },
                         {
-                            type: "fish3",
+                            type: ["fish3"],
                             count: [1, 3],
                             gap: 200,
                             nextSchoolGap: [200, 400]
