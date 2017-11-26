@@ -1,4 +1,4 @@
-package com.aux;
+package com.helper;
 
 import org.cocos2dx.goldfish.R;
 
@@ -59,7 +59,7 @@ public class MyFirebaseMessaging {
     }
 
     public static void registerMessageHandler(final Activity activity) {
-        IntentFilter intentFilter = new IntentFilter("com.aux.ReceiveNotification");
+        IntentFilter intentFilter = new IntentFilter("com.helper.ReceiveNotification");
 
         activity.registerReceiver(new BroadcastReceiver() {
             @Override

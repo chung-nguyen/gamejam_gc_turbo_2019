@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.aux;
+package com.helper;
 
 import org.cocos2dx.goldfish.R;
 
@@ -75,7 +75,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.        
-        Intent i = new Intent("com.aux.ReceiveNotification");
+        Intent i = new Intent("com.helper.ReceiveNotification");
         i.putExtra("data", remoteMessage);        
         sendOrderedBroadcast(i, null);
     }

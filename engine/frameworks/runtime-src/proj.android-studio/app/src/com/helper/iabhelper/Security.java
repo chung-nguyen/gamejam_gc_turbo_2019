@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.aux.iabhelper;
+package com.helper.iabhelper;
 
 import android.text.TextUtils;
 import android.util.Log;

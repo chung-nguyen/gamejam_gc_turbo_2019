@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.aux.iabhelper;
+package com.helper.iabhelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;

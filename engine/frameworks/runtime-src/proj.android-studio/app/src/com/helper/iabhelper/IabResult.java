@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.aux.iabhelper;
+package com.helper.iabhelper;
 
 /**
  * Represents the result of an in-app billing operation.

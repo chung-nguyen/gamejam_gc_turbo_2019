@@ -1,4 +1,4 @@
-package com.aux;
+package com.helper;
 
 import org.cocos2dx.lib.Cocos2dxActivity;
 import org.cocos2dx.lib.Cocos2dxGLSurfaceView;

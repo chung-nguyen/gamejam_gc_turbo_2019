@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.aux.iabhelper;
+package com.helper.iabhelper;
 
 /**
  * Exception thrown when something went wrong with in-app billing.

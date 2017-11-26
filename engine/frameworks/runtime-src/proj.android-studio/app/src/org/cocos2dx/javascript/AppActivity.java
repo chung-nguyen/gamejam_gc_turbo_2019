@@ -34,10 +34,10 @@ import android.view.View;
 import android.util.Log;
 import java.util.Arrays;
 
-import com.aux.AndroidFacebook;
-import com.aux.MyFirebaseMessaging;
-import com.aux.MyFirebaseAnalytics;
-import com.aux.MyIAB;
+import com.helper.AndroidFacebook;
+import com.helper.MyFirebaseMessaging;
+import com.helper.MyFirebaseAnalytics;
+import com.helper.MyIAB;
 
 public class AppActivity extends Cocos2dxActivity {
     @Override

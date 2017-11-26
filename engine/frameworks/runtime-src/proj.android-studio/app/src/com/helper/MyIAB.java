@@ -1,4 +1,4 @@
-package com.aux;
+package com.helper;
 
 import org.cocos2dx.goldfish.R;
 import org.cocos2dx.lib.Cocos2dxActivity;
@@ -7,10 +7,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 
-import com.aux.iabhelper.IabHelper;
-import com.aux.iabhelper.IabResult;
-import com.aux.iabhelper.Inventory;
-import com.aux.iabhelper.Purchase;
+import com.helper.iabhelper.IabHelper;
+import com.helper.iabhelper.IabResult;
+import com.helper.iabhelper.Inventory;
+import com.helper.iabhelper.Purchase;
 
 import java.util.List;
 import java.util.LinkedList;
