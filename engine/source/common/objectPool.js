@@ -26,7 +26,7 @@ ObjectPool.prototype.pop = function() {
     var obj;
 
     if (this.list.length > 0) {
-        this.list[this.list.length - 1];
+        obj = this.list[this.list.length - 1];
         --this.list.length;
     } else {
         obj = this.onCreate();

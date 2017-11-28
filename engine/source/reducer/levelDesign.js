@@ -40,35 +40,36 @@ const initialState = {
                 {
                     area: { x: 0, y: 440, width: 1920, height: 10 },
                     direction: 1,
-                    speed: 100,
+                    speed: 50,
                     schools: [
                         {
                             type: ["fish1"],
                             count: [1, 3],
-                            gap: 200,
-                            nextSchoolGap: [200, 400]
+                            gap: [1500, 2000],
+                            nextSchoolGap: [4000, 6000]
                         },
                         {
                             type: ["fish2"],
                             count: [1, 3],
-                            gap: 200,
-                            nextSchoolGap: [200, 400]
+                            gap: [1500, 2000],
+                            nextSchoolGap: [4000, 6000]
                         },
                         {
                             type: ["fish3"],
                             count: [1, 3],
-                            gap: 200,
-                            nextSchoolGap: [200, 400]
+                            gap: [1500, 2000],
+                            nextSchoolGap: [4000, 6000]
                         }
                     ]
                 }
             ],
-            
+
             // Fishes definition
             fishDefs: {
                 fish1: {
                     name: "fish1",
                     scale: 0.4,
+                    width: 80,
                     swim: { alias: "swim", frameCount: 13, fps: 30 },
                     bite: { alias: "swim", frameCount: 13, fps: 30 },
                     sway: { alias: "swim", frameCount: 13, fps: 30 }
@@ -76,6 +77,7 @@ const initialState = {
                 fish2: {
                     name: "fish1",
                     scale: 0.4,
+                    width: 80,
                     swim: { alias: "swim", frameCount: 13, fps: 30 },
                     bite: { alias: "swim", frameCount: 13, fps: 30 },
                     sway: { alias: "swim", frameCount: 13, fps: 30 }
@@ -83,6 +85,7 @@ const initialState = {
                 fish3: {
                     name: "fish1",
                     scale: 0.4,
+                    width: 80,
                     swim: { alias: "swim", frameCount: 13, fps: 30 },
                     bite: { alias: "swim", frameCount: 13, fps: 30 },
                     sway: { alias: "swim", frameCount: 13, fps: 30 }
