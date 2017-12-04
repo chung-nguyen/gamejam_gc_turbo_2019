@@ -139,7 +139,13 @@ GameLogic.prototype.getEntities = function() {
 };
 
 GameLogic.prototype.sendCommand = function(command: object) {
+    // TODO: select the right hook if multiplayer
+    var myHook = this.hooks[0];
+
+    myHook.throw();
     return true;
 };
+
+GameLogic.ACTION = 1;
 
 module.exports = GameLogic;

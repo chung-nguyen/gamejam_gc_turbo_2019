@@ -6,8 +6,8 @@ var Hook = function(opts) {
 
     this.initialLength = FixedPoint.num2fix(opts.initialLength);
     this.size = FixedPoint.num2fix(opts.size);
-    this.pullSpeed = opts.pullSpeed || 10;
-    this.throwSpeed = opts.throwSpeed || 10;
+    this.pullSpeed = opts.pullSpeed || 100;
+    this.throwSpeed = opts.throwSpeed || 100;
     this.rotatingSpeed = opts.rotatingSpeed || 20;
 
     this.length = this.initialLength;
@@ -20,39 +20,73 @@ var Hook = function(opts) {
 
     this.maxAngle = this.angle + FixedPoint.num2fix(opts.maxAngle || 40);
     this.minAngle = this.angle - FixedPoint.num2fix(opts.maxAngle || 40);
+    this.maxLength = FixedPoint.num2fix(200);
 
     this.updateCounter = 0;
 };
 
 Hook.prototype.move = function(dt) {
-    var da = this.direction * this.rotatingSpeed * FixedPoint.num2fix(dt) / 1000;
-    if ((this.direction > 0 && this.angle + da >= this.maxAngle) || (this.direction < 0 && this.angle + da <= this.minAngle)) {
-        this.direction = -this.direction;
-        da = this.direction * this.rotatingSpeed * FixedPoint.num2fix(dt) / 1000;
+    if (this.isThrowing) {
+        var delta = this.throwSpeed * FixedPoint.num2fix(dt) / 1000;
+        this.length += delta;
+        this.futureLength = this.length + delta;
+
+        this.angle = this.futureAngle;
+
+        if (this.length >= this.maxLength) {
+            this.length = this.futureLength = this.maxLength;
+            this.isThrowing = false;
+        }
+    } else {
+        if (this.length > this.initialLength) {
+            var delta = -this.pullSpeed * FixedPoint.num2fix(dt) / 1000;
+            this.length += delta;
+            this.futureLength = this.length + delta;
+
+            this.angle = this.futureAngle;
+
+            if (this.length < this.initialLength) {
+                this.length = this.futureLength = this.initialLength;
+            }
+        } else {
+            var da = this.direction * this.rotatingSpeed * FixedPoint.num2fix(dt) / 1000;
+            if ((this.direction > 0 && this.angle + da >= this.maxAngle) || (this.direction < 0 && this.angle + da <= this.minAngle)) {
+                this.direction = -this.direction;
+                da = this.direction * this.rotatingSpeed * FixedPoint.num2fix(dt) / 1000;
+            }
+
+            this.angle = FixedPoint.normalizeAngle(this.angle + da);
+
+            if ((this.direction > 0 && this.angle + da >= this.maxAngle) || (this.direction < 0 && this.angle + da <= this.minAngle)) {
+                this.direction = -this.direction;
+                da = this.direction * this.rotatingSpeed * FixedPoint.num2fix(dt) / 1000;
+            }
+
+            this.futureAngle = this.angle + da;
+
+            this.length = this.futureLength;
+        }
     }
-
-    this.angle = FixedPoint.normalizeAngle(this.angle + da);
-
-    if ((this.direction > 0 && this.angle + da >= this.maxAngle) || (this.direction < 0 && this.angle + da <= this.minAngle)) {
-        this.direction = -this.direction;
-        da = this.direction * this.rotatingSpeed * FixedPoint.num2fix(dt) / 1000;
-    }
-
-    this.futureAngle = this.angle + da;
 };
 
-Hook.prototype.isOutBound = function(bounds) {};
+Hook.prototype.isOutBound = function() {
+    return this.length > this.maxLength;
+};
 
 Hook.prototype.throw = function() {
     if (this.isThrowing) {
         return;
     }
+
+    this.isThrowing = true;
 };
 
 Hook.prototype.pull = function() {
     if (!this.isThrowing) {
         return;
     }
+
+    this.isThrowing = false;
 };
 
 Hook.prototype.getDisplayPosition = function() {

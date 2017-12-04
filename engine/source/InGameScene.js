@@ -53,6 +53,13 @@ var InGameScene = BaseScene.extend({
                 this.removeFromParent(true);
             }
         });
+
+        this.touchpad = new ActionTouchpad({
+            contentSize: this.getContentSize(),
+            onAction: this.onAction.bind(this)
+        });
+
+        this.addChild(this.touchpad);
     },
 
     onEnter: function() {
@@ -67,12 +74,16 @@ var InGameScene = BaseScene.extend({
         });
 
         this.showWaiting(true);
+
+        var self = this;
         loadResources(["fishes.plist", "hooks.plist"], () => {
             addSpriteFramesFromResource("fishes.plist");
             addSpriteFramesFromResource("hooks.plist");
 
             this.scheduleUpdate();
             this.showWaiting(false);
+
+            this.willAction = false;
         });
     },
 
@@ -92,6 +103,15 @@ var InGameScene = BaseScene.extend({
         this.timeCounter += dt * 1000;
         if (this.timeCounter >= config.fixedTimeStep) {
             this.timeCounter -= config.fixedTimeStep;
+
+            if (this.willAction) {
+                this.gameLogic.sendCommand({
+                    type: GameLogic.ACTION
+                });
+
+                this.willAction = false;
+            }
+
             this.gameLogic.step(config.fixedTimeStep);
         }
 
@@ -154,10 +174,7 @@ var InGameScene = BaseScene.extend({
                 var logicFuturePosition = logicFish.getDisplayFuturePosition();
                 var dt = this.timeCounter / config.fixedTimeStep;
 
-                var p = cc.p(
-                    cc.lerp(logicCurrentPosition.x, logicFuturePosition.x, dt),
-                    cc.lerp(logicCurrentPosition.y, logicFuturePosition.y, dt)
-                );
+                var p = cc.p(cc.lerp(logicCurrentPosition.x, logicFuturePosition.x, dt), cc.lerp(logicCurrentPosition.y, logicFuturePosition.y, dt));
 
                 fish.setPosition(p);
             }
@@ -172,6 +189,58 @@ var InGameScene = BaseScene.extend({
                 delete this.fishes[fishID];
             }
         }
+    },
+
+    onAction: function(touch, event) {
+        this.willAction = true;
+    }
+});
+
+var ActionTouchpad = cc.Node.extend({
+    ctor: function(opts) {
+        this._super();
+
+        this.setContentSize(opts.contentSize);
+
+        this.onAction = opts.onAction;
+    },
+
+    onEnter: function() {
+        this._super();
+
+        var self = this;
+        this._touchListener = cc.EventListener.create({
+            event: cc.EventListener.TOUCH_ONE_BY_ONE,
+            swallowTouches: true,
+            onTouchBegan: self.onTouchBegan.bind(self),
+            onTouchMoved: self.onTouchMoved.bind(self),
+            onTouchEnded: self.onTouchEnded.bind(self),
+            onTouchCancelled: self.onTouchCancelled(self)
+        });
+
+        cc.eventManager.addListener(self._touchListener, self);
+    },
+
+    onExit: function() {
+        this._super();
+        cc.eventManager.removeListener(this._touchListener);
+    },
+
+    onTouchBegan: function(touch, event) {
+        return true;
+    },
+
+    onTouchMoved: function(touch, event) {
+        return true;
+    },
+
+    onTouchEnded: function(touch, event) {
+        this.onAction && this.onAction(touch, event);
+        return true;
+    },
+
+    onTouchCancelled: function(touches, event) {
+        return false;
     }
 });
 
