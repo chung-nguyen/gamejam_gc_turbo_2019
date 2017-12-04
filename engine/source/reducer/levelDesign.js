@@ -27,11 +27,11 @@ const initialState = {
             players: [
                 // Player 1
                 {
-                    hookPosition: { x: 600, y: 140 }
+                    hookPosition: { x: 600, y: 940 }
                 },
                 // Player 1
                 {
-                    hookPosition: { x: 1320, y: 140 }
+                    hookPosition: { x: 1320, y: 940 }
                 }
             ],
 

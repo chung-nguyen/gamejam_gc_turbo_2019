@@ -8,6 +8,7 @@ import { storeDispatch, getStoreState } from "./store/store";
 
 import ObjectPool from "./common/objectPool";
 import Fish from "./entity/fish";
+import Hook from "./entity/hook";
 import GameLogic from "./logic/gameLogic";
 
 var InGameScene = BaseScene.extend({
@@ -17,6 +18,7 @@ var InGameScene = BaseScene.extend({
         this.timeCounter = 0;
         this.updateCounter = 0;
         this.fishes = {};
+        this.hooks = {};
 
         var self = this;
         this.fishPool = new ObjectPool({
@@ -32,7 +34,23 @@ var InGameScene = BaseScene.extend({
                 this.setVisible(false);
             },
             onDestroy: function() {
-                this.removeFromParent();
+                this.removeFromParent(true);
+            }
+        });
+        this.hookPool = new ObjectPool({
+            onCreate: function() {
+                var hook = new Hook();
+                self.addChild(hook);
+                return hook;
+            },
+            onShow: function() {
+                this.setVisible(true);
+            },
+            onHide: function() {
+                this.setVisible(false);
+            },
+            onDestroy: function() {
+                this.removeFromParent(true);
             }
         });
     },
@@ -49,8 +67,9 @@ var InGameScene = BaseScene.extend({
         });
 
         this.showWaiting(true);
-        loadResources(["fishes.plist"], () => {
+        loadResources(["fishes.plist", "hooks.plist"], () => {
             addSpriteFramesFromResource("fishes.plist");
+            addSpriteFramesFromResource("hooks.plist");
 
             this.scheduleUpdate();
             this.showWaiting(false);
@@ -61,6 +80,9 @@ var InGameScene = BaseScene.extend({
         this._super();
 
         this.unscheduleUpdate();
+        this.fishPool.clear();
+        this.hookPool.clear();
+
         removeSpriteFramesFromResource("fishes.plist");
     },
 
@@ -74,8 +96,49 @@ var InGameScene = BaseScene.extend({
         }
 
         var entities = this.gameLogic.getEntities();
-        for (var i = 0; i < entities.fishes.length; ++i) {
-            var logicFish = entities.fishes[i];
+        this.updateFishes(entities.fishes);
+        this.updateHooks(entities.hooks);
+    },
+
+    updateHooks: function(hooks) {
+        for (var i = 0; i < hooks.length; ++i) {
+            var logicHook = hooks[i];
+            var hook = this.hooks[logicHook.id];
+
+            if (!hook) {
+                hook = this.hookPool.pop();
+                hook.reset();
+
+                hook.setPosition(logicHook.getDisplayPosition());
+                hook.setDirection(logicHook.getDisplayAngle(), logicHook.getDisplayLength());
+                this.hooks[logicHook.id] = hook;
+            } else {
+                var dt = this.timeCounter / config.fixedTimeStep;
+
+                var logicCurrentAngle = logicHook.getDisplayAngle();
+                var logicFutureAngle = logicHook.getDisplayFutureAngle();
+                var a = cc.lerp(logicCurrentAngle, logicFutureAngle, dt);
+
+                var logicCurrentLength = logicHook.getDisplayLength();
+                var logicFutureLength = logicHook.getDisplayFutureLength();
+                var l = cc.lerp(logicCurrentLength, logicFutureLength, dt);
+
+                hook.setDirection(a, l);
+            }
+        }
+
+        for (var hookID in this.hooks) {
+            var hook = this.hooks[hookID];
+            if (hook.updateCounter < this.updateCounter) {
+                this.hookPool.push(fish);
+                delete this.hooks[hookID];
+            }
+        }
+    },
+
+    updateFishes: function(fishes) {
+        for (var i = 0; i < fishes.length; ++i) {
+            var logicFish = fishes[i];
             var fish = this.fishes[logicFish.id];
 
             if (!fish) {
@@ -89,10 +152,11 @@ var InGameScene = BaseScene.extend({
             } else {
                 var logicCurrentPosition = logicFish.getDisplayPosition();
                 var logicFuturePosition = logicFish.getDisplayFuturePosition();
+                var dt = this.timeCounter / config.fixedTimeStep;
 
                 var p = cc.p(
-                    cc.lerp(logicCurrentPosition.x, logicFuturePosition.x, this.timeCounter / config.fixedTimeStep),
-                    cc.lerp(logicCurrentPosition.y, logicFuturePosition.y, this.timeCounter / config.fixedTimeStep)
+                    cc.lerp(logicCurrentPosition.x, logicFuturePosition.x, dt),
+                    cc.lerp(logicCurrentPosition.y, logicFuturePosition.y, dt)
                 );
 
                 fish.setPosition(p);

@@ -1,6 +1,7 @@
 // @flow
 import Chance from "../utils/chance";
 import Fish from "./fish";
+import Hook from "./hook";
 
 var GameLogic = function(opts: object) {
     this.level = opts.level;
@@ -28,8 +29,17 @@ GameLogic.prototype.reset = function() {
 
     this.boats = [];
     this.fishermen = [];
-    this.hooks = [];
     this.fishes = [];
+
+    var players = this.level.players;
+
+    this.hooks = [
+        new Hook({
+            position: players[0].hookPosition,
+            initialLength: 100,
+            size: 20
+        })
+    ];
 };
 
 GameLogic.prototype.getFishData = function(name: string) {
@@ -38,9 +48,20 @@ GameLogic.prototype.getFishData = function(name: string) {
 };
 
 GameLogic.prototype.step = function(dt: Number) {
+    this.updateFishes(dt);
+    this.updateHooks(dt);
+};
+
+GameLogic.prototype.updateHooks = function (dt: Number) {
+    for (var i = 0; i < this.hooks.length; ++i) {
+        var hook = this.hooks[i];
+        hook.move(dt);
+    }
+}
+
+GameLogic.prototype.updateFishes = function(dt: Number) {
     var fishDefs = this.level.fishDefs;
     var lines = this.level.lines;
-    var players = this.level.players;
 
     for (var i = 0; i < lines.length; ++i) {
         var fishLine = this.fishLines[i];
@@ -106,7 +127,7 @@ GameLogic.prototype.step = function(dt: Number) {
             --this.fishes.length;
         }
     }
-};
+}
 
 GameLogic.prototype.getEntities = function() {
     return {
