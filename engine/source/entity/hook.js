@@ -25,4 +25,8 @@ Hook.prototype.setDirection = function (angle, length) {
     this.tip.setRotation(270 - angle);
 }
 
+Hook.prototype.setTipPosition = function (pos) {
+    this.tip.setPosition(pos);
+}
+
 module.exports = Hook;

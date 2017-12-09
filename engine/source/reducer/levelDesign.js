@@ -27,7 +27,10 @@ const initialState = {
             players: [
                 // Player 1
                 {
-                    hookPosition: { x: 600, y: 940 }
+                    hookPosition: { x: 600, y: 940 },
+                    collision: [
+                        { type: 'circle', offset: { x: 0, y: 0 }, radius: 20 }
+                    ]
                 },
                 // Player 1
                 {
@@ -70,6 +73,9 @@ const initialState = {
                     name: "fish1",
                     scale: 0.4,
                     width: 80,
+                    collision: [
+                        { type: 'circle', offset: { x: 0, y: 0 }, radius: 40 }
+                    ],
                     swim: { alias: "swim", frameCount: 13, fps: 30 },
                     bite: { alias: "swim", frameCount: 13, fps: 30 },
                     sway: { alias: "swim", frameCount: 13, fps: 30 }
@@ -78,6 +84,9 @@ const initialState = {
                     name: "fish1",
                     scale: 0.4,
                     width: 80,
+                    collision: [
+                        { type: 'circle', offset: { x: 0, y: 0 }, radius: 40 }
+                    ],
                     swim: { alias: "swim", frameCount: 13, fps: 30 },
                     bite: { alias: "swim", frameCount: 13, fps: 30 },
                     sway: { alias: "swim", frameCount: 13, fps: 30 }
@@ -86,6 +95,9 @@ const initialState = {
                     name: "fish1",
                     scale: 0.4,
                     width: 80,
+                    collision: [
+                        { type: 'circle', offset: { x: 0, y: 0 }, radius: 40 }
+                    ],
                     swim: { alias: "swim", frameCount: 13, fps: 30 },
                     bite: { alias: "swim", frameCount: 13, fps: 30 },
                     sway: { alias: "swim", frameCount: 13, fps: 30 }

@@ -1,4 +1,5 @@
 import FixedPoint from "./fixedpoint";
+import Collider from "./collider";
 
 var Hook = function(opts) {
     this.originX = FixedPoint.num2fix(opts.position.x);
@@ -6,8 +7,8 @@ var Hook = function(opts) {
 
     this.initialLength = FixedPoint.num2fix(opts.initialLength);
     this.size = FixedPoint.num2fix(opts.size);
-    this.pullSpeed = opts.pullSpeed || 100;
-    this.throwSpeed = opts.throwSpeed || 100;
+    this.pullSpeed = opts.pullSpeed || 200;
+    this.throwSpeed = opts.throwSpeed || 200;
     this.rotatingSpeed = opts.rotatingSpeed || 20;
 
     this.length = this.initialLength;
@@ -20,9 +21,18 @@ var Hook = function(opts) {
 
     this.maxAngle = this.angle + FixedPoint.num2fix(opts.maxAngle || 40);
     this.minAngle = this.angle - FixedPoint.num2fix(opts.maxAngle || 40);
-    this.maxLength = FixedPoint.num2fix(200);
+    this.maxLength = FixedPoint.num2fix(800);
 
     this.updateCounter = 0;
+    this.x = this.originX;
+    this.y =  this.originY;
+    this.caughtFish = null;
+
+    this.collider = new Collider({
+        entity: this,
+        collision: opts.collision,
+        scale: FixedPoint.ONE
+    });
 };
 
 Hook.prototype.move = function(dt) {
@@ -65,8 +75,16 @@ Hook.prototype.move = function(dt) {
             this.futureAngle = this.angle + da;
 
             this.length = this.futureLength;
+
+            if (this.caughtFish) {
+                this.caughtFish.goIntoNest();
+                this.caughtFish = null;
+            }
         }
     }
+
+    this.x = this.originX + FixedPoint.mult(FixedPoint.cos(this.angle), this.length);
+    this.y = this.originY + FixedPoint.mult(FixedPoint.sin(this.angle), this.length);
 };
 
 Hook.prototype.isOutBound = function() {
@@ -89,6 +107,22 @@ Hook.prototype.pull = function() {
     this.isThrowing = false;
 };
 
+Hook.prototype.testCollisionWithFish = function(fish) {
+    if (this.collider.test(fish.collider)) {
+        this.futureLength = this.length;
+        return true;
+    }
+
+    return false;
+};
+
+Hook.prototype.catchFish = function (fish) {
+    if (!this.caughtFish) {
+        fish.setCaught(this);
+        this.caughtFish = fish;
+    }
+}
+
 Hook.prototype.getDisplayPosition = function() {
     return cc.p(FixedPoint.fix2num(this.originX), FixedPoint.fix2num(this.originY));
 };
@@ -108,5 +142,9 @@ Hook.prototype.getDisplayLength = function() {
 Hook.prototype.getDisplayFutureLength = function() {
     return FixedPoint.fix2num(this.futureLength);
 };
+
+Hook.prototype.getDisplayTargetPosition = function() {
+    return cc.p(FixedPoint.fix2num(this.x), FixedPoint.fix2num(this.y));
+}
 
 module.exports = Hook;

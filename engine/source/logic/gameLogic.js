@@ -36,8 +36,9 @@ GameLogic.prototype.reset = function() {
     this.hooks = [
         new Hook({
             position: players[0].hookPosition,
-            initialLength: 100,
-            size: 20
+            initialLength: 200,
+            size: 20,
+            collision: players[0].collision
         })
     ];
 };
@@ -48,14 +49,26 @@ GameLogic.prototype.getFishData = function(name: string) {
 };
 
 GameLogic.prototype.step = function(dt: Number) {
-    this.updateFishes(dt);
     this.updateHooks(dt);
+    this.updateFishes(dt);
 };
 
 GameLogic.prototype.updateHooks = function (dt: Number) {
     for (var i = 0; i < this.hooks.length; ++i) {
         var hook = this.hooks[i];
         hook.move(dt);
+
+        if (hook.isThrowing) {
+            for (var j = this.fishes.length - 1; j >= 0; --j) {
+                var fish = this.fishes[j];
+
+                if (hook.testCollisionWithFish(fish)) {
+                    hook.catchFish(fish);
+                    hook.pull();
+                    break;
+                }
+            }
+        }
     }
 }
 
@@ -120,7 +133,7 @@ GameLogic.prototype.updateFishes = function(dt: Number) {
         var fish = this.fishes[i];
         fish.move(dt);
 
-        if (fish.isOutBound(this.bounds)) {
+        if (fish.isOutBound(this.bounds) || fish.isDead) {
             var t = this.fishes[this.fishes.length - 1];
             this.fishes[this.fishes.length - 1] = fish;
             this.fishes[i] = t;

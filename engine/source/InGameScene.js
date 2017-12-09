@@ -24,7 +24,7 @@ var InGameScene = BaseScene.extend({
         this.fishPool = new ObjectPool({
             onCreate: function() {
                 var fish = new Fish();
-                self.addChild(fish);
+                self.addChild(fish, 1);
                 return fish;
             },
             onShow: function() {
@@ -40,7 +40,7 @@ var InGameScene = BaseScene.extend({
         this.hookPool = new ObjectPool({
             onCreate: function() {
                 var hook = new Hook();
-                self.addChild(hook);
+                self.addChild(hook, 10);
                 return hook;
             },
             onShow: function() {
