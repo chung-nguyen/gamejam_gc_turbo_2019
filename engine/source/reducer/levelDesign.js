@@ -28,6 +28,7 @@ const initialState = {
                 // Player 1
                 {
                     hookPosition: { x: 600, y: 940 },
+                    potPosition: { x: 400, y: 940 },
                     collision: [
                         { type: 'circle', offset: { x: 0, y: 0 }, radius: 20 }
                     ]

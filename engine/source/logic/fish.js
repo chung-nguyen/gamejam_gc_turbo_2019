@@ -16,7 +16,7 @@ var Fish = function(opts) {
     this.futureX = this.x;
     this.futureY = this.y;
     this.caughtHook = null;
-    this.isDead = false;
+    this.state = Fish.IDLE;
     this.updateCounter = 0;
 
     this.collider = new Collider({
@@ -56,8 +56,16 @@ Fish.prototype.setCaught = function (hook) {
     this.caughtHook = hook;
 }
 
-Fish.prototype.goIntoNest = function () {
-    this.isDead = true;
+Fish.prototype.goIntoPot = function () {
+    this.state = Fish.DEAD;
 }
+
+Fish.prototype.isDead = function () {
+    return this.state === Fish.DEAD;
+}
+
+Fish.IDLE = 0;
+Fish.CATCHING = 1;
+Fish.DEAD = 2;
 
 module.exports = Fish;

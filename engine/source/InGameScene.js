@@ -167,7 +167,7 @@ var InGameScene = BaseScene.extend({
                 fish.reset(fishData);
 
                 fish.setPosition(logicFish.getDisplayPosition());
-                fish.runAction("swim");
+                fish.playAnimation("swim");
                 this.fishes[logicFish.id] = fish;
             } else {
                 var logicCurrentPosition = logicFish.getDisplayPosition();
@@ -177,6 +177,10 @@ var InGameScene = BaseScene.extend({
                 var p = cc.p(cc.lerp(logicCurrentPosition.x, logicFuturePosition.x, dt), cc.lerp(logicCurrentPosition.y, logicFuturePosition.y, dt));
 
                 fish.setPosition(p);
+
+                if (logicFish.caughtHook && !fish.isCaught) {
+                    fish.setPotPosition(logicFish.caughtHook.getDisplayPosition(), logicFish.caughtHook.getDisplayPotPosition());
+                }
             }
 
             fish.updateCounter = this.updateCounter;
@@ -185,8 +189,12 @@ var InGameScene = BaseScene.extend({
         for (var fishID in this.fishes) {
             var fish = this.fishes[fishID];
             if (fish.updateCounter < this.updateCounter) {
-                this.fishPool.push(fish);
                 delete this.fishes[fishID];
+
+                // this fish is dead in logic, but animate the going into nest animation before deletion
+                fish.goIntoPot((target) => {
+                    this.fishPool.push(target);
+                });
             }
         }
     },

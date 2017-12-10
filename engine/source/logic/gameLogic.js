@@ -36,6 +36,7 @@ GameLogic.prototype.reset = function() {
     this.hooks = [
         new Hook({
             position: players[0].hookPosition,
+            pot: players[0].potPosition,
             initialLength: 200,
             size: 20,
             collision: players[0].collision
@@ -133,7 +134,7 @@ GameLogic.prototype.updateFishes = function(dt: Number) {
         var fish = this.fishes[i];
         fish.move(dt);
 
-        if (fish.isOutBound(this.bounds) || fish.isDead) {
+        if (fish.isOutBound(this.bounds) || fish.isDead()) {
             var t = this.fishes[this.fishes.length - 1];
             this.fishes[this.fishes.length - 1] = fish;
             this.fishes[i] = t;

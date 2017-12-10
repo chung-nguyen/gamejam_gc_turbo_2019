@@ -4,6 +4,8 @@ import Collider from "./collider";
 var Hook = function(opts) {
     this.originX = FixedPoint.num2fix(opts.position.x);
     this.originY = FixedPoint.num2fix(opts.position.y);
+    this.potX = FixedPoint.num2fix(opts.pot.x);
+    this.potY = FixedPoint.num2fix(opts.pot.y);
 
     this.initialLength = FixedPoint.num2fix(opts.initialLength);
     this.size = FixedPoint.num2fix(opts.size);
@@ -77,7 +79,7 @@ Hook.prototype.move = function(dt) {
             this.length = this.futureLength;
 
             if (this.caughtFish) {
-                this.caughtFish.goIntoNest();
+                this.caughtFish.goIntoPot();
                 this.caughtFish = null;
             }
         }
@@ -125,6 +127,10 @@ Hook.prototype.catchFish = function (fish) {
 
 Hook.prototype.getDisplayPosition = function() {
     return cc.p(FixedPoint.fix2num(this.originX), FixedPoint.fix2num(this.originY));
+};
+
+Hook.prototype.getDisplayPotPosition = function () {
+    return cc.p(FixedPoint.fix2num(this.potX), FixedPoint.fix2num(this.potY));
 };
 
 Hook.prototype.getDisplayAngle = function() {
