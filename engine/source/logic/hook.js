@@ -153,4 +153,8 @@ Hook.prototype.getDisplayTargetPosition = function() {
     return cc.p(FixedPoint.fix2num(this.x), FixedPoint.fix2num(this.y));
 }
 
+Hook.prototype.getDisplayMaxLength = function () {
+    return FixedPoint.fix2num(this.maxLength);
+}
+
 module.exports = Hook;

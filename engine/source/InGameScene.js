@@ -129,7 +129,9 @@ var InGameScene = BaseScene.extend({
 
             if (!hook) {
                 hook = this.hookPool.pop();
-                hook.reset();
+                hook.reset({
+                    maxLength: logicHook.getDisplayMaxLength()
+                });
 
                 hook.setPosition(logicHook.getDisplayPosition());
                 hook.setDirection(logicHook.getDisplayAngle(), logicHook.getDisplayLength());
