@@ -48,6 +48,10 @@ Fish.prototype.getDisplayFuturePosition = function(dt) {
     return cc.p(FixedPoint.fix2num(this.futureX), FixedPoint.fix2num(this.futureY));
 };
 
+Fish.prototype.getDisplayDirection = function () {
+    return this.direction < 0 ? -1 : 1;
+}
+
 Fish.prototype.isOutBound = function(bounds) {
     return this.x - FixedPoint.num2fix(this.data.width) > FixedPoint.num2fix(bounds.right);
 };

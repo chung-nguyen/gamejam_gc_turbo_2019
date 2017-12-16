@@ -1,8 +1,7 @@
 var ONE = 1.0;
 
-var PI = Math.PI;
+var PI = 3.141592654;
 var TWO_PI = 2 * PI;
-var MAX_ANGLE = 360;
 
 var num2fix = function(value) {
     return value;
@@ -13,48 +12,40 @@ var fix2num = function(value) {
 };
 
 var sin = function (value) {
-    return Math.sin(value * Math.PI / 180);
+    var inValue = value * PI / 180;
+    if (inValue < -PI) {
+        inValue += TWO_PI;
+    } else if (inValue > PI) {
+        inValue -= TWO_PI;
+    }
+
+    var B = 1.2732395; // 4/pi
+    var C = -0.40528473; // -4 / (pi^2)
+
+    return inValue > 0 ? B*inValue + C * inValue*inValue : B*inValue - C * inValue*inValue;
 }
 
 var cos = function (value) {
-    return Math.cos(value * Math.PI / 180);
+    return sin(value + 90);
 }
 
 var normalizeAngle = function(theta) {
     if (theta < 0) {
         while (theta < 0) {
-            theta += MAX_ANGLE;
+            theta += 360;
         }
     } else {
-        while (theta >= MAX_ANGLE) {
-            theta -= MAX_ANGLE;
+        while (theta >= 360) {
+            theta -= 360;
         }
     }
 
     return theta;
 };
 
-var approxDistance = function(dx, dy) {
-    /*var min, max, approx;
-
-    if (dx < 0) dx = -dx;
-    if (dy < 0) dy = -dy;
-
-    if (dx < dy) {
-        min = dx;
-        max = dy;
-    } else {
-        min = dy;
-        max = dx;
-    }
-
-    approx = max * 1007 + min * 441;
-    if (max < min << 4) approx -= max * 40;
-
-    // add 512 for proper rounding
-    return (approx + 512) >> 10;*/
-
-    return Math.sqrt(dx * dx + dy * dy);
+var approxDistance = function(x, y) {
+    // Approximation by using octagons approach
+	return 1.426776695*Math.min(0.7071067812*(Math.abs(x)+Math.abs(y)), Math.max (Math.abs(x), Math.abs(y)));
 };
 
 var mult = function (a, b) {

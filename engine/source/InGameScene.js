@@ -31,6 +31,7 @@ var InGameScene = BaseScene.extend({
                 this.setVisible(true);
             },
             onHide: function() {
+                this.stopAllActions();
                 this.setVisible(false);
             },
             onDestroy: function() {
@@ -47,6 +48,7 @@ var InGameScene = BaseScene.extend({
                 this.setVisible(true);
             },
             onHide: function() {
+                this.stopAllActions();
                 this.setVisible(false);
             },
             onDestroy: function() {
@@ -166,6 +168,7 @@ var InGameScene = BaseScene.extend({
                 fish = this.fishPool.pop();
                 fish.reset(fishData);
 
+                fish.setScale(logicFish.getDisplayDirection(), 1);
                 fish.setPosition(logicFish.getDisplayPosition());
                 fish.playAnimation("swim");
                 this.fishes[logicFish.id] = fish;
@@ -191,10 +194,14 @@ var InGameScene = BaseScene.extend({
             if (fish.updateCounter < this.updateCounter) {
                 delete this.fishes[fishID];
 
-                // this fish is dead in logic, but animate the going into nest animation before deletion
-                fish.goIntoPot((target) => {
-                    this.fishPool.push(target);
-                });
+                if (fish.isCaught) {
+                    // this fish is dead in logic, but animate the going into pot animation before deletion
+                    fish.goIntoPot((target) => {
+                        this.fishPool.push(target);
+                    });
+                } else {
+                    this.fishPool.push(fish);
+                }
             }
         }
     },

@@ -20,9 +20,11 @@ var Fish = cc.Node.extend({
         this.stopAllActions();
         this.setOpacity(255);
         this.setScale(1);
+        this.setRotation(0);
         this.sprite.setScale(opts.scale || 1);
 
         this.name = opts.name;
+        this.isCaught = false;
         this.action = {
             swim: this.createAction(opts.swim),
             bite: this.createAction(opts.bite),
@@ -69,13 +71,23 @@ var Fish = cc.Node.extend({
         this.isCaught = true;
         this.hookPosition = hookPos;
         this.potPosition = potPos;
+
+        this.playAnimation("bite");
+        this.runAction(cc.sequence([
+            cc.rotateTo(0.5, this.getScaleX() * (-45)),
+            cc.delayTime(1.5),
+            cc.callFunc(() => this.playAnimation("sway"))
+        ]));
     },
 
     goIntoPot: function(cbDone) {
+        this.stopAllActions();
+
         this.runAction(cc.sequence([
             cc.spawn([
                 cc.bezierTo(1, [this.hookPosition, this.potPosition, this.potPosition]).easing(cc.easeInOut(3)),
-                cc.scaleTo(1, 0),
+                cc.rotateTo(1, -180),
+                cc.scaleTo(1, 0, 0),
                 cc.fadeOut(1)
             ]),
             cc.callFunc(() => cbDone(this))
