@@ -22,7 +22,7 @@ var Fish = function(opts) {
     this.collider = new Collider({
         entity: this,
         collision: this.data.collision,
-        scale: FixedPoint.num2fix(this.data.scale)
+        scale: FixedPoint.num2fix(this.data.scale * this.direction)
     });
 };
 

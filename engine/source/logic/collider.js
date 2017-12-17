@@ -1,12 +1,12 @@
 import FixedPoint from "./fixedpoint";
 
-var Collider = function(opts) {
+var Collider = function (opts) {
     this.collision = opts.collision;
     this.scale = opts.scale;
     this.entity = opts.entity;
 };
 
-Collider.prototype.test = function(other) {
+Collider.prototype.test = function (other) {
     for (var i = this.collision.length - 1; i >= 0; --i) {
         var a = this.collision[i];
         var posA = {
@@ -41,13 +41,11 @@ Collider.prototype.test = function(other) {
 };
 
 function testCircle2Cirlce (posA, radiusA, posB, radiusB) {
-    var R = radiusA + radiusB
-
+    var R = radiusA + radiusB;
     var dx = posB.x - posA.x;
     var dy = posB.y - posA.y;
-    var d = FixedPoint.approxDistance(dx, dy);
 
-    return d <= R;
+    return FixedPoint.mult(dx, dx) + FixedPoint.mult(dy, dy) <= FixedPoint.mult(R, R);
 }
 
 module.exports = Collider;
