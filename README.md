@@ -64,6 +64,20 @@ javap -classpath . Test
 + To generate Jni header file:
 javah -jni Test
 
+### Nginx permission problem on CentOS 7
+
+Change permission of static dir: chmod -R o+x /path/to/dir
+Try disable SELinux: setenforce Permissive
+
+### SSH command not found
+
+By default profiles aren't loaded when connecting via ssh. To enable this behaviour, set the following option in /etc/ssh/sshd_config:
+
+PermitUserEnvironment yes
+afterward restart ssh
+
+/etc/init.d/ssh restart
+
 ### How Facebook was integrated
 
 ### Web

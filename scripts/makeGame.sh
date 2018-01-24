@@ -15,6 +15,4 @@ fi
 
 cd ../scripts
 
-cp $SRCDIR/bundle.js $OUTDIR
-
 $FILE_HASH $OUTDIR $OUTDIR/hash.json

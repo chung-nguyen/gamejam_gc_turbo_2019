@@ -8,5 +8,5 @@ cd ../engine
 cocos compile -p web -m release
 cd ../scripts
 
-rsync -ar --progress ../engine/publish/html5 $REMOTE:/home/goldfish/
-rsync -ar --progress ../engine/_dist/ $REMOTE:/home/goldfish/html5/content/
+rsync -ar --progress ../engine/publish/html5 $REMOTE:$REMOTE_DIR
+rsync -ar --progress ../engine/_dist/ $REMOTE:$REMOTE_DIR/html5/content/
