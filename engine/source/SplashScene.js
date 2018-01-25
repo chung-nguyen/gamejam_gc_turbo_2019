@@ -1,10 +1,9 @@
-import AvatarCache from "./common/avatarCache";
 import BaseScene from "./common/baseScene";
 import ui from "./utils/ui";
 
 import Localize from "./localize";
-import { storeDispatch } from "./store/store";
-import { fetchLevelDesign } from "./reducer/levelDesign";
+import { storeDispatch, getStoreState } from "./store/store";
+import { login } from "./reducer/authenticate";
 
 var SplashSceneLayer = cc.Layer.extend({
     ctor: function() {
@@ -32,7 +31,14 @@ var SplashSceneLayer = cc.Layer.extend({
 
     onInstantPlay: function(sender, type) {
         if (type === ccui.Widget.TOUCH_ENDED) {
-            setImmediate(() => cc.director.runScene(new window.InGameScene()));
+            setImmediate(() => {
+                var authenticate = getStoreState().authenticate;
+                var userId = authenticate.id || Math.random().toString(36).substr(2, 9);
+
+                storeDispatch(login({ id: userId }, () => {
+                    cc.director.runScene(new window.LoadingScene())
+                }));
+            });
         }
     }
 });
@@ -50,16 +56,8 @@ var SplashScene = BaseScene.extend({
             addSpriteFramesFromResource("splash.plist");
             this.addChild(new SplashSceneLayer());
 
-            storeDispatch(fetchLevelDesign((action, state) => {
-                this.showWaiting(false);
-            }));            
+            this.showWaiting(false);
         });
-    },
-
-    onExit: function() {
-        this._super();
-
-        removeSpriteFramesFromResource("splash.plist");
     }
 });
 

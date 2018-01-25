@@ -1,16 +1,17 @@
 // @flow
+var config = require('config');
 
-const PREFIX = 'douchebag.';
+const PREFIX = config.localStorageName;
 
 export const storageMiddleware = (store: Store, action: any, next: Function) => {
     if (action.persist) {
         action.persist.forEach((key) => {
             const state = store.getState();
             const value = state[key];
-            if (value) {        
+            if (value) {
                 cc.sys.localStorage.setItem(JSON.stringify(PREFIX + key), JSON.stringify(value) );
-            }            
-        });        
+            }
+        });
     }
 
     next(action);
@@ -18,12 +19,12 @@ export const storageMiddleware = (store: Store, action: any, next: Function) => 
 
 export const loadState = (keys: []) => {
     const state = {};
-    keys.forEach(key => {        
+    keys.forEach(key => {
         try {
             const val = JSON.parse(cc.sys.localStorage.getItem(JSON.stringify(PREFIX + key)));
             state[key] = val || {};
-        } catch (e) {            
-        }        
+        } catch (e) {
+        }
     });
 
     return state;

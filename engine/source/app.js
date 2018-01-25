@@ -1,7 +1,7 @@
 import { createStore } from "./store/store";
 import appState from "./reducer/appState";
 import authenticate from "./reducer/authenticate";
-import levelDesign from "./reducer/levelDesign";
+import room from "./reducer/room";
 
 // @flow
 if (!window) {
@@ -10,6 +10,7 @@ if (!window) {
 
 window.SplashScene = require("./SplashScene");
 window.InGameScene = require("./InGameScene");
+window.LoadingScene = require("./LoadingScene");
 
 window.initApp = function() {
     console.log("init app...");
@@ -39,7 +40,7 @@ window.initApp = function() {
     const store = createStore({
         appState,
         authenticate,
-        levelDesign
+        room
     });
 
     store.restoreState();

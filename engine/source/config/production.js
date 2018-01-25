@@ -1,5 +1,5 @@
 module.exports = {
-    gatewayAddress: 'http://128.199.254.229:9000/api',
-    lobbyAddress: 'ws://128.199.254.229:9000/lobby',
-    fixedTimeStep: 100
+    apiUrl: 'http://128.199.202.184/api',
+    socketUrl: 'ws://128.199.202.184/socket',
+    localStorageName: 'gamejam.rts'
 };

@@ -2,7 +2,7 @@
 export const SET_APP_STATE = 'SET_APP_STATE';
 
 export const setAppState = (data: any, callback: Function) => ({
-    type: SET_APP_STATE,    
+    type: SET_APP_STATE,
     data,
     callback,
     next: {
@@ -11,11 +11,10 @@ export const setAppState = (data: any, callback: Function) => ({
 });
 
 const actionHandler = {
-    [SET_APP_STATE]: (state, action) => {        
+    [SET_APP_STATE]: (state, action) => {
         return Object.assign({}, state, action.data);
     }
 }
-
 
 const initialState = {
 }

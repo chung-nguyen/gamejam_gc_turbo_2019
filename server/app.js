@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var battle = require('./routes/battle');
 
 var app = express();
 
@@ -23,8 +24,22 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 var router = express.Router();
+
+router.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+
+  if (req.method === "OPTIONS") {
+    res.header("Access-Control-Max-Age", "3600");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, X-Access-Token");
+    return res.sendStatus(200);
+  }
+
+  next();
+});
+
 router.use('/', index);
 router.use('/users', users);
+router.use('/battle', battle);
 
 app.use('/api', router);
 
