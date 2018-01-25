@@ -12,7 +12,8 @@
     "express": "~4.14.1",
     "jade": "~1.11.0",
     "morgan": "~1.7.0",
+    "node-async-locks": "^1.0.1",
     "serve-favicon": "~2.3.2",
-    "node-async-locks": "^1.0.1"
+    "ws": "^4.0.0"
   }
 }

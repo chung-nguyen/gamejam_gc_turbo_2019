@@ -6,12 +6,15 @@ import Localize from "./localize";
 import { storeDispatch, getStoreState } from "./store/store";
 
 import ObjectPool from "./common/objectPool";
+import Battle from "./battle";
 
 var InGameScene = BaseScene.extend({
     ctor: function() {
         this._super();
 
         var self = this;
+
+        this.battle = new Battle();
 
         this.touchpad = new ActionTouchpad({
             contentSize: this.getContentSize(),
@@ -26,12 +29,12 @@ var InGameScene = BaseScene.extend({
 
         this.showWaiting(true);
 
-        var room = getStoreState().room;
-        console.error(room);
-
         var self = this;
         loadResources(["fishes.plist"], () => {
             addSpriteFramesFromResource("fishes.plist");
+
+            cc.log("Connecting to battle...");
+            this.battle.connect();
 
             this.scheduleUpdate();
             this.showWaiting(false);
@@ -44,13 +47,17 @@ var InGameScene = BaseScene.extend({
         this.unscheduleUpdate();
 
         removeSpriteFramesFromResource("fishes.plist");
+        this.battle.close();
     },
 
     update: function(dt) {
-
+        this.battle.update(dt);
     },
 
     onAction: function(touch, event) {
+        if (this.battle.isReady) {
+            // TODO
+        }
     }
 });
 

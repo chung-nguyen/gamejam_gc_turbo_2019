@@ -41,7 +41,7 @@ class SocketClient {
 
     tryConnect() {
         this._socket = new WebSocket(this.buildQuery(this._address, this._query));
-        this._socket.binaryType = "arraybuffer";
+        //this._socket.binaryType = "arraybuffer";
 
         var self = this;
         this._socket.onopen = function(evt) {
@@ -70,7 +70,7 @@ class SocketClient {
 
             if (evt.reason) {
                 self._messagesQueue.push(
-                    msgpack.encode({
+                    JSON.stringify({
                         type: "close",
                         reasons: evt.reason
                     })
@@ -101,7 +101,7 @@ class SocketClient {
 
             var data;
             try {
-                data = msgpack.decode(msg);
+                data = JSON.parse(msg);
             } catch (e) {
                 cc.error(e);
             }
@@ -122,7 +122,7 @@ class SocketClient {
 
     send(data) {
         if (this.isReady && this._socket) {
-            var msg = msgpack.encode(data);
+            var msg = JSON.stringify(data);
             this._socket.send(msg);
         } else {
             this._pendingQueue.push(data);

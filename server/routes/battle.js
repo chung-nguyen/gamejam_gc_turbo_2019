@@ -4,7 +4,7 @@ var AsyncLock = require("node-async-locks").AsyncLock;
 var Lobby = require("../lobby");
 
 var asyncLock = new AsyncLock();
-var lobby = new Lobby();
+var lobby = new Lobby(9000);
 
 router.post("/start", function (req, res, next) {
     asyncLock.enter((token) => {
