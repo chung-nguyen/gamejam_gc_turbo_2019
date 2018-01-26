@@ -15,6 +15,7 @@ var InGameScene = BaseScene.extend({
         var self = this;
 
         this.battle = new Battle();
+        this.addChild(this.battle);
 
         this.touchpad = new ActionTouchpad({
             contentSize: this.getContentSize(),
@@ -29,11 +30,13 @@ var InGameScene = BaseScene.extend({
 
         this.showWaiting(true);
 
+        cc.log("Loading battle...");
         var self = this;
-        loadResources(["fishes.plist"], () => {
-            addSpriteFramesFromResource("fishes.plist");
+        loadResources(["battle.plist", "characters.plist"], () => {
+            addSpriteFramesFromResource("battle.plist");
+            addSpriteFramesFromResource("characters.plist");
 
-            cc.log("Connecting to battle...");
+            this.battle.init();
             this.battle.connect();
 
             this.scheduleUpdate();
@@ -46,7 +49,8 @@ var InGameScene = BaseScene.extend({
 
         this.unscheduleUpdate();
 
-        removeSpriteFramesFromResource("fishes.plist");
+        removeSpriteFramesFromResource("battle.plist");
+        removeSpriteFramesFromResource("characters.plist");
         this.battle.close();
     },
 
@@ -55,7 +59,7 @@ var InGameScene = BaseScene.extend({
     },
 
     onAction: function(touch, event) {
-        if (this.battle.isReady) {
+        if (this.battle.isReady()) {
             // TODO
         }
     }

@@ -1,3 +1,5 @@
+var Settings = require('./settings');
+
 var url = require('url');
 var WebSocket = require('ws');
 
@@ -45,6 +47,8 @@ var Lobby = function (port) {
             ws.close(1000, "room_not_found");
         }
     });
+
+    setInterval(() => this.update(), 5000);
 }
 
 Lobby.prototype.createRoom = function (user) {
@@ -74,6 +78,16 @@ Lobby.prototype.createRoom = function (user) {
 
 Lobby.prototype.getRoom = function (roomId) {
     return this.rooms.find(it => it.id === roomId);
+}
+
+Lobby.prototype.update = function () {
+    for (var i = this.rooms.length - 1; i >= 0; --i) {
+        var room = this.rooms[i];
+        if (!room.isAlive) {
+            this.rooms[i] = this.rooms[this.rooms.length - 1];
+            this.rooms.length--;
+        }
+    }
 }
 
 module.exports = Lobby;

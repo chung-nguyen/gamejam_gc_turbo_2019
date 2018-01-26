@@ -11,7 +11,7 @@ mkdir -p $OUTDIR
 
 $SPRITE_PACK --keepMargin=1 --maxSheetSize=2048 --outdir ../engine/res ../resources/bootstrap
 $SPRITE_PACK --keepMargin=1 --outdir $OUTDIR ../resources/splash
-$SPRITE_PACK --outdir $OUTDIR ../resources/fishes
-$SPRITE_PACK --outdir $OUTDIR ../resources/hooks
+$SPRITE_PACK --keepMargin=1 --outdir $OUTDIR ../resources/battle
+$SPRITE_PACK --keepMargin=1 --outdir $OUTDIR ../resources/characters
 
 $FILE_HASH $OUTDIR $OUTDIR/hash.json
