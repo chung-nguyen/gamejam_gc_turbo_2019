@@ -3,6 +3,15 @@ var Room = function (id) {
     this.players = [];
     this.isAlive = true;
     this.isReady = false;
+
+    this._interval = setInterval(() => this.update(), 100);
+};
+
+Room.prototype.destroy = function () {
+    if (this._interval) {
+        clearInterval(this._interval);
+        this._interval = null;
+    }
 };
 
 Room.prototype.isFull = function () {
@@ -61,22 +70,24 @@ Room.prototype.getPlayer = function (userId) {
 
 Room.prototype.update = function (dt) {
     if (!this.isReady) return;
+
+    var turn = {};
+
+    this.sendAll(turn);
 };
 
 Room.prototype.sendTo = function (player, message) {
     try {
         player.ws.send(JSON.stringify(message));
-    } catch (e) {
-    }
+    } catch (e) {}
 };
 
 Room.prototype.sendAll = function (message) {
     var data = JSON.stringify(message);
     this.players.forEach((p) => {
         try {
-            p.ws.send(data)
-        } catch (e) {
-        }
+            p.ws.send(data);
+        } catch (e) {}
     });
 };
 

@@ -4,6 +4,9 @@ import Defs from "./defs";
 
 import Camera from "./camera";
 import Presentation from "./presentation";
+import ActionBar from "./ActionBar";
+import ActionTouchpad from "./ActionTouchpad";
+import ui from "../utils/ui";
 
 var config = require("config");
 
@@ -35,8 +38,28 @@ var Battle = cc.Layer.extend({
         this.ground.setScale(Defs.BATTLE_SCALE);
         this.addChild(this.ground);
 
+        var groundSize = this.ground.getContentSize();
         this.presentation = new Presentation();
+        this.presentation.setPosition(groundSize.width / 2, groundSize.height / 2);
         this.ground.addChild(this.presentation, 10);
+
+        this.actionBar = new ActionBar({ maxEnergy: 10, battleRoot: this.presentation.root, socket: this.socket });
+        this.actionBar.setAnchorPoint(0, 0);
+        this.actionBar.setPosition(ui.relativeTo(this, ui.LEFT_BOTTOM, 0, 0));
+        this.addChild(this.actionBar, 40);
+
+        this.actionBar.setCurrentCards(room.playerId, ["dummy"]);
+
+        var touchpad = new ActionTouchpad({
+            contentSize: cc.size(Defs.SCREEN_SIZE.width, Defs.SCREEN_SIZE.height),
+            actionBar: this.actionBar,
+            battleRoot: this.presentation.root
+        });
+
+        touchpad.setArenaSize(32, 18);
+
+        this.addChild(touchpad, 50);
+        this.touchpad = touchpad;
 
         Camera.setRotate(room.playerId === 0 ? 0 : 180);
         this.presentation.rotate(Camera.rotate);

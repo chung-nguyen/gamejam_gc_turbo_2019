@@ -35,7 +35,6 @@ var Lobby = function (port) {
 
                 ws.on("message", message => {
                     var room = this.getRoom(ws.roomId);
-                    console.log(message);
                     if (room != null) {
                         room.handleMessage(ws.userId, message);
                     }
@@ -59,7 +58,7 @@ Lobby.prototype.createRoom = function (user) {
             if (!it.isFull()) {
                 room = it;
             }
-        })
+        });
 
         if (!room) {
             ++this.idCounter;
@@ -84,6 +83,8 @@ Lobby.prototype.update = function () {
     for (var i = this.rooms.length - 1; i >= 0; --i) {
         var room = this.rooms[i];
         if (!room.isAlive) {
+            room.destroy();
+
             this.rooms[i] = this.rooms[this.rooms.length - 1];
             this.rooms.length--;
         }
