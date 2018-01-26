@@ -1,12 +1,12 @@
-import BaseScene from "./common/baseScene";
-import ui from "./utils/ui";
+import BaseScene from "../common/baseScene";
+import ui from ".//utils/ui";
 
 import config from "config";
-import Localize from "./localize";
-import { storeDispatch, getStoreState } from "./store/store";
+import Localize from "../localize";
+import { storeDispatch, getStoreState } from "../store/store";
 
-import ObjectPool from "./common/objectPool";
-import Battle from "./battle";
+import ObjectPool from "../common/objectPool";
+import Battle from "../battle";
 
 var InGameScene = BaseScene.extend({
     ctor: function() {

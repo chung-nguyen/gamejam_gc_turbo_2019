@@ -1,9 +1,9 @@
-import BaseScene from "./common/baseScene";
-import ui from "./utils/ui";
+import BaseScene from "../common/baseScene";
+import ui from "../utils/ui";
 
-import Localize from "./localize";
-import { storeDispatch, getStoreState } from "./store/store";
-import { login } from "./reducer/authenticate";
+import Localize from "../localize";
+import { storeDispatch, getStoreState } from "../store/store";
+import { login } from "../reducer/authenticate";
 
 var SplashSceneLayer = cc.Layer.extend({
     ctor: function() {

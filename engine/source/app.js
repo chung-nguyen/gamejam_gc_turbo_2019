@@ -8,9 +8,9 @@ if (!window) {
     window = {};
 }
 
-window.SplashScene = require("./SplashScene");
-window.InGameScene = require("./InGameScene");
-window.LoadingScene = require("./LoadingScene");
+window.SplashScene = require("./scenes/SplashScene");
+window.InGameScene = require("./scenes/InGameScene");
+window.LoadingScene = require("./scenes/LoadingScene");
 
 window.initApp = function() {
     console.log("init app...");

@@ -1,9 +1,9 @@
-import BaseScene from "./common/baseScene";
-import ui from "./utils/ui";
+import BaseScene from "../common/baseScene";
+import ui from "../utils/ui";
 
-import Localize from "./localize";
-import { storeDispatch, getStoreState } from "./store/store";
-import { startBattle } from "./reducer/room";
+import Localize from "../localize";
+import { storeDispatch, getStoreState } from "../store/store";
+import { startBattle } from "../reducer/room";
 
 var LoadingSceneLayer = cc.Layer.extend({
     ctor: function() {
