@@ -1,5 +1,5 @@
 import BaseScene from "../common/baseScene";
-import ui from ".//utils/ui";
+import ui from "../utils/ui";
 
 import config from "config";
 import Localize from "../localize";
