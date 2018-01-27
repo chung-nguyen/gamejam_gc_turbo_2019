@@ -40,7 +40,10 @@ var Battle = cc.Layer.extend({
 
         this.ground = new cc.Sprite("#ground.png");
         this.ground.setPosition(
-            cc.p(Defs.SCREEN_CENTER.x + Defs.BATTLE_POSITION.x, Defs.SCREEN_CENTER.y + Defs.BATTLE_POSITION.y)
+            cc.p(
+                Defs.SCREEN_CENTER.x + Defs.BATTLE_POSITION.x,
+                Defs.SCREEN_CENTER.y + Defs.BATTLE_POSITION.y
+            )
         );
         this.ground.setScale(Defs.BATTLE_SCALE);
         this.addChild(this.ground);
@@ -50,7 +53,12 @@ var Battle = cc.Layer.extend({
         this.presentation.setPosition(groundSize.width / 2, groundSize.height / 2);
         this.ground.addChild(this.presentation, 10);
 
-        this.actionBar = new ActionBar({ maxEnergy: 10, battleRoot: this.presentation.root, socket: this.socket, team: room.playerId });
+        this.actionBar = new ActionBar({
+            maxEnergy: 10,
+            battleRoot: this.presentation.root,
+            socket: this.socket,
+            team: room.playerId
+        });
         this.actionBar.setAnchorPoint(0, 0);
         this.actionBar.setPosition(ui.relativeTo(this, ui.LEFT_BOTTOM, 0, 0));
         this.addChild(this.actionBar, 40);
@@ -73,15 +81,14 @@ var Battle = cc.Layer.extend({
         Camera.setRotate(room.playerId === 0 ? 0 : 180);
         this.presentation.rotate(Camera.rotate);
 
-
         this.lagNotify = new NotifyLayer();
         this.lagNotify.setText("Reconnecting...");
         this.lagNotify.setVisible(false);
-        this.addChild(this.lagNotify);        
+        this.addChild(this.lagNotify);
 
         this.battleResult = new alertLayer();
         this.battleResult.setVisible(false);
-        this.addChild(this.battleResult);
+        this.addChild(this.battleResult, 100);
     },
 
     connect: function () {
@@ -103,9 +110,7 @@ var Battle = cc.Layer.extend({
     },
 
     update: function (dt) {
-        if (this.state === State.GAMEOVER) {
-            return this.updateGameOver(dt);
-        }
+        if (this.state === State.GAMEOVER) return;
 
         if (this.state === State.LOADING && this.socket.isReady) {
             this.send({ type: "ready" });
@@ -150,9 +155,16 @@ var Battle = cc.Layer.extend({
     },
 
     initGameOver: function (result) {
-        this.battleResult.setError(result == getStoreState().room.playerId ? "YOU WIN!" : result < 0 ? "DRAW!" : "YOU LOSE!",_=>{
-            cc.director.runScene(new window.SplashScene());
-        });
+        this.battleResult.setError(
+            result.winnerId == getStoreState().room.playerId
+                ? "YOU WIN!"
+                : result.winnerId < 0 ? "DRAW!" : "YOU LOSE!",
+            (_) => {
+                cc.director.runScene(new window.SplashScene());
+            }
+        );
+        this.battleResult.setVisible(true);
+        this.state = State.GAMEOVER;
     },
     handleReady: function (message) {
         cc.log("Battle ready!");
@@ -160,7 +172,7 @@ var Battle = cc.Layer.extend({
 
         var room = getStoreState().room;
 
-        var hand = ["raider", "gunner", "giant", "axeman", "flamer", "sawman"];
+        var hand = [ "raider", "gunner", "giant", "axeman", "flamer", "sawman" ];
         shuffle(hand);
         this.actionBar.setHand(hand);
 
