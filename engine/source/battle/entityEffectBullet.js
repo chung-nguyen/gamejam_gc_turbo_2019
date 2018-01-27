@@ -47,7 +47,7 @@ var EntityEffectBullet = EntityBase.extend({
             var dy = this.target.logic.y - this.logic.y;
             var mag = approxDistance(dx, dy);
             if (mag > this.target.attr.Size) {
-                var v = dt * 2;
+                var v = dt * 1.5;
                 this.logic.x += dx / mag * v;
                 this.logic.y += dy / mag * v;
 
