@@ -22,7 +22,8 @@ var UNIT_DATA = {
         Size: 1,
         Range: 5,
         Cool: 1000,
-        Cost: 0
+        Cost: 0,
+        Klass: "entityHQ"
     },
     tower: {
         HP: 100,
@@ -30,7 +31,8 @@ var UNIT_DATA = {
         Size: 1,
         Range: 5,
         Cool: 1000,
-        Cost: 0
+        Cost: 0,
+        Klass: "entityTower"
     },
     dummy: {
         HP: 100,
@@ -38,7 +40,8 @@ var UNIT_DATA = {
         Size: 1,
         Range: 1,
         Cool: 1000,
-        Cost: 2
+        Cost: 2,
+        Klass: "entityMeleeFighter"
     }
 }
 

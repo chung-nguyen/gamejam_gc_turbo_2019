@@ -100,8 +100,8 @@ var Battle = cc.Layer.extend({
                     this.handleReady(message);
                     break;
 
-                case "result":
-                    this.handleResult(message);
+                case "timeOver":
+                    this.handleTimeOver(message);
                     break;
 
                 case "turn":
@@ -127,7 +127,7 @@ var Battle = cc.Layer.extend({
         this.presentation.init();
     },
 
-    handleResult: function (message) {},
+    handleTimeOver: function (message) {},
 
     handleTurn: function (message) {
         this.replay[message.index] = message;

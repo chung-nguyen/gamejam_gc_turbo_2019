@@ -2,6 +2,13 @@ import Defs from "./defs";
 import Camera from "./camera";
 import EntityTower from "./entityTower";
 import EntityHQ from "./entityHQ";
+import EntityMeleeFigher from "./entityMeleeFighter";
+
+var ENTITY_KLASS_MAP = {
+    "entityHQ": EntityHQ,
+    "entityTower": EntityTower,
+    "entityMeleeFighter": EntityMeleeFigher
+};
 
 var Presentation = cc.Node.extend({
     ctor: function () {
@@ -14,6 +21,9 @@ var Presentation = cc.Node.extend({
         this.addChild(this.root, 0);
 
         this.energy = 0;
+        this.leftGoals = [];
+        this.rightGoals = [];
+        this.units = [];
     },
 
     rotate: function (angle) {
@@ -21,29 +31,13 @@ var Presentation = cc.Node.extend({
     },
 
     init: function () {
-        var leftTower1 = new EntityTower(0);
-        leftTower1.setLocation(650, 350);
-        this.root.addChild(leftTower1);
+        this.leftGoals.push(this.deploy({ name: "tower", x: 650, y: 350 }));
+        this.leftGoals.push(this.deploy({ name: "tower", x: 650, y: 1450 }));
+        this.leftGoals.push(this.deploy({ name: "hq", x: 300, y: 900 }));
 
-        var leftTower2 = new EntityTower(0);
-        leftTower2.setLocation(650, 1450);
-        this.root.addChild(leftTower2);
-
-        var leftHQ = new EntityHQ(0);
-        leftHQ.setLocation(300, 900);
-        this.root.addChild(leftHQ);
-
-        var rightTower1 = new EntityTower(0);
-        rightTower1.setLocation(2550, 350);
-        this.root.addChild(rightTower1);
-
-        var rightTower2 = new EntityTower(0);
-        rightTower2.setLocation(2550, 1450);
-        this.root.addChild(rightTower2);
-
-        var rightHQ = new EntityHQ(0);
-        rightHQ.setLocation(2900, 900);
-        this.root.addChild(rightHQ);
+        this.rightGoals.push(this.deploy({ name: "tower", x: 2550, y: 350 }));
+        this.rightGoals.push(this.deploy({ name: "tower", x: 2550, y: 1450 }));
+        this.rightGoals.push(this.deploy({ name: "hq", x: 2900, y: 900 }));
 
         this.energy = 0;
     },
@@ -54,11 +48,23 @@ var Presentation = cc.Node.extend({
 
     deploy: function (deployment) {
         var unitData = Defs.UNIT_DATA[deployment.name];
+        if (!unitData) return;
+
+        var Klass = ENTITY_KLASS_MAP[unitData.Klass];
+        if (!Klass) return;
+
+        var e = new Klass(deployment.playerId);
+        e.setUnitData(unitData);
+        e.setLocation(deployment.x, deployment.y);
+        this.units.push(e);
+        this.root.addChild(e);
         this.energy -= unitData.Cost * 1000;
+
+        return e;
     },
 
     step: function (dt) {
-        this.energy += dt / 2;
+        this.energy += dt * 2;
         if (this.energy > 10000) {
             this.energy = 10000;
         }

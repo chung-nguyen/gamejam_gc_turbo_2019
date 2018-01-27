@@ -18,12 +18,9 @@ var EntityBase = cc.Node.extend({
         this.setFacing(team === 0 ? 1 : -1);
     },
 
-    setUnitData: function (name) {
-        var data = Defs.UNIT_DATA[name];
-        if (data) {
-            this.logic.HP = data.HP;
-            this.attr = data;
-        }
+    setUnitData: function (data) {
+        this.logic.HP = data.HP;
+        this.attr = data;
     },
 
     setFacing: function (value) {
