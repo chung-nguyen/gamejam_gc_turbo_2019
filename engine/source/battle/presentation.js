@@ -5,14 +5,20 @@ import EntityHQ from "./entityHQ";
 import EntityMeleeFigher from "./entityMeleeFighter";
 import EntityFlameThrower from "./entityFlameThrower";
 import EntityGunner from "./entityGunner";
+import EntityGiant from "./entityGiant";
+import EntityAxeman from "./entityAxeman";
 
 var ENTITY_KLASS_MAP = {
-    "entityHQ": EntityHQ,
-    "entityTower": EntityTower,
-    "entityMeleeFighter": EntityMeleeFigher,
-    "entityFlameThrower": EntityFlameThrower,
-    "entityGunner": EntityGunner
+    entityHQ: EntityHQ,
+    entityTower: EntityTower,
+    entityMeleeFighter: EntityMeleeFigher,
+    entityFlameThrower: EntityFlameThrower,
+    entityGunner: EntityGunner,
+    entityGiant: EntityGiant,
+    entityAxeman: EntityAxeman
 };
+
+var TRIPLE_FORMATION = [ { dx: 0, dy: 0 }, { dx: -120, dy: -120 }, { dx: -120, dy: 120 } ];
 
 var Presentation = cc.Node.extend({
     ctor: function () {
@@ -70,13 +76,31 @@ var Presentation = cc.Node.extend({
         var Klass = ENTITY_KLASS_MAP[unitData.Klass];
         if (!Klass) return;
 
-        var e = new Klass(deployment.playerId, this);
+        var e;
+        if (unitData.Count === 3) {
+            for (var i = 0; i < unitData.Count; ++i) {
+                e = this.spawnUnit(
+                    Klass,
+                    deployment.playerId,
+                    deployment.x + TRIPLE_FORMATION[i].dx,
+                    deployment.y + TRIPLE_FORMATION[i].dy,
+                    unitData
+                );
+            }
+        } else {
+            e = this.spawnUnit(Klass, deployment.playerId, deployment.x, deployment.y, unitData);
+        }
+
+        this.energy -= unitData.Cost * 1000;
+        return e;
+    },
+
+    spawnUnit: function (Klass, team, x, y, unitData) {
+        var e = new Klass(team, this);
         e.setUnitData(unitData);
-        e.setLocation(deployment.x, deployment.y);
+        e.setLocation(x, y);
         this.units.push(e);
         this.root.addChild(e);
-        this.energy -= unitData.Cost * 1000;
-
         return e;
     },
 
@@ -121,7 +145,7 @@ var Presentation = cc.Node.extend({
                 this.result = { winnerId: 1 };
             }
         } else if (!rightHQ.isAlive()) {
-            if (!leftHQ.isAlive())    {
+            if (!leftHQ.isAlive()) {
                 this.result = { winnerId: -1 };
             } else {
                 this.result = { winnerId: 0 };
@@ -158,6 +182,21 @@ var Presentation = cc.Node.extend({
                 if (d < dist) {
                     res = g;
                     dist = d;
+                }
+            }
+        }
+
+        return res;
+    },
+
+    findEnemyInArea: function (entity, x, y, r) {
+        var res = [];
+        for (var i = 0; i < this.units.length; ++i) {
+            var g = this.units[i];
+            if (g.isAlive() && g.team !== entity.team && entity.canAttack(g)) {
+                var d = g.getDistanceToPos(x, y);
+                if (d < r) {
+                    res.push(g);
                 }
             }
         }

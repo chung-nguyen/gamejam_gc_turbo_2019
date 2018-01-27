@@ -34,8 +34,10 @@ var EntityEffectFlame = EntityBase.extend({
         if (this.damageCool <= 0) {
             this.damageCool = this.owner.attr.DamageInterval;
 
-            // TODO: damage enemies in a line
-            this.target.damage(this.owner.attr.Damage);
+            var enemies = this.presentation.findEnemyInArea(this.owner, this.target.logic.x, this.target.logic.y, this.owner.attr.SplashRange);
+            for (var i = 0; i < enemies.length; ++i) {
+                enemies[i].damage(this.owner.attr.Damage);
+            }
         } else {
             this.damageCool -= dt;
         }

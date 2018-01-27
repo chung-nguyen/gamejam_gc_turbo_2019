@@ -116,6 +116,12 @@ var EntityBase = cc.Node.extend({
         return this.getDistanceTo(target) < this.attr.Sight;
     },
 
+    getDistanceToPos: function (x, y) {
+        var dx = x - this.logic.x;
+        var dy = y - this.logic.y;
+        return approxDistance(dx, dy);
+    },
+
     getDistanceTo: function (target) {
         var dx = target.logic.x - this.logic.x;
         var dy = target.logic.y - this.logic.y;
@@ -170,10 +176,15 @@ var EntityBase = cc.Node.extend({
 
         if (!animation) {
             var animFrames = [];
-            for (var i = 0; i < framesCount; i++) {
-                var frame = cc.spriteFrameCache.getSpriteFrame(animationName + "_" + i + ".png");
-                animFrames.push(frame);
-            }
+            var i = 0;
+            var frame;
+            do {
+                frame = cc.spriteFrameCache.getSpriteFrame(animationName + "_" + i + ".png");
+                if (frame) {
+                    animFrames.push(frame);
+                }
+                ++i;
+            } while (frame);
 
             animation = new cc.Animation(animFrames, 1.0 / Defs.ANIMATION_FPS);
             ANIMATION_CACHE[animationName] = animation;

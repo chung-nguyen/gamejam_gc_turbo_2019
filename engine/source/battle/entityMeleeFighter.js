@@ -27,26 +27,12 @@ var EntityMeleeFighter = EntityBase.extend({
         if (this.state === Defs.UNIT_STATE_IDLE) {
             this.intentAction = this.animAction.idle;
 
-            var enemy = this.presentation.findEnemy(this);
-            if (enemy) {
-                this.state = Defs.UNIT_STATE_WALK;
-                this.stateData.target = enemy;
-            } else {
-                var goal = this.presentation.findGoal(this);
-                if (goal) {
-                    this.state = Defs.UNIT_STATE_WALK;
-                    this.stateData.target = goal;
-                }
-            }
+            this.updateIdle();
         }
 
         if (this.state === Defs.UNIT_STATE_WALK) {
             this.intentAction = this.animAction.walk;
-
-            var enemy = this.presentation.findEnemy(this);
-            if (enemy) {
-                this.stateData.target = enemy;
-            }
+            this.lookForEnemy();
 
             var target = this.stateData.target;
             if (target && target.isAlive()) {
@@ -73,11 +59,16 @@ var EntityMeleeFighter = EntityBase.extend({
             var target = this.stateData.target;
             if (target && target.isAlive()) {
                 if (this.logic.cool <= 0) {
-                    this.intentAction = this.animAction.attack;
-                    this.currentAction = null;
-                    this.logic.cool = this.attr.Cool;
+                    var dist = this.getDistanceTo(target);
+                    if (dist > this.attr.Range) {
+                        this.state = Defs.UNIT_STATE_WALK;
+                    } else {
+                        this.intentAction = this.animAction.attack;
+                        this.currentAction = null;
+                        this.logic.cool = this.attr.Cool;
 
-                    this.createEffect(target);
+                        this.createEffect(target);
+                    }
                 }
             } else {
                 this.state = Defs.UNIT_STATE_IDLE;
@@ -97,6 +88,27 @@ var EntityMeleeFighter = EntityBase.extend({
     createEffect: function (target) {
         var hit = new EntityEffectHit1(this.team, this.presentation, this, target);
         this.presentation.addEffect(hit);
+    },
+
+    lookForEnemy: function () {
+        var enemy = this.presentation.findEnemy(this);
+        if (enemy) {
+            this.stateData.target = enemy;
+        }
+    },
+
+    updateIdle: function () {
+        var enemy = this.presentation.findEnemy(this);
+        if (enemy) {
+            this.state = Defs.UNIT_STATE_WALK;
+            this.stateData.target = enemy;
+        } else {
+            var goal = this.presentation.findGoal(this);
+            if (goal) {
+                this.state = Defs.UNIT_STATE_WALK;
+                this.stateData.target = goal;
+            }
+        }
     }
 });
 
