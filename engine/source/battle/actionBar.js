@@ -197,7 +197,7 @@ var ActionBar = cc.Node.extend({
     {
         this.cardButtons.map(card=>{
             card && card.update && card.update(dt);
-    }
+        });
     }
 });
 

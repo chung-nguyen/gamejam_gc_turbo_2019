@@ -23,10 +23,14 @@ var CardButton = cc.Node.extend({
         if (this.name !== name || this.team !== team) {
             this.name = name;
             this.team = team;
-
             this.sprite.setSpriteFrame(name + "_portrait.png");
+            this.sprite.setScaleX(-1);
+            this.createAnimAction();
+            
         }
     },
+
+
 
     removeDummies: function () {
         for (var i = 0; i < this.dummies.length; ++i) {
@@ -100,7 +104,6 @@ var CardButton = cc.Node.extend({
         var pt = touch.getLocation();
         var sz = this.sprite.getContentSize();
         var bb = cc.rect(0, 0, sz.width, sz.height);
-
         return cc.rectContainsPoint(bb, this.sprite.convertToNodeSpace(pt));
     },
     createAnimAction: function () {

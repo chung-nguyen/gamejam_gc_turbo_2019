@@ -136,6 +136,40 @@ module.exports = {
         return btn;
     },
 
+    makeSlider: function (root, opts)
+    {
+        opts = Object.assign({
+            barTexture:"",
+            buttonTexture:"",
+            buttonTextureClicked:"",
+            progressBarTexture:"",
+            touchEnable:true,
+            anchorPoint:cc.p(0.5,0.5),
+            position:cc.p(0,0),
+            scale:1.0,
+            onChange:function(){},
+            onEvent:function(){},
+        },opts);
+        var slider = new ccui.Slider();
+        slider.setTouchEnabled(true);
+        slider.setScale(opts.scale);
+        slider.setAnchorPoint(opts.anchorPoint);
+        slider.setPosition(opts.position);
+        slider.loadBarTexture(getResourceAlias(opts.barTexture));
+        slider.loadSlidBallTextures(getResourceAlias(opts.buttonTexture), getResourceAlias(opts.buttonTextureClicked), "");
+        slider.loadProgressBarTexture(getResourceAlias(opts.progressBarTexture));
+        slider.addEventListener((sender,type)=>{
+            switch (type) {
+                case ccui.Slider.EVENT_PERCENT_CHANGED:
+                    opts.onChange(sender.getPercent().toFixed(0));
+                    break;
+            }
+            opts.onEvent(sender, type);
+        });
+        root.addChild(slider);
+        return slider;
+    },
+    
     makeMaskedSprite: function(root, opts) {
         var spr = new cc.Sprite("#" + opts.sprite);
         spr.setScale(opts.scale || 1);

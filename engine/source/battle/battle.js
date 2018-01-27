@@ -100,6 +100,8 @@ var Battle = cc.Layer.extend({
             this.state = State.WAITING;
         }
 
+        this.actionBar.update(dt);
+
         var message = this.socket.popMessage();
         if (message) {
             switch (message.type) {

@@ -13,23 +13,23 @@ var MenuSceneLayer = cc.Layer.extend({
     },
     initUI: function () {
         let instantPlay = this.addButton("instantPlay", this.onInstantPlay, {
-            position: ui.relativeTo(this, ui.LEFT_MIDDLE, 30, 100)
+            position: ui.relativeTo(this, ui.CENTER, 0, 0)
         });
-        let option = this.addButton("option", this.onEnterOption, {
-            position: ui.relativeTo(this, ui.LEFT_MIDDLE, 30, -50)
-        });
-        let help = this.addButton("help", this.onInstantPlay, { 
-            position: ui.relativeTo(this, ui.LEFT_MIDDLE, 30, -200)
-        });
-        let about = this.addButton("about", this.onInstantPlay, {
-            position: ui.relativeTo(this, ui.LEFT_MIDDLE, 30, -350)
-        });
+        // let option = this.addButton("option", this.onEnterOption, {
+        //     position: ui.relativeTo(this, ui.LEFT_MIDDLE, 30, -50)
+        // });
+        // let help = this.addButton("help", this.onInstantPlay, { 
+        //     position: ui.relativeTo(this, ui.LEFT_MIDDLE, 30, -200)
+        // });
+        // let about = this.addButton("about", this.onInstantPlay, {
+        //     position: ui.relativeTo(this, ui.LEFT_MIDDLE, 30, -350)
+        // });
     },
     addButton: function (text, handle, opt) {
         opt = Object.assign({
             normal: "button_green.png",
             pressed: "button_green_pressed.png",
-            anchorPoint: cc.p(0, 0),
+            anchorPoint: cc.p(0.5, 0.5),
             position: ui.relativeTo(this, ui.LEFT_MIDDLE, 30, 30),
             listener: handle,
             listenerTarget: this

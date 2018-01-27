@@ -27,5 +27,6 @@ module.exports = {
             config: path.join(__dirname, 'source', 'config', process.env.NODE_ENV || 'development')
         }
     },
-    devtool: 'source-map'
+    devtool: 'source-map',
+    watch:true
 };
