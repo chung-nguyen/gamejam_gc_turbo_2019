@@ -8,36 +8,61 @@ var BaseScene = cc.Scene.extend({
     ctor: function(opt) {
         opt = opt || {
             sprites: [],
-            persitSprites: []
+            persitSprites: [],
+            sounds:[]
         }
         this._super();
         this.state = {};         
         this._waitingLayer = null;
         this._alertLayer = null;         
-        this._resourceReady = false;
+        this._loadingCount = 0;
         this._sprites = opt.sprites || [];
         this._persitSprites = opt.persitSprites || [];
+        this._sounds = opt.sounds || [];
     },    
 
     onEnter: function () {
         this._super();  
         connectStore(this);
         this.loadResource();
+        this.loadSound();
+    },
+    checkReady:function(isDone)
+    {
+        if(this._loadingCount==0)
+        {
+            this.onLoading && this.onLoading();
+        }
+        this._loadingCount += isDone ? -1 : 1;
+        if(this._loadingCount==0)
+        {
+            this.onReady && this.onReady();
+        }
+    },
+    loadSound:function()
+    {
+        this.checkReady(false);
+        if(this._sounds.length)
+        {
+            Sound.preload(this._sounds,_=>{
+                this.checkReady(true);
+            });
+        }else{
+            this.checkReady(true);
+        }
     },
     loadResource:function(){
+        this.checkReady(false);
         if (this._sprites.length||this._persitSprites.length) {
-            this._resourceReady = false;
-            this.onLoading && this.onLoading();
             var sprites = [].concat(this._sprites,this._persitSprites);
             loadResources(sprites, () => {
                 sprites.map(sprite=>{
                     addSpriteFramesFromResource(sprite);
                 });
-                this._resourceReady = true;
-                this.onReady && this.onReady();
+                this.checkReady(true);
             });
         }else{
-            this._resourceReady = true;
+            this.checkReady(true);
         }
     },
     unloadResource:function()

@@ -15,10 +15,10 @@ var MenuSceneLayer = cc.Layer.extend({
         let instantPlay = this.addButton("instantPlay", this.onInstantPlay, {
             position: ui.relativeTo(this, ui.LEFT_MIDDLE, 30, 100)
         });
-        let option = this.addButton("option", this.onInstantPlay, {
+        let option = this.addButton("option", this.onEnterOption, {
             position: ui.relativeTo(this, ui.LEFT_MIDDLE, 30, -50)
         });
-        let help = this.addButton("help", this.onInstantPlay, {
+        let help = this.addButton("help", this.onInstantPlay, { 
             position: ui.relativeTo(this, ui.LEFT_MIDDLE, 30, -200)
         });
         let about = this.addButton("about", this.onInstantPlay, {
@@ -48,12 +48,22 @@ var MenuSceneLayer = cc.Layer.extend({
     onInstantPlay: function (sender, type) {
         if (type === ccui.Widget.TOUCH_ENDED) {
             setImmediate(() => {
+                Sound.playSfx("click");
+                Sound.stopMusic();
                 var authenticate = getStoreState().authenticate;
                 var userId = authenticate.id || Math.random().toString(36).substr(2, 9);
-
                 storeDispatch(login({ id: userId }, () => {
                     cc.director.runScene(new window.LoadingScene())
                 }));
+            });
+        }
+    },
+    onEnterOption: function (sender, type)
+    {
+        if (type === ccui.Widget.TOUCH_ENDED) {
+            Sound.playSfx("click");
+            setImmediate(() => {
+                
             });
         }
     }
@@ -66,6 +76,11 @@ var MenuScene = BaseScene.extend({
     onEnter: function () {
         this._super();
         this.addChild(new MenuSceneLayer());
+    },
+    onReady:function()
+    {
+        this._super();
+        Sound.playMusic("bg_music",true);
     }
 });
 

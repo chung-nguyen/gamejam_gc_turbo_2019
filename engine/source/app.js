@@ -11,6 +11,7 @@ window.MenuScene = require("./scenes/MenuScene");
 window.SplashScene = require("./scenes/SplashScene");
 window.InGameScene = require("./scenes/InGameScene");
 window.LoadingScene = require("./scenes/LoadingScene");
+window.Sound = require("./sound/sound");
 
 window.initApp = function() {
     console.log("init app...");

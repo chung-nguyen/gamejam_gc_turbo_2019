@@ -18,6 +18,10 @@ var SplashScene = BaseScene.extend({
             persitSprites:[
                 "splash.plist",
                 "ui.plist"
+            ],
+            sounds:[
+                "bg_music",
+                "click"
             ]
         });
     },
@@ -26,7 +30,7 @@ var SplashScene = BaseScene.extend({
         this.addChild(new SplashSceneLayer());
         setTimeout(function(){
             cc.director.runScene(new window.MenuScene())
-        },1000);
+        },500);
     }
 });
 
