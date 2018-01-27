@@ -7,7 +7,8 @@ var EnergyBar = cc.Node.extend({
         opts.maxEnergy = opts.maxEnergy || 10;
 
         // Base
-        var emptyBar = ui.makeImageView(this, {
+        var emptyBar = this; 
+        ui.makeImageView(emptyBar, {
             sprite: "empty_energy_bar.png",
             anchorPoint: cc.p(0.5, 0.5),
             position: cc.p(0, 0),
@@ -19,7 +20,7 @@ var EnergyBar = cc.Node.extend({
         // Fill
         this.halfFill = ui.makeProgressBar(emptyBar, {
             sprite: "half_fill_energy_bar.png",
-            anchorPoint: cc.p(0.5, 0.5),
+            anchorPoint: cc.p(0, 0),
             position: cc.p(0, 0),
             scale: barScale,
             percent: 0
@@ -27,7 +28,7 @@ var EnergyBar = cc.Node.extend({
 
         this.fullFill = ui.makeProgressBar(emptyBar, {
             sprite: "full_energy_bar_" + opts.team + ".png",
-            anchorPoint: cc.p(0.5, 0.5),
+            anchorPoint: cc.p(0, 0),
             position: cc.p(0, 0),
             scale: barScale,
             percent: 0
@@ -39,7 +40,7 @@ var EnergyBar = cc.Node.extend({
         for (var i = 0; i < opts.maxEnergy - 1; ++i) {
             ui.makeImageView(emptyBar, {
                 sprite: "energy_bar_separator.png",
-                anchorPoint: cc.p(0.5, 0.5),
+                anchorPoint: cc.p(0, 0),
                 position: cc.p(x, 0),
                 scaleX: barScale,
                 scaleY: 1
@@ -51,18 +52,18 @@ var EnergyBar = cc.Node.extend({
         // Icon
         ui.makeImageView(emptyBar, {
             sprite: "icon_energy_" + opts.team + ".png",
-            anchorPoint: cc.p(0.25, 0.5),
-            position: cc.p(-opts.width / 2, 0),
+            anchorPoint: cc.p(0.5, 0.5),
+            position: ui.relativeTo(emptyBar, ui.LEFT_MIDDLE, -opts.width / 4 - 100, 0),
             scale: barScale
         });
 
         // Number
-        this.numberText = ui.makeText(this, {
+        this.numberText = ui.makeText(emptyBar, {
             text: "0",
             font: getBigFontName(),
             fontSize: 48,
-            anchorPoint: cc.p(1, 0.5),
-            position: cc.p(-opts.width / 2 - 20 * barScale, 0),
+            anchorPoint: cc.p(0.5, 0.5),
+            position: ui.relativeTo(emptyBar, ui.LEFT_MIDDLE, -opts.width / 4 - 100, 150),
             shadow: true
         });
 

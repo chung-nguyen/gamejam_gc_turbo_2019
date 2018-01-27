@@ -28,13 +28,13 @@ var ActionBar = cc.Node.extend({
         this.energy = 0;
 
         this.energyBar = new EnergyBar({
-            width: Defs.ACTION_BAR_WIDTH ,
+            width: Defs.ACTION_BAR_WIDTH*0.75,
             height: 50,
             team: 1,
             maxEnergy: opts.maxEnergy || 10
         });
         this.energyBar.setAnchorPoint(cc.p(0, 0));
-        this.energyBar.setPosition(ui.relativeTo(panel, ui.CENTER_BOTTOM, 0, 50));
+        this.energyBar.setPosition(ui.relativeTo(panel, ui.CENTER_BOTTOM, -Defs.ACTION_BAR_WIDTH/4+150, 50));
         this.energyBar.setFill(0);
         panel.addChild(this.energyBar); 
 
