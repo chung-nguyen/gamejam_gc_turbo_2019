@@ -13,26 +13,20 @@ var LoadingSceneLayer = cc.Layer.extend({
 
 var LoadingScene = BaseScene.extend({
     ctor: function() {
-        this._super();
+        this._super({
+            sprites:[
+                "splash.plist"
+            ]
+        });
     },
 
-    onEnter: function() {
+    onReady: function() {
         this._super();
-
-        this.showWaiting(true);
         this.addChild(new LoadingSceneLayer());
-
         var authenticate = getStoreState().authenticate;
         storeDispatch(startBattle(authenticate, () => {
-            this.showWaiting(false);
             cc.director.runScene(new window.InGameScene())
         }));
-    },
-
-    onExit: function() {
-        this._super();
-
-        removeSpriteFramesFromResource("splash.plist");
     }
 });
 

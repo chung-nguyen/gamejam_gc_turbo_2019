@@ -9,49 +9,39 @@ import ObjectPool from "../common/objectPool";
 import Battle from "../battle";
 
 var InGameScene = BaseScene.extend({
-    ctor: function() {
-        this._super();
-
-        var self = this;
-
-        this.battle = new Battle();
-        this.addChild(this.battle);
-    },
-
-    onEnter: function() {
-        this._super();
-
-        this.showWaiting(true);
-
-        cc.log("Loading battle...");
-        var self = this;
-        loadResources(["battle.plist", "characters.plist"], () => {
-            addSpriteFramesFromResource("battle.plist");
-            addSpriteFramesFromResource("characters.plist");
-
-            this.battle.init();
-            this.battle.connect();
-
-            this.scheduleUpdate();
-            this.showWaiting(false);
+    ctor: function () {
+        this._super({
+            sprites: ["battle.plist", "characters.plist"]
         });
     },
-
-    onExit: function() {
+    onEnter: function () {
         this._super();
-
+    },
+    onLoading: function () {
+        this._super();
+        cc.log("Loading battle...");
+    },
+    onReady: function () {
+        this._super();
+        cc.log("Resource ready");
+        this.battle = new Battle();
+        
+        this.addChild(this.battle);
+        this.battle.init();
+        this.battle.connect();
+        this.scheduleUpdate();
+    },
+    onExit: function () {
+        this._super();
         this.unscheduleUpdate();
-
-        removeSpriteFramesFromResource("battle.plist");
-        removeSpriteFramesFromResource("characters.plist");
         this.battle.close();
     },
 
-    update: function(dt) {
+    update: function (dt) {
         this.battle.update(dt);
     },
 
-    onAction: function(touch, event) {
+    onAction: function (touch, event) {
         if (this.battle.isReady()) {
             // TODO
         }

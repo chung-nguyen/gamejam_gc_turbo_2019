@@ -7,7 +7,7 @@ import room from "./reducer/room";
 if (!window) {
     window = {};
 }
-
+window.MenuScene = require("./scenes/MenuScene");
 window.SplashScene = require("./scenes/SplashScene");
 window.InGameScene = require("./scenes/InGameScene");
 window.LoadingScene = require("./scenes/LoadingScene");

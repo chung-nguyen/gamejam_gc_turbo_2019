@@ -1,5 +1,10 @@
 // @flow
 export const SET_APP_STATE = 'SET_APP_STATE';
+export const LOAD_SPRITE = 'LOAD_SPRITE';
+export const LOAD_SOUND = 'LOAD_SOUND';
+export const UNLOAD_SPRITE = 'UNLOAD_SPRITE';
+export const UNLOAD_SOUND = 'UNLOAD_SOUND';
+
 
 export const setAppState = (data: any, callback: Function) => ({
     type: SET_APP_STATE,
@@ -17,6 +22,7 @@ const actionHandler = {
 }
 
 const initialState = {
+    
 }
 
 export const appState = (state: any = initialState, action: any) => {

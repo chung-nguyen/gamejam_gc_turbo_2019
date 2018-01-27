@@ -19,6 +19,18 @@ const _texts = {
         en: 'instant play',
         vn: 'chơi ngay'
     },
+    option: {
+        en: 'option',
+        vn: 'tùy chọn'
+    },
+    help: {
+        en: 'help',
+        vn: 'hướng hẫn'
+    },
+    about: {
+        en: 'about',
+        vn: 'giới thiệu'
+    },
     logout: {
         en: 'logout',
         vn: 'đăng xuất'

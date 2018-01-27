@@ -9,9 +9,11 @@ echo Packing sprites...
 
 mkdir -p $OUTDIR
 
-$SPRITE_PACK --keepMargin=1 --maxSheetSize=2048 --outdir ../engine/res ../resources/bootstrap
+$SPRITE_PACK --keepMargin=1 --maxSheetSize=2048 --outdir ../engine/res ../resources/bootstrap 
 $SPRITE_PACK --keepMargin=1 --outdir $OUTDIR ../resources/splash
 $SPRITE_PACK --keepMargin=1 --outdir $OUTDIR ../resources/battle
 $SPRITE_PACK --keepMargin=1 --outdir $OUTDIR ../resources/characters
+$SPRITE_PACK --keepMargin=1 --outdir $OUTDIR ../resources/ui
+
 
 $FILE_HASH $OUTDIR $OUTDIR/hash.json
