@@ -4,6 +4,7 @@ import ui from "../utils/ui";
 import Localize from "../localize";
 import { storeDispatch, getStoreState } from "../store/store";
 import { login } from "../reducer/authenticate";
+import alertLayer from "../common/alertLayer";
 
 var SplashSceneLayer = cc.Layer.extend({
     ctor: function() {
@@ -28,6 +29,7 @@ var SplashScene = BaseScene.extend({
     onReady:function(){
         this._super();
         this.addChild(new SplashSceneLayer());
+       
         setTimeout(function(){
             cc.director.runScene(new window.MenuScene())
         },500);

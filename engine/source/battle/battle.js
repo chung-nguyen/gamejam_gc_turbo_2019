@@ -8,6 +8,8 @@ import ActionBar from "./actionBar";
 import ActionTouchpad from "./actionTouchpad";
 import ui from "../utils/ui";
 import shuffle from "../utils/shuffle";
+import alertLayer from "../common/alertLayer";
+import NotifyLayer from "../common/notifyLayer";
 
 var config = require("config");
 
@@ -70,6 +72,16 @@ var Battle = cc.Layer.extend({
 
         Camera.setRotate(room.playerId === 0 ? 0 : 180);
         this.presentation.rotate(Camera.rotate);
+
+
+        this.lagNotify = new NotifyLayer();
+        this.lagNotify.setText("Reconnecting...");
+        this.lagNotify.setVisible(false);
+        this.addChild(this.lagNotify);        
+
+        this.battleResult = new alertLayer();
+        this.battleResult.setVisible(false);
+        this.addChild(this.battleResult);
     },
 
     connect: function () {
@@ -130,24 +142,18 @@ var Battle = cc.Layer.extend({
     },
 
     showLaggedWarning: function () {
-        // TODO
+        this.lagNotify.setVisible(true);
     },
 
     hideLaggedWarning: function () {
-        // TODO
+        this.lagNotify.setVisible(false);
     },
 
     initGameOver: function (result) {
-        this.state = State.GAMEOVER;
-
-        // TODO
+        this.battleResult.setError(result == getStoreState().room.playerId ? "YOU WIN!" : result < 0 ? "DRAW!" : "YOU LOSE!",_=>{
+            cc.director.runScene(new window.SplashScene());
+        });
     },
-
-    updateGameOver: function (dt) {
-        // TODO
-        cc.director.runScene(new window.SplashScene());
-    },
-
     handleReady: function (message) {
         cc.log("Battle ready!");
         this.state = State.RUNNING;
