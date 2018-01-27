@@ -100,7 +100,7 @@ var UNIT_DATA = {
         Cool: 1000,
         Speed: 100,
         Cost: 2,
-        Klass: "entityMeleeFighter",
+        Klass: "entityGunner",
         animation: {
             idle: { name: "gun_hero_idle", count: 1, loop: true },
             walk: { name: "gun_hero_walk", count: 31, loop: true },
@@ -148,10 +148,11 @@ var UNIT_DATA = {
         Size: 100,
         Range: 300,
         Sight: 500,
-        Cool: 500,
+        Cool: 3000,
         Speed: 100,
         Cost: 2,
-        Klass: "entityMeleeFighter",
+        DamageInterval: 200,
+        Klass: "entityFlameThrower",
         animation: {
             idle: { name: "spit_fire_hero_idle", count: 1, loop: true },
             walk: { name: "spit_fire_hero_walk", count: 31, loop: true },

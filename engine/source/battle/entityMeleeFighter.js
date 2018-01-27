@@ -59,8 +59,8 @@ var EntityMeleeFighter = EntityBase.extend({
 
                     this.setFacing(dx > 0 ? 1 : -1);
 
-                    this.logic.x += dx * v / mag;
-                    this.logic.y += dy * v / mag;
+                    this.logic.x += dx / mag * v;
+                    this.logic.y += dy / mag * v;
                 } else {
                     this.state = Defs.UNIT_STATE_ATTACK;
                 }
@@ -77,8 +77,7 @@ var EntityMeleeFighter = EntityBase.extend({
                     this.currentAction = null;
                     this.logic.cool = this.attr.Cool;
 
-                    var hit = new EntityEffectHit1(this.team, this.presentation, this, target);
-                    this.presentation.addEffect(hit);
+                    this.createEffect(target);
                 }
             } else {
                 this.state = Defs.UNIT_STATE_IDLE;
@@ -93,6 +92,11 @@ var EntityMeleeFighter = EntityBase.extend({
             this.sprite.runAction(this.currentAction);
         }
         return true;
+    },
+
+    createEffect: function (target) {
+        var hit = new EntityEffectHit1(this.team, this.presentation, this, target);
+        this.presentation.addEffect(hit);
     }
 });
 

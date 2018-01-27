@@ -19,6 +19,7 @@ var EntityBase = cc.Node.extend({
 
         this.zShift = 0;
         this.attr = {};
+        this.facing = 0;
 
         this.team = team;
         this.presentation = presentation;
@@ -56,6 +57,8 @@ var EntityBase = cc.Node.extend({
     },
 
     setFacing: function (value) {
+        this.facing = value;
+
         var camRot = Camera.rotate;
         if (value < 0) {
             if (camRot === 0) {

@@ -136,8 +136,6 @@ var ActionTouchpad = cc.Node.extend({
         var x = pt.x / Defs.ARENA_CELL_WIDTH;
         var y = pt.y / Defs.ARENA_CELL_HEIGHT;
 
-        cc.log("CHECK " + x + " " + y);
-
         var xCond;
         if (this.team === 0) {
             xCond = x >= 0 && x < 15;

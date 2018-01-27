@@ -3,11 +3,15 @@ import Camera from "./camera";
 import EntityTower from "./entityTower";
 import EntityHQ from "./entityHQ";
 import EntityMeleeFigher from "./entityMeleeFighter";
+import EntityFlameThrower from "./entityFlameThrower";
+import EntityGunner from "./entityGunner";
 
 var ENTITY_KLASS_MAP = {
     "entityHQ": EntityHQ,
     "entityTower": EntityTower,
-    "entityMeleeFighter": EntityMeleeFigher
+    "entityMeleeFighter": EntityMeleeFigher,
+    "entityFlameThrower": EntityFlameThrower,
+    "entityGunner": EntityGunner
 };
 
 var Presentation = cc.Node.extend({
