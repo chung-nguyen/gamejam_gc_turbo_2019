@@ -3,10 +3,10 @@ import ui from "../utils/ui";
 import ObjectPool from "../common/objectPool";
 
 import Defs from "./defs";
-import EnergyBar from "./EnergyBar";
-import CardButton from "./CardButton";
+import EnergyBar from "./energyBar";
+import CardButton from "./cardButton";
 
-import DummyEntity from "./DummyEntity";
+import DummyEntity from "./dummyEntity";
 
 var ActionBar = cc.Node.extend({
     ctor: function(opts) {

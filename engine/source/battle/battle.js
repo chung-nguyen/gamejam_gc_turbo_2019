@@ -4,8 +4,8 @@ import Defs from "./defs";
 
 import Camera from "./camera";
 import Presentation from "./presentation";
-import ActionBar from "./ActionBar";
-import ActionTouchpad from "./ActionTouchpad";
+import ActionBar from "./actionBar";
+import ActionTouchpad from "./actionTouchpad";
 import ui from "../utils/ui";
 
 var config = require("config");
