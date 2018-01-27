@@ -19,7 +19,7 @@ var ActionBar = cc.Node.extend({
             sprite: "action_bar_panel.png",
             scale9Size: cc.size(Defs.ACTION_BAR_WIDTH, Defs.ACTION_BAR_HEIGHT),
             anchorPoint: cc.p(0, 0),
-            position: ui.relativeTo(this, ui.LEFT_BOTTOM, 0, 0),
+            position: ui.relativeTo(this, ui.CENTER_BOTTOM, (Defs.SCREEN_SIZE.width - Defs.ACTION_BAR_WIDTH)/2, 0),
             ignoreContentAdaptWithSize: false
         });
 
@@ -28,15 +28,15 @@ var ActionBar = cc.Node.extend({
         this.energy = 0;
 
         this.energyBar = new EnergyBar({
-            width: Defs.ACTION_BAR_WIDTH - 170,
+            width: Defs.ACTION_BAR_WIDTH ,
             height: 50,
             team: 1,
             maxEnergy: opts.maxEnergy || 10
         });
-        this.energyBar.setAnchorPoint(cc.p(0.5, 0));
+        this.energyBar.setAnchorPoint(cc.p(0, 0));
         this.energyBar.setPosition(ui.relativeTo(panel, ui.CENTER_BOTTOM, 0, 60));
         this.energyBar.setFill(0);
-        panel.addChild(this.energyBar);
+        panel.addChild(this.energyBar); 
 
         this.buttonRoot = ui.makeNode(panel, {
             anchorPoint: cc.p(0.5, 0),
@@ -192,6 +192,12 @@ var ActionBar = cc.Node.extend({
     setEnergy: function (value) {
         this.energy = value;
         this.energyBar.setFill(value);
+    },
+    update:function(dt)
+    {
+        this.cardButtons.map(card=>{
+            card && card.update && card.update(dt);
+    }
     }
 });
 

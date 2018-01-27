@@ -45,16 +45,19 @@ var CardButton = cc.Node.extend({
             var dummy = this.dummies[i];
             dummy.setVisible(false);
         }
+        
     },
 
     unselect: function() {
         this.isSelected = false;
         this.sprite.setPosition(cc.p(0, 0));
+        this.sprite.stopAllActions();
     },
 
     select: function() {
         this.isSelected = true;
         this.sprite.setPosition(cc.p(0, 20));
+        this.sprite.runAction(this.animAction);
 
         for (var i = 0; i < this.dummies.length; ++i) {
             var dummy = this.dummies[i];
@@ -99,6 +102,24 @@ var CardButton = cc.Node.extend({
         var bb = cc.rect(0, 0, sz.width, sz.height);
 
         return cc.rectContainsPoint(bb, this.sprite.convertToNodeSpace(pt));
+    },
+    createAnimAction: function () {
+        var animationName = Defs.UNIT_DATA[this.name].animation.attack.name;
+        var i = 0;
+        var animFrames = [];
+        var frame = cc.spriteFrameCache.getSpriteFrame(animationName + "_" + i + ".png");
+        while(frame)
+        {
+            animFrames.push(frame);
+            i++;
+            frame = cc.spriteFrameCache.getSpriteFrame(animationName + "_" + i + ".png");
+        }
+        this.animAction = new cc.Animation(animFrames, 1.0 / Defs.ANIMATION_FPS);
+        this.animAction = new cc.RepeatForever(new cc.Animate(this.animAction));
+        return this.animAction;
+    },
+    update: function (dt) {
+        this._super(dt);
     }
 });
 
