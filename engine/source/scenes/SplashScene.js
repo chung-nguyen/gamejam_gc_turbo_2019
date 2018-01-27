@@ -9,7 +9,6 @@ import alertLayer from "../common/alertLayer";
 var SplashSceneLayer = cc.Layer.extend({
     ctor: function() {
         this._super();
-        ui.makeImageView(this, { sprite: "background.jpg", resizeMode: ui.RESIZE_COVER });
     }
 });
 
@@ -29,7 +28,7 @@ var SplashScene = BaseScene.extend({
     onReady:function(){
         this._super();
         this.addChild(new SplashSceneLayer());
-       
+
         setTimeout(function(){
             cc.director.runScene(new window.MenuScene())
         },500);

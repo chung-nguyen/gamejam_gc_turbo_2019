@@ -21,10 +21,11 @@ var ENTITY_KLASS_MAP = {
 var TRIPLE_FORMATION = [ { dx: 0, dy: 0 }, { dx: -120, dy: -120 }, { dx: -120, dy: 120 } ];
 
 var Presentation = cc.Node.extend({
-    ctor: function () {
+    ctor: function (opts) {
         this._super();
 
         this.entities = [];
+        this.team = opts.team;
 
         this.root = new cc.Node();
         this.root.setPosition(cc.p(-Defs.ARENA_WIDTH / 2, -Defs.ARENA_HEIGHT / 2));
@@ -91,7 +92,9 @@ var Presentation = cc.Node.extend({
             e = this.spawnUnit(Klass, deployment.playerId, deployment.x, deployment.y, unitData);
         }
 
-        this.energy -= unitData.Cost * 1000;
+        if (deployment.playerId === this.team) {
+            this.energy -= unitData.Cost * 1000;
+        }
         return e;
     },
 

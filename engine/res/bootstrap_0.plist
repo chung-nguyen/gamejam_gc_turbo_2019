@@ -9,50 +9,37 @@
         <key>offset</key>
         <string>{0,0}</string>
         <key>sourceSize</key>
-        <string>{310,400}</string>
+        <string>{422,267}</string>
         <key>frame</key>
-        <string>{{0,0},{310,400}}</string>
+        <string>{{0,0},{420,263}}</string>
         <key>sourceColorRect</key>
-        <string>{{0,0},{310,400}}</string>
+        <string>{{1,2},{420,263}}</string>
         <key>textureRotated</key>
         <false/>
       </dict>
       <key>loading_bkg.png</key>
       <dict>
         <key>offset</key>
-        <string>{0,0}</string>
+        <string>{0,-5}</string>
         <key>sourceSize</key>
         <string>{281,281}</string>
         <key>frame</key>
-        <string>{{314,0},{281,281}}</string>
+        <string>{{424,0},{271,271}}</string>
         <key>sourceColorRect</key>
-        <string>{{0,0},{281,281}}</string>
-        <key>textureRotated</key>
-        <false/>
-      </dict>
-      <key>loadingbar.png</key>
-      <dict>
-        <key>offset</key>
-        <string>{0,0}</string>
-        <key>sourceSize</key>
-        <string>{838,88}</string>
-        <key>frame</key>
-        <string>{{600,0},{838,88}}</string>
-        <key>sourceColorRect</key>
-        <string>{{0,0},{838,88}}</string>
+        <string>{{5,10},{271,271}}</string>
         <key>textureRotated</key>
         <false/>
       </dict>
       <key>loading_dot.png</key>
       <dict>
         <key>offset</key>
-        <string>{0,0}</string>
+        <string>{-0.5,2}</string>
         <key>sourceSize</key>
         <string>{244,244}</string>
         <key>frame</key>
-        <string>{{1442,0},{244,244}}</string>
+        <string>{{700,0},{235,240}}</string>
         <key>sourceColorRect</key>
-        <string>{{0,0},{244,244}}</string>
+        <string>{{4,0},{235,240}}</string>
         <key>textureRotated</key>
         <false/>
       </dict>
@@ -63,7 +50,7 @@
         <key>sourceSize</key>
         <string>{228,228}</string>
         <key>frame</key>
-        <string>{{1690,0},{228,228}}</string>
+        <string>{{700,244},{228,228}}</string>
         <key>sourceColorRect</key>
         <string>{{0,0},{228,228}}</string>
         <key>textureRotated</key>
@@ -76,7 +63,7 @@
         <key>sourceSize</key>
         <string>{296,130}</string>
         <key>frame</key>
-        <string>{{600,92},{296,130}}</string>
+        <string>{{0,268},{296,130}}</string>
         <key>sourceColorRect</key>
         <string>{{0,0},{296,130}}</string>
         <key>textureRotated</key>
@@ -89,7 +76,7 @@
         <key>sourceSize</key>
         <string>{296,130}</string>
         <key>frame</key>
-        <string>{{900,92},{296,130}}</string>
+        <string>{{300,276},{296,130}}</string>
         <key>sourceColorRect</key>
         <string>{{0,0},{296,130}}</string>
         <key>textureRotated</key>
@@ -102,7 +89,7 @@
         <key>sourceSize</key>
         <string>{296,130}</string>
         <key>frame</key>
-        <string>{{600,226},{296,130}}</string>
+        <string>{{0,402},{296,130}}</string>
         <key>sourceColorRect</key>
         <string>{{0,0},{296,130}}</string>
         <key>textureRotated</key>
@@ -115,7 +102,7 @@
         <key>sourceSize</key>
         <string>{296,130}</string>
         <key>frame</key>
-        <string>{{900,226},{296,130}}</string>
+        <string>{{300,410},{296,130}}</string>
         <key>sourceColorRect</key>
         <string>{{0,0},{296,130}}</string>
         <key>textureRotated</key>
@@ -128,7 +115,7 @@
         <key>sourceSize</key>
         <string>{296,130}</string>
         <key>frame</key>
-        <string>{{1690,232},{296,130}}</string>
+        <string>{{600,476},{296,130}}</string>
         <key>sourceColorRect</key>
         <string>{{0,0},{296,130}}</string>
         <key>textureRotated</key>
@@ -141,9 +128,22 @@
         <key>sourceSize</key>
         <string>{296,130}</string>
         <key>frame</key>
-        <string>{{1200,248},{296,130}}</string>
+        <string>{{0,536},{296,130}}</string>
         <key>sourceColorRect</key>
         <string>{{0,0},{296,130}}</string>
+        <key>textureRotated</key>
+        <false/>
+      </dict>
+      <key>loadingbar.png</key>
+      <dict>
+        <key>offset</key>
+        <string>{0,-5}</string>
+        <key>sourceSize</key>
+        <string>{838,88}</string>
+        <key>frame</key>
+        <string>{{0,670},{838,78}}</string>
+        <key>sourceColorRect</key>
+        <string>{{0,10},{838,78}}</string>
         <key>textureRotated</key>
         <false/>
       </dict>
@@ -154,7 +154,7 @@
         <key>sourceSize</key>
         <string>{800,40}</string>
         <key>frame</key>
-        <string>{{314,360},{800,40}}</string>
+        <string>{{0,752},{800,40}}</string>
         <key>sourceColorRect</key>
         <string>{{0,0},{800,40}}</string>
         <key>textureRotated</key>
@@ -166,7 +166,7 @@
       <key>format</key>
       <integer>2</integer>
       <key>size</key>
-      <string>{1986,400}</string>
+      <string>{935,792}</string>
       <key>realTextureFileName</key>
       <string>bootstrap_0.png</string>
       <key>textureFileName</key>
@@ -174,11 +174,9 @@
       <key>hashes</key>
       <dict>
         <key>logo.png</key>
-        <string>e9e8e587ab8a27eb5e0d15c282dc21e3</string>
+        <string>e46b01bd37c02f2d56d295b0cff709a7</string>
         <key>loading_bkg.png</key>
         <string>707d36181e70c3177386a24bcfee7d08</string>
-        <key>loadingbar.png</key>
-        <string>bbe323d0794dd4acf134aba46c54c818</string>
         <key>loading_dot.png</key>
         <string>6cf345ae09af9a8cf363763d1c2376c3</string>
         <key>popup_frame.png</key>
@@ -195,6 +193,8 @@
         <string>6128dad8a301b8290242305dd09adfb7</string>
         <key>button_blue.png</key>
         <string>11c2cc839f2acb6dee58f02ce68f2fec</string>
+        <key>loadingbar.png</key>
+        <string>bbe323d0794dd4acf134aba46c54c818</string>
         <key>loadingprogress.png</key>
         <string>a6422f3735ae35e28417fa374f2d5a7f</string>
       </dict>

@@ -56,11 +56,12 @@ Lobby.prototype.createRoom = function (user) {
     return new Promise((resolve, reject) => {
         var room;
 
-        this.rooms.forEach(it => {
+        for (var i = this.rooms.length - 1; i >= 0; --i) {
+            var it = this.rooms[i];
             if (!it.isFull()) {
                 room = it;
             }
-        });
+        }
 
         if (!room) {
             ++this.idCounter;

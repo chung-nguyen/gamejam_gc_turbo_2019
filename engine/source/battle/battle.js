@@ -49,7 +49,7 @@ var Battle = cc.Layer.extend({
         this.addChild(this.ground);
 
         var groundSize = this.ground.getContentSize();
-        this.presentation = new Presentation();
+        this.presentation = new Presentation({ team: room.playerId });
         this.presentation.setPosition(groundSize.width / 2, groundSize.height / 2);
         this.ground.addChild(this.presentation, 10);
 

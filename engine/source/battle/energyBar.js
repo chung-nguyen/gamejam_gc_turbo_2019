@@ -45,9 +45,9 @@ var EnergyBar = cc.Node.extend({
         this.numberText = ui.makeText(emptyBar, {
             text: "0",
             font: getBigFontName(),
-            fontSize: 48,
+            fontSize: 96,
             anchorPoint: cc.p(0.5, 0.5),
-            position: ui.relativeTo(emptyBar, ui.LEFT_MIDDLE, -opts.width / 4 - 200, 150),
+            position: ui.relativeTo(emptyBar, ui.LEFT_MIDDLE, -opts.width / 4 - 180, 150),
             shadow: true
         });
 

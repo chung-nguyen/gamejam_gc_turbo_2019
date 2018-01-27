@@ -32,7 +32,7 @@ var bootstrapText = {
     }
 };
 
-var currentLanguage = "vn";
+var currentLanguage = "en";
 
 var resourcePath = {};
 var plistFiles = {};
@@ -146,12 +146,12 @@ var BootstrapScene = cc.Scene.extend({
             function() {},
             function() {
                 // bg
-                var bg = cc.LayerColor.create(cc.color(255, 255, 255), size.width, size.height);                
+                var bg = cc.LayerColor.create(cc.color(255, 255, 255), size.width, size.height);
                 self.addChild(bg, 0);
 
                 var logo = new ccui.ImageView("logo.png", ccui.Widget.PLIST_TEXTURE);
                 var logoSize = logo.getContentSize();
-                logo.setPosition(center);                
+                logo.setPosition(center);
                 self.addChild(logo, 1);
 
                 // Loading box

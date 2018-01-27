@@ -8,7 +8,7 @@ import { login } from "../reducer/authenticate";
 var MenuSceneLayer = cc.Layer.extend({
     ctor: function () {
         this._super();
-        ui.makeImageView(this, { sprite: "menu_background.jpg", resizeMode: ui.RESIZE_COVER });
+        ui.makeImageView(this, { sprite: "logo.png", position: ui.relativeTo(this, ui.TOP_CENTER, 320, 200) });
         this.initUI();
     },
     initUI: function () {
@@ -18,7 +18,7 @@ var MenuSceneLayer = cc.Layer.extend({
         // let option = this.addButton("option", this.onEnterOption, {
         //     position: ui.relativeTo(this, ui.LEFT_MIDDLE, 30, -50)
         // });
-        // let help = this.addButton("help", this.onInstantPlay, { 
+        // let help = this.addButton("help", this.onInstantPlay, {
         //     position: ui.relativeTo(this, ui.LEFT_MIDDLE, 30, -200)
         // });
         // let about = this.addButton("about", this.onInstantPlay, {
@@ -32,14 +32,15 @@ var MenuSceneLayer = cc.Layer.extend({
             anchorPoint: cc.p(0.5, 0.5),
             position: ui.relativeTo(this, ui.LEFT_MIDDLE, 30, 30),
             listener: handle,
-            listenerTarget: this
+            listenerTarget: this,
+            scale: 2
         }, opt || {});
 
         var button = ui.makeButton(this, opt);
         ui.makeText(button, {
             text: Localize.getCaps(text),
             font: getBigFontName(),
-            fontSize: 40,
+            fontSize: 32,
             position: ui.relativeTo(button, ui.CENTER, 0, 0),
             shadow: true
         });
@@ -63,7 +64,7 @@ var MenuSceneLayer = cc.Layer.extend({
         if (type === ccui.Widget.TOUCH_ENDED) {
             Sound.playSfx("click");
             setImmediate(() => {
-                
+
             });
         }
     }
