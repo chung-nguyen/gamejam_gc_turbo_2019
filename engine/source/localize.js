@@ -25,7 +25,7 @@ const _texts = {
     },
     help: {
         en: 'help',
-        vn: 'hướng hẫn'
+        vn: 'hướng dẫn'
     },
     about: {
         en: 'about',
