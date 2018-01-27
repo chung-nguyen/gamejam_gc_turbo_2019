@@ -58,7 +58,7 @@ var CardButton = cc.Node.extend({
 
         for (var i = 0; i < this.dummies.length; ++i) {
             var dummy = this.dummies[i];
-            dummy.setFacing(this.team === 0 ? 0 : 180);
+            dummy.setFacing(this.team === 0 ? 1 : -1);
         }
     },
 

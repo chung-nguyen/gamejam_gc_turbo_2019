@@ -74,19 +74,16 @@ var ActionBar = cc.Node.extend({
 
         for (var i = 0; i < cards.length; ++i) {
             var name = cards[i];
-            //var count = 1;
-
-            //var formation = nativeEngine.getCardFormation(this.engineGameId, name, level);
+            var count = 1;
 
             var dummyGroup = [];
-            /*for (var j = 0; j < formation.length; ++j) {
-                var f = formation[j];
+            for (var j = 0; j < count; ++j) {
                 var dummy = new DummyEntity();
-                dummy.setOffset(f.x, f.y);
-                dummy.snap(f.name, team, f.level);
+                dummy.setOffset(0, 0);
+                dummy.snap(name, team);
                 this.battleRoot.addChild(dummy);
                 dummyGroup.push(dummy);
-            }*/
+            }
 
             var button = this.cardButtonsPool.pop();
             button.index = i;
