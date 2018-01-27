@@ -15,5 +15,6 @@ $SPRITE_PACK --keepMargin=1 --outdir $OUTDIR ../resources/battle
 $SPRITE_PACK --keepMargin=1 --outdir $OUTDIR ../resources/characters
 $SPRITE_PACK --keepMargin=1 --outdir $OUTDIR ../resources/ui
 
+cp -f ../resources/sound/* $OUTDIR/
 
 $FILE_HASH $OUTDIR $OUTDIR/hash.json
