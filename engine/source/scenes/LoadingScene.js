@@ -24,8 +24,13 @@ var LoadingScene = BaseScene.extend({
         this._super();
         this.addChild(new LoadingSceneLayer());
         var authenticate = getStoreState().authenticate;
-        storeDispatch(startBattle(authenticate, () => {
-            cc.director.runScene(new window.InGameScene())
+        storeDispatch(startBattle(authenticate, (result) => {
+            if (result.error) {
+                console.error(result.error);
+                cc.director.runScene(new window.SplashScene())
+            } else {
+                cc.director.runScene(new window.InGameScene())
+            }
         }));
     }
 });

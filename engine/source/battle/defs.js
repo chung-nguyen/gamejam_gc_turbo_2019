@@ -13,6 +13,8 @@ var ARENA_HEIGHT = 576;
 var ARENA_CELL_WIDTH = 32;
 var ARENA_CELL_HEIGHT = 32;
 
+var MAX_CARDS_PER_ROUND = 4;
+
 var UNIT_DATA = {
     hq: {
         HP: 100,
@@ -52,6 +54,8 @@ module.exports = {
     ARENA_HEIGHT,
     ARENA_CELL_WIDTH,
     ARENA_CELL_HEIGHT,
+
+    MAX_CARDS_PER_ROUND,
 
     UNIT_DATA
 };

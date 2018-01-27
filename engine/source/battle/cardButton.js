@@ -85,6 +85,14 @@ var CardButton = cc.Node.extend({
         }
     },
 
+    clearDummies: function () {
+        for (var i = 0; i < this.dummies.length; ++i) {
+            var dummy = this.dummies[i];
+            dummy.removeFromParent();
+        }
+        this.dummies = [];
+    },
+
     containsTouchLocation: function(touch) {
         var pt = touch.getLocation();
         var sz = this.sprite.getContentSize();

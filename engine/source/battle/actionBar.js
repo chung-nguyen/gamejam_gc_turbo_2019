@@ -9,7 +9,7 @@ import CardButton from "./cardButton";
 import DummyEntity from "./dummyEntity";
 
 var ActionBar = cc.Node.extend({
-    ctor: function(opts) {
+    ctor: function (opts) {
         this._super();
 
         this.battleRoot = opts.battleRoot;
@@ -24,8 +24,14 @@ var ActionBar = cc.Node.extend({
         });
 
         this.panel = panel;
+        this.team = opts.team;
 
-        this.energyBar = new EnergyBar({ width: Defs.ACTION_BAR_WIDTH - 170, height: 50, team: 1, maxEnergy: opts.maxEnergy || 10 });
+        this.energyBar = new EnergyBar({
+            width: Defs.ACTION_BAR_WIDTH - 170,
+            height: 50,
+            team: 1,
+            maxEnergy: opts.maxEnergy || 10
+        });
         this.energyBar.setAnchorPoint(cc.p(0.5, 0));
         this.energyBar.setPosition(ui.relativeTo(panel, ui.CENTER_BOTTOM, 0, 60));
         this.energyBar.setFill(1020);
@@ -38,19 +44,24 @@ var ActionBar = cc.Node.extend({
 
         this._opts = opts;
         this.cardButtons = [];
+        this.hand = [];
+        this.handIndex = 0;
 
         this.cardButtonsPool = new ObjectPool({
             onCreate: function () {
                 return new CardButton();
             },
             onHide: function () {
+                this.clearDummies();
                 this.setVisible(false);
             },
             onShow: function () {
                 this.setVisible(true);
+                this.sprite.setVisible(true);
             },
             onDestroy: function () {
-                this.removeFromParentAndCleanup();
+                this.clearDummies();
+                this.removeFromParent();
             }
         });
 
@@ -59,43 +70,58 @@ var ActionBar = cc.Node.extend({
         this.myPlayerIndex = -1;
     },
 
-    setCurrentCards: function(team, cards) {
+    setHand: function (hand) {
         this.clearCardButtons();
 
         this.cardButtons = [];
-
-        var w = Defs.ACTION_BAR_WIDTH - 256;
-        var x = -w / 2 + 64;
-        var gap = w / cards.length;
-
-        for (var i = 0; i < cards.length; ++i) {
-            var name = cards[i];
-            var count = 1;
-
-            var dummyGroup = [];
-            for (var j = 0; j < count; ++j) {
-                var dummy = new DummyEntity();
-                dummy.setOffset(0, 0);
-                dummy.snap(name, team);
-                this.battleRoot.addChild(dummy);
-                dummyGroup.push(dummy);
-            }
-
-            var button = this.cardButtonsPool.pop();
-            button.index = i;
-
-            button.setCharacterName(name, team);
-            button.setDummies(dummyGroup);
-
-            this.buttonRoot.addChild(button);
-            this.cardButtons.push(button);
-
-            button.setPosition(cc.p(x, 0));
-            x += gap;
+        for (var i = 0; i < Defs.MAX_CARDS_PER_ROUND; ++i) {
+            this.cardButtons[i] = null;
         }
+
+        this.hand = hand;
+        for (var i = 0; i < Defs.MAX_CARDS_PER_ROUND; ++i) {
+            var name = hand[i];
+            this.setCard(i, name);
+        }
+
+        this.handIndex = i;
     },
 
-    clearCardButtons: function() {
+    setCard: function (i, name) {
+        var w = Defs.ACTION_BAR_WIDTH - 256;
+        var x = -w / 2 + 64;
+        var gap = w / Defs.MAX_CARDS_PER_ROUND;
+
+        var count = 1;
+
+        var dummyGroup = [];
+        for (var j = 0; j < count; ++j) {
+            var dummy = new DummyEntity();
+            dummy.setOffset(0, 0);
+            dummy.snap(name, this.team);
+            this.battleRoot.addChild(dummy);
+            dummyGroup.push(dummy);
+        }
+
+        var button = this.cardButtons[i];
+        if (!button) {
+            button = this.cardButtonsPool.pop();
+            button.index = i;
+            button.setPosition(cc.p(x + i * gap, 0));
+
+            if (!button.getParent()) {
+                this.buttonRoot.addChild(button);
+            }
+
+            this.cardButtons[i] = button;
+        }
+
+        button.setCharacterName(name, this.team);
+        button.setDummies(dummyGroup);
+        return button;
+    },
+
+    clearCardButtons: function () {
         for (var i = 0; i < this.cardButtons.length; ++i) {
             var button = this.cardButtons[i];
             this.cardButtonsPool.push(button);
@@ -134,6 +160,28 @@ var ActionBar = cc.Node.extend({
         var y = Math.floor(pt.y * 100 / Defs.ARENA_CELL_HEIGHT);
 
         this.socket.send({ x, y, type: "deploy", name: card.name, ref: card.ref });
+    },
+
+    recycleCardButton: function (ref) {
+        for (var i = this.pendingButtons.length - 1; i >= 0; --i) {
+            var btn = this.pendingButtons[i];
+            if (btn.ref === ref) {
+                this.cardButtonsPool.push(btn);
+
+                this.pendingButtons[i] = this.pendingButtons[this.pendingButtons.length - 1];
+                this.pendingButtons.length--;
+            }
+        }
+
+        for (var i = 0; i < this.cardButtons.length; ++i) {
+            if (this.cardButtons[i] == null) {
+                if (this.handIndex >= this.hand.length) {
+                    this.handIndex = 0;
+                }
+                this.setCard(i, this.hand[this.handIndex]);
+                this.handIndex++;
+            }
+        }
     }
 });
 

@@ -7,6 +7,7 @@ import Presentation from "./presentation";
 import ActionBar from "./actionBar";
 import ActionTouchpad from "./actionTouchpad";
 import ui from "../utils/ui";
+import shuffle from "../utils/shuffle";
 
 var config = require("config");
 
@@ -43,7 +44,7 @@ var Battle = cc.Layer.extend({
         this.presentation.setPosition(groundSize.width / 2, groundSize.height / 2);
         this.ground.addChild(this.presentation, 10);
 
-        this.actionBar = new ActionBar({ maxEnergy: 10, battleRoot: this.presentation.root, socket: this.socket });
+        this.actionBar = new ActionBar({ maxEnergy: 10, battleRoot: this.presentation.root, socket: this.socket, team: room.playerId });
         this.actionBar.setAnchorPoint(0, 0);
         this.actionBar.setPosition(ui.relativeTo(this, ui.LEFT_BOTTOM, 0, 0));
         this.addChild(this.actionBar, 40);
@@ -113,7 +114,10 @@ var Battle = cc.Layer.extend({
         this.state = State.RUNNING;
 
         var room = getStoreState().room;
-        this.actionBar.setCurrentCards(room.playerId, ["dummy"]);
+
+        var hand = ["dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy", "dummy"];
+        shuffle(hand);
+        this.actionBar.setHand(hand);
 
         this.actionBar.setVisible(true);
         this.touchpad.setVisible(true);
@@ -126,7 +130,9 @@ var Battle = cc.Layer.extend({
     handleTurn: function (message) {
         var deployList = message.deploy;
         for (var i = 0; i < deployList.length; ++i) {
-            this.presentation.deploy(deployList[i]);
+            var deployment = deployList[i];
+            this.actionBar.recycleCardButton(deployment.ref);
+            this.presentation.deploy(deployment);
         }
 
         this.presentation.step(message.dt);
