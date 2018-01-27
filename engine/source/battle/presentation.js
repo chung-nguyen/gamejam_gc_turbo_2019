@@ -48,7 +48,7 @@ var Presentation = cc.Node.extend({
     },
 
     update: function (dt) {
-        this.timeFrameCounter += dt;
+        this.timeFrameCounter += dt * 1000;
 
         for (var i = 0; i < this.units.length; ++i) {
             this.units[i].update(dt);

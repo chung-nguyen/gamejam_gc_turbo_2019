@@ -84,7 +84,7 @@ var EntityMeleeFighter = EntityBase.extend({
             }
         }
 
-        this._futurePosition = cc.p(this.logic.x, this.logic.y);
+        this._futurePosition = this.convertPosition(this.logic.x, this.logic.y);
         return true;
     }
 });
