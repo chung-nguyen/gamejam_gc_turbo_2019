@@ -109,7 +109,7 @@ var UNIT_DATA = {
         }
     },
     giant: {
-        HP: 1000,
+        HP: 100,
         Damage: 10,
         Size: 100,
         Range: 400,
@@ -125,6 +125,23 @@ var UNIT_DATA = {
             die: { name: "giant_hero_die", count: 21, loop: false }
         }
     },
+    axeman: {
+        HP: 100,
+        Damage: 20,
+        Size: 100,
+        Range: 200,
+        Sight: 500,
+        Cool: 2000,
+        Speed: 80,
+        Cost: 2,
+        Klass: "entityMeleeFighter",
+        animation: {
+            idle: { name: "axe_hero_idle", count: 1, loop: true },
+            walk: { name: "axe_hero_walk", count: 31, loop: true },
+            attack: { name: "axe_hero_attack", count: 41, loop: false },
+            die: { name: "axe_hero_die", count: 16, loop: false }
+        }
+    }
 }
 
 module.exports = {
