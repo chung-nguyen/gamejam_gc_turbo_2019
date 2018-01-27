@@ -9,6 +9,15 @@ var EntityTower = EntityBase.extend({
 
         this.sprite = new cc.Sprite("#tower_idle_0.png");
         this.addChild(this.sprite);
+    },
+
+    step: function (dt) {
+        if (!this.stepLiveliness(dt)) {
+            return false;
+        }
+
+        this._super(dt);
+        return true;
     }
 });
 

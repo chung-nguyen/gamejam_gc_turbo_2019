@@ -7,7 +7,8 @@ echo Make source only
 
 cd ../engine
 
-if [ "$1" = "release" ]; then 
+if [ "$1" = "release" ]; then
+export NODE_ENV=production
 ../node_modules/.bin/webpack -p
 else
 ../node_modules/.bin/webpack

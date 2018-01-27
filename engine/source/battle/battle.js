@@ -89,6 +89,10 @@ var Battle = cc.Layer.extend({
     },
 
     update: function (dt) {
+        if (this.state === State.GAMEOVER) {
+            return this.updateGameOver(dt);
+        }
+
         if (this.state === State.LOADING && this.socket.isReady) {
             this.send({ type: "ready" });
             this.state = State.WAITING;
@@ -114,6 +118,17 @@ var Battle = cc.Layer.extend({
         this.presentation.update(dt);
     },
 
+    initGameOver: function (result) {
+        this.state = State.GAMEOVER;
+
+        // TODO
+    },
+
+    updateGameOver: function (dt) {
+        // TODO
+        cc.director.runScene(new window.SplashScene());
+    },
+
     handleReady: function (message) {
         cc.log("Battle ready!");
         this.state = State.RUNNING;
@@ -130,9 +145,13 @@ var Battle = cc.Layer.extend({
         this.presentation.init();
     },
 
-    handleTimeOver: function (message) {},
+    handleTimeOver: function (message) {
+        this.initGameOver({ winnerId: -1 });
+    },
 
     handleTurn: function (message) {
+        if (this.state !== State.RUNNING) return;
+
         this.replay[message.index] = message;
         if (message.index > this.receivedTurnCount) {
             this.receivedTurnCount = message.index;
@@ -150,6 +169,10 @@ var Battle = cc.Layer.extend({
             this.presentation.step(turn.dt);
             this.actionBar.setEnergy(this.presentation.energy);
             ++this.currentTurn;
+
+            if (this.presentation.result) {
+                this.initGameOver(this.presentation.result);
+            }
         }
     }
 });

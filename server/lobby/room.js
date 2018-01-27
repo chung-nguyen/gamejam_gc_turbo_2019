@@ -1,6 +1,6 @@
 var WebSocket = require("ws");
 
-var UPDATE_INTERVAL = 100;
+var UPDATE_INTERVAL = 200;
 var READY_TIMEOUT = 1000;
 
 var Room = function (id) {
