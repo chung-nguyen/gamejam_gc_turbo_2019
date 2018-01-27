@@ -17,7 +17,7 @@ var EnergyBar = cc.Node.extend({
         var barScale = emptyBar.getScale();
 
         // Fill
-        this.halfFill = ui.makeProgressBar(this, {
+        this.halfFill = ui.makeProgressBar(emptyBar, {
             sprite: "half_fill_energy_bar.png",
             anchorPoint: cc.p(0.5, 0.5),
             position: cc.p(0, 0),
@@ -25,7 +25,7 @@ var EnergyBar = cc.Node.extend({
             percent: 0
         });
 
-        this.fullFill = ui.makeProgressBar(this, {
+        this.fullFill = ui.makeProgressBar(emptyBar, {
             sprite: "full_energy_bar_" + opts.team + ".png",
             anchorPoint: cc.p(0.5, 0.5),
             position: cc.p(0, 0),
@@ -37,19 +37,19 @@ var EnergyBar = cc.Node.extend({
         var gap = opts.width / opts.maxEnergy;
         var x = -opts.width / 2 + gap;
         for (var i = 0; i < opts.maxEnergy - 1; ++i) {
-            ui.makeImageView(this, {
+            ui.makeImageView(emptyBar, {
                 sprite: "energy_bar_separator.png",
                 anchorPoint: cc.p(0.5, 0.5),
                 position: cc.p(x, 0),
-                scaleX: 1,
-                scaleY: barScale
+                scaleX: barScale,
+                scaleY: 1
             });
 
             x += gap;
         }
 
         // Icon
-        ui.makeImageView(this, {
+        ui.makeImageView(emptyBar, {
             sprite: "icon_energy_" + opts.team + ".png",
             anchorPoint: cc.p(0.25, 0.5),
             position: cc.p(-opts.width / 2, 0),

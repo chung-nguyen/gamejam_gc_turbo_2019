@@ -19,7 +19,7 @@ var ActionBar = cc.Node.extend({
             sprite: "action_bar_panel.png",
             scale9Size: cc.size(Defs.ACTION_BAR_WIDTH, Defs.ACTION_BAR_HEIGHT),
             anchorPoint: cc.p(0, 0),
-            position: ui.relativeTo(this, ui.CENTER_BOTTOM, (Defs.SCREEN_SIZE.width - Defs.ACTION_BAR_WIDTH)/2, 0),
+            position: ui.relativeTo(this, ui.LEFT_BOTTOM, 0, 0),
             ignoreContentAdaptWithSize: false
         });
 
@@ -34,13 +34,13 @@ var ActionBar = cc.Node.extend({
             maxEnergy: opts.maxEnergy || 10
         });
         this.energyBar.setAnchorPoint(cc.p(0, 0));
-        this.energyBar.setPosition(ui.relativeTo(panel, ui.CENTER_BOTTOM, 0, 60));
+        this.energyBar.setPosition(ui.relativeTo(panel, ui.CENTER_BOTTOM, 0, 50));
         this.energyBar.setFill(0);
         panel.addChild(this.energyBar); 
 
         this.buttonRoot = ui.makeNode(panel, {
-            anchorPoint: cc.p(0.5, 0),
-            position: ui.relativeTo(panel, ui.CENTER_TOP, 0, 90)
+            anchorPoint: cc.p(0, 0),
+            position: ui.relativeTo(panel, ui.CENTER_BOTTOM, 0, 60)
         });
 
         this._opts = opts;
@@ -109,8 +109,7 @@ var ActionBar = cc.Node.extend({
         if (!button) {
             button = this.cardButtonsPool.pop();
             button.index = i;
-            button.setPosition(cc.p(x + i * gap, 0));
-
+            button.setPosition(ui.relativeTo(this.buttonRoot, ui.LEFT_MIDDLE, x + i * gap, 0));
             if (!button.getParent()) {
                 this.buttonRoot.addChild(button);
             }

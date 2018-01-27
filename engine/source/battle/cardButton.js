@@ -5,9 +5,7 @@ var CardButton = cc.Node.extend({
     ctor: function(opts) {
         this._super();
 
-        var spr = new cc.Sprite();
-        this.addChild(spr);
-        this.sprite = spr;
+        
 
         this.dummies = [];
 
@@ -15,6 +13,20 @@ var CardButton = cc.Node.extend({
         this.team = 0;
         this.index = 0;
         this.ref = 0;
+
+        this.frame = ui.makeImageView(this, {
+            sprite: "popup_frame.png",
+            scale9Size: cc.size(Defs.ACTION_BAR_HEIGHT*0.75, Defs.ACTION_BAR_HEIGHT*0.75),
+            anchorPoint: cc.p(0, 0),
+            position: ui.relativeTo(this, ui.CENTER, 0, 0),
+            ignoreContentAdaptWithSize: false
+        });
+
+        var spr = new cc.Sprite();
+        this.sprite = spr;
+        this.frame.addChild(spr);
+        
+        
 
         this.isSelected = false;
     },
@@ -25,6 +37,8 @@ var CardButton = cc.Node.extend({
             this.team = team;
             this.sprite.setSpriteFrame(name + "_portrait.png");
             this.sprite.setScaleX(-1);
+            this.sprite.setAnchorPoint(cc.p(0.5, 0.5));
+            this.sprite.setPosition(ui.relativeTo(this.frame, ui.CENTER_BOTTOM, 0, 20));
             this.createAnimAction();
             
         }
@@ -54,15 +68,12 @@ var CardButton = cc.Node.extend({
 
     unselect: function() {
         this.isSelected = false;
-        this.sprite.setPosition(cc.p(0, 0));
         this.sprite.stopAllActions();
     },
 
     select: function() {
         this.isSelected = true;
-        this.sprite.setPosition(cc.p(0, 20));
         this.sprite.runAction(this.animAction);
-
         for (var i = 0; i < this.dummies.length; ++i) {
             var dummy = this.dummies[i];
             dummy.setFacing(this.team === 0 ? 1 : -1);
@@ -102,9 +113,9 @@ var CardButton = cc.Node.extend({
 
     containsTouchLocation: function(touch) {
         var pt = touch.getLocation();
-        var sz = this.sprite.getContentSize();
+        var sz = this.frame.getContentSize();
         var bb = cc.rect(0, 0, sz.width, sz.height);
-        return cc.rectContainsPoint(bb, this.sprite.convertToNodeSpace(pt));
+        return cc.rectContainsPoint(bb, this.frame.convertToNodeSpace(pt));
     },
     createAnimAction: function () {
         var animationName = Defs.UNIT_DATA[this.name].animation.attack.name;
