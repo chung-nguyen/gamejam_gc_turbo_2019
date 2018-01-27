@@ -90,6 +90,23 @@ var UNIT_DATA = {
             attack: { name: "knife_hero_attack", count: 16, loop: false },
             die: { name: "knife_hero_die", count: 17, loop: false }
         }
+    },
+    gunner: {
+        HP: 100,
+        Damage: 5,
+        Size: 100,
+        Range: 500,
+        Sight: 500,
+        Cool: 1000,
+        Speed: 100,
+        Cost: 2,
+        Klass: "entityMeleeFighter",
+        animation: {
+            idle: { name: "gun_hero_idle", count: 1, loop: true },
+            walk: { name: "gun_hero_walk", count: 31, loop: true },
+            attack: { name: "gun_hero_attack", count: 7, loop: false },
+            die: { name: "gun_hero_die", count: 12, loop: false }
+        }
     }
 }
 

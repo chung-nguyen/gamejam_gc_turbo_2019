@@ -135,7 +135,7 @@ var Battle = cc.Layer.extend({
 
         var room = getStoreState().room;
 
-        var hand = ["raider", "raider", "raider", "raider", "raider", "raider", "raider", "raider"];
+        var hand = ["raider", "gunner", "raider", "gunner", "raider", "gunner", "raider", "gunner"];
         shuffle(hand);
         this.actionBar.setHand(hand);
 
