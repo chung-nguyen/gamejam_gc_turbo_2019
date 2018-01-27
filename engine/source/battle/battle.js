@@ -24,6 +24,7 @@ var Battle = cc.Layer.extend({
         this.socket = new SocketClient();
         this.state = State.LOADING;
         this.currentTurn = 0;
+        this.receivedTurnCount = 0;
         this.replay = {};
     },
 
@@ -109,6 +110,8 @@ var Battle = cc.Layer.extend({
                     break;
             }
         }
+
+        this.presentation.update(dt);
     },
 
     handleReady: function (message) {
@@ -131,9 +134,12 @@ var Battle = cc.Layer.extend({
 
     handleTurn: function (message) {
         this.replay[message.index] = message;
+        if (message.index > this.receivedTurnCount) {
+            this.receivedTurnCount = message.index;
+        }
 
         var turn = this.replay[this.currentTurn];
-        if (turn) {
+        if (turn && this.receivedTurnCount - this.currentTurn >= Defs.TURN_PADDING) {
             var deployList = turn.deploy;
             for (var i = 0; i < deployList.length; ++i) {
                 var deployment = deployList[i];
