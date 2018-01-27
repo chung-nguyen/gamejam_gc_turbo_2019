@@ -56,7 +56,8 @@ var Battle = cc.Layer.extend({
         var touchpad = new ActionTouchpad({
             contentSize: cc.size(Defs.SCREEN_SIZE.width, Defs.SCREEN_SIZE.height),
             actionBar: this.actionBar,
-            battleRoot: this.presentation.root
+            battleRoot: this.presentation.root,
+            team: room.playerId
         });
 
         touchpad.setArenaSize(32, 18);

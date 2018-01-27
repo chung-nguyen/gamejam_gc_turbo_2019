@@ -11,6 +11,7 @@ var ActionTouchpad = cc.Node.extend({
         this._opts = opts;
         this.actionBar = opts.actionBar;
         this.selectedCard = null;
+        this.team = opts.team;
     },
 
     onEnter: function() {
@@ -137,7 +138,14 @@ var ActionTouchpad = cc.Node.extend({
 
         cc.log("CHECK " + x + " " + y);
 
-        return x >= 0 && y >= 0 && x < 32 && y < 18;
+        var xCond;
+        if (this.team === 0) {
+            xCond = x >= 0 && x < 14;
+        } else {
+            xCond = x > 18 && x < 32;
+        }
+
+        return xCond && (y >= 0 && y < 18);
     },
 
     _containsTouchLocation: function(touch) {
