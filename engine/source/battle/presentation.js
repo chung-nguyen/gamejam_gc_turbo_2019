@@ -12,6 +12,8 @@ var Presentation = cc.Node.extend({
         this.root = new cc.Node();
         this.root.setPosition(cc.p(-Defs.ARENA_WIDTH / 2, -Defs.ARENA_HEIGHT / 2));
         this.addChild(this.root, 0);
+
+        this.energy = 0;
     },
 
     rotate: function (angle) {
@@ -42,18 +44,24 @@ var Presentation = cc.Node.extend({
         var rightHQ = new EntityHQ(0);
         rightHQ.setLocation(2900, 900);
         this.root.addChild(rightHQ);
+
+        this.energy = 0;
     },
 
     update: function (dt) {
 
     },
 
-    deploy: function (data) {
-
+    deploy: function (deployment) {
+        var unitData = Defs.UNIT_DATA[deployment.name];
+        this.energy -= unitData.Cost * 1000;
     },
 
     step: function (dt) {
-
+        this.energy += dt / 2;
+        if (this.energy > 10000) {
+            this.energy = 10000;
+        }
     }
 });
 

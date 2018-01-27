@@ -25,6 +25,7 @@ var ActionBar = cc.Node.extend({
 
         this.panel = panel;
         this.team = opts.team;
+        this.energy = 0;
 
         this.energyBar = new EnergyBar({
             width: Defs.ACTION_BAR_WIDTH - 170,
@@ -34,7 +35,7 @@ var ActionBar = cc.Node.extend({
         });
         this.energyBar.setAnchorPoint(cc.p(0.5, 0));
         this.energyBar.setPosition(ui.relativeTo(panel, ui.CENTER_BOTTOM, 0, 60));
-        this.energyBar.setFill(1020);
+        this.energyBar.setFill(0);
         panel.addChild(this.energyBar);
 
         this.buttonRoot = ui.makeNode(panel, {
@@ -58,6 +59,7 @@ var ActionBar = cc.Node.extend({
             onShow: function () {
                 this.setVisible(true);
                 this.sprite.setVisible(true);
+                this.unselect();
             },
             onDestroy: function () {
                 this.clearDummies();
@@ -133,7 +135,10 @@ var ActionBar = cc.Node.extend({
         for (var i = 0; i < this.cardButtons.length; ++i) {
             var button = this.cardButtons[i];
             if (button && button.isVisible() && button.containsTouchLocation(touch)) {
-                return button;
+                var data = Defs.UNIT_DATA[button.name];
+                if (data && data.Cost * 1000 <= this.energy) {
+                    return button;
+                }
             }
         }
 
@@ -182,6 +187,11 @@ var ActionBar = cc.Node.extend({
                 this.handIndex++;
             }
         }
+    },
+
+    setEnergy: function (value) {
+        this.energy = value;
+        this.energyBar.setFill(value);
     }
 });
 

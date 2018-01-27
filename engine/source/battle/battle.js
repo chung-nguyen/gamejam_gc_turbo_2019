@@ -23,6 +23,8 @@ var Battle = cc.Layer.extend({
         this._super();
         this.socket = new SocketClient();
         this.state = State.LOADING;
+        this.currentTurn = 0;
+        this.replay = {};
     },
 
     isReady: function () {
@@ -128,14 +130,21 @@ var Battle = cc.Layer.extend({
     handleResult: function (message) {},
 
     handleTurn: function (message) {
-        var deployList = message.deploy;
-        for (var i = 0; i < deployList.length; ++i) {
-            var deployment = deployList[i];
-            this.actionBar.recycleCardButton(deployment.ref);
-            this.presentation.deploy(deployment);
-        }
+        this.replay[message.index] = message;
 
-        this.presentation.step(message.dt);
+        var turn = this.replay[this.currentTurn];
+        if (turn) {
+            var deployList = turn.deploy;
+            for (var i = 0; i < deployList.length; ++i) {
+                var deployment = deployList[i];
+                this.actionBar.recycleCardButton(deployment.ref);
+                this.presentation.deploy(deployment);
+            }
+
+            this.presentation.step(turn.dt);
+            this.actionBar.setEnergy(this.presentation.energy);
+            ++this.currentTurn;
+        }
     }
 });
 

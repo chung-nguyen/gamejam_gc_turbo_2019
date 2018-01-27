@@ -21,21 +21,24 @@ var UNIT_DATA = {
         Damage: 10,
         Size: 1,
         Range: 5,
-        Cool: 1000
+        Cool: 1000,
+        Cost: 0
     },
     tower: {
         HP: 100,
         Damage: 10,
         Size: 1,
         Range: 5,
-        Cool: 1000
+        Cool: 1000,
+        Cost: 0
     },
     dummy: {
         HP: 100,
         Damage: 10,
         Size: 1,
         Range: 1,
-        Cool: 1000
+        Cool: 1000,
+        Cost: 2
     }
 }
 
