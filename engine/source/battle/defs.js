@@ -141,7 +141,24 @@ var UNIT_DATA = {
             attack: { name: "axe_hero_attack", count: 41, loop: false },
             die: { name: "axe_hero_die", count: 16, loop: false }
         }
-    }
+    },
+    flamer: {
+        HP: 100,
+        Damage: 5,
+        Size: 100,
+        Range: 300,
+        Sight: 500,
+        Cool: 500,
+        Speed: 100,
+        Cost: 2,
+        Klass: "entityMeleeFighter",
+        animation: {
+            idle: { name: "spit_fire_hero_idle", count: 1, loop: true },
+            walk: { name: "spit_fire_hero_walk", count: 31, loop: true },
+            attack: { name: "spit_fire_hero_attack", count: 11, loop: false },
+            die: { name: "spit_fire_hero_die", count: 15, loop: false }
+        }
+    },
 }
 
 module.exports = {

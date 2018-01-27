@@ -140,9 +140,9 @@ var ActionTouchpad = cc.Node.extend({
 
         var xCond;
         if (this.team === 0) {
-            xCond = x >= 0 && x < 14;
+            xCond = x >= 0 && x < 15;
         } else {
-            xCond = x > 18 && x < 32;
+            xCond = x > 17 && x < 32;
         }
 
         return xCond && (y >= 0 && y < 18);
