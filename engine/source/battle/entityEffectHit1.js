@@ -9,7 +9,7 @@ var EntityEffectHit1 = EntityBase.extend({
         this._super(team, presentation);
 
         this.target = null;
-        this.life = 500;
+        this.life = 600;
         this.owner = owner;
 
         this.target = target;
@@ -21,14 +21,19 @@ var EntityEffectHit1 = EntityBase.extend({
         this.zShift = 10;
         this.syncPosition();
 
-        target.damage(this.owner.attr.Damage);
-
-        var animAction = this.createAnimAction({ name: "hit1_idle", count: 1, loop: false });
-        this.sprite.runAction(animAction);
+        this.animAction = this.createAnimAction({ name: "hit1_idle", count: 1, loop: false });
+        this.state = Defs.UNIT_STATE_IDLE;
     },
 
     step: function (dt) {
         this._super(dt);
+
+        if (this.life <= 400 && this.state === Defs.UNIT_STATE_IDLE) {
+            this.sprite.runAction(this.animAction);
+            this.state = Defs.UNIT_STATE_ATTACK;
+
+            this.target.damage(this.owner.attr.Damage);
+        }
 
         this.life -= dt;
         return this.life > 0;

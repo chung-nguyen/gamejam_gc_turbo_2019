@@ -8,7 +8,8 @@ import approxDistance from "../utils/approxDistance";
 var EntityMeleeFighter = EntityBase.extend({
     setUnitData (data) {
         this._super(data);
-        this.sprite.runAction(this.animAction.idle);
+        this.currentAction = this.animAction.idle;
+        this.sprite.runAction(this.currentAction);
     },
 
     update: function (dt) {
@@ -18,29 +19,30 @@ var EntityMeleeFighter = EntityBase.extend({
     },
 
     step: function (dt) {
-        if (!this.stepLiveliness(dt)) {
-            return false;
-        }
+        if (!this.stepLiveliness(dt)) return false;
+        if (this.state === Defs.UNIT_STATE_DYING) return true;
 
         this._super(dt);
 
         if (this.state === Defs.UNIT_STATE_IDLE) {
+            this.intentAction = this.animAction.idle;
+
             var enemy = this.presentation.findEnemy(this);
             if (enemy) {
                 this.state = Defs.UNIT_STATE_WALK;
-                this.sprite.runAction(this.animAction.walk);
                 this.stateData.target = enemy;
             } else {
                 var goal = this.presentation.findGoal(this);
                 if (goal) {
                     this.state = Defs.UNIT_STATE_WALK;
-                    this.sprite.runAction(this.animAction.walk);
                     this.stateData.target = goal;
                 }
             }
         }
 
         if (this.state === Defs.UNIT_STATE_WALK) {
+            this.intentAction = this.animAction.walk;
+
             var enemy = this.presentation.findEnemy(this);
             if (enemy) {
                 this.stateData.target = enemy;
@@ -61,11 +63,9 @@ var EntityMeleeFighter = EntityBase.extend({
                     this.logic.y += dy * v / mag;
                 } else {
                     this.state = Defs.UNIT_STATE_ATTACK;
-                    this.sprite.runAction(this.animAction.attack);
                 }
             } else {
                 this.state = Defs.UNIT_STATE_IDLE;
-                this.sprite.runAction(this.animAction.idle);
             }
         }
 
@@ -73,6 +73,8 @@ var EntityMeleeFighter = EntityBase.extend({
             var target = this.stateData.target;
             if (target && target.isAlive()) {
                 if (this.logic.cool <= 0) {
+                    this.intentAction = this.animAction.attack;
+                    this.currentAction = null;
                     this.logic.cool = this.attr.Cool;
 
                     var hit = new EntityEffectHit1(this.team, this.presentation, this, target);
@@ -80,11 +82,16 @@ var EntityMeleeFighter = EntityBase.extend({
                 }
             } else {
                 this.state = Defs.UNIT_STATE_IDLE;
-                this.sprite.runAction(this.animAction.idle);
             }
         }
 
         this._futurePosition = this.convertPosition(this.logic.x, this.logic.y);
+
+        if (this.currentAction !== this.intentAction) {
+            this.currentAction = this.intentAction;
+            this.sprite.stopAllActions();
+            this.sprite.runAction(this.currentAction);
+        }
         return true;
     }
 });

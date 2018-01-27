@@ -9,12 +9,12 @@ echo Packing sprites...
 
 mkdir -p $OUTDIR
 
-$SPRITE_PACK --keepMargin=1 --maxSheetSize=2048 --outdir ../engine/res ../resources/bootstrap 
-$SPRITE_PACK --keepMargin=1 --outdir $OUTDIR ../resources/splash
-$SPRITE_PACK --keepMargin=1 --outdir $OUTDIR ../resources/battle
-$SPRITE_PACK --keepMargin=1 --outdir $OUTDIR ../resources/characters
-$SPRITE_PACK --keepMargin=1 --outdir $OUTDIR ../resources/effects
-$SPRITE_PACK --keepMargin=1 --outdir $OUTDIR ../resources/ui
+$SPRITE_PACK --maxSheetSize=2048 --outdir ../engine/res ../resources/bootstrap 
+$SPRITE_PACK --outdir $OUTDIR ../resources/splash
+$SPRITE_PACK --outdir $OUTDIR ../resources/battle
+$SPRITE_PACK --outdir $OUTDIR ../resources/characters
+$SPRITE_PACK --outdir $OUTDIR ../resources/effects
+$SPRITE_PACK --outdir $OUTDIR ../resources/ui
 
 cp -f ../resources/sound/* $OUTDIR/
 

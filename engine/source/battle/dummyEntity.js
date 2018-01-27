@@ -1,7 +1,7 @@
 import Defs from "./defs";
 
 var DummyEntity = cc.Node.extend({
-    ctor: function() {
+    ctor: function () {
         this._super(0);
 
         this.offsetX = 0;
@@ -11,18 +11,20 @@ var DummyEntity = cc.Node.extend({
     },
 
     snap: function (name, team) {
-        this.sprite = new cc.Sprite("#" + name + "_idle_0.png");
+        var unitData = Defs.UNIT_DATA[name];
+
+        this.sprite = new cc.Sprite("#" + unitData.animation.idle.name + "_0.png");
         this.sprite.setOpacity(128);
         this.addChild(this.sprite);
     },
 
-    setFacing: function(value) {
+    setFacing: function (value) {
         this.facing = value;
-        this.setScaleX(value < 0 ? -1 : 1);
+        this.setScaleX(value < 0 ? 1 : -1);
         this.setScaleY(value < 0 ? -1 : 1);
     },
 
-    update: function(dt) {},
+    update: function (dt) {},
 
     setOffset: function (x, y) {
         this.offsetX = x;

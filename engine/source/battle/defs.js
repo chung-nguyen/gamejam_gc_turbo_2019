@@ -73,6 +73,23 @@ var UNIT_DATA = {
             attack: { name: "dummy_attack", count: 4, loop: false },
             die: { name: "dummy_die", count: 4, loop: false }
         }
+    },
+    raider: {
+        HP: 100,
+        Damage: 10,
+        Size: 100,
+        Range: 150,
+        Sight: 500,
+        Cool: 1000,
+        Speed: 100,
+        Cost: 2,
+        Klass: "entityMeleeFighter",
+        animation: {
+            idle: { name: "knife_hero_idle", count: 1, loop: true },
+            walk: { name: "knife_hero_walk", count: 31, loop: true },
+            attack: { name: "knife_hero_attack", count: 16, loop: false },
+            die: { name: "knife_hero_die", count: 17, loop: false }
+        }
     }
 }
 

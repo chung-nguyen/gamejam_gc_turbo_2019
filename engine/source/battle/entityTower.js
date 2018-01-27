@@ -11,9 +11,8 @@ var EntityTower = EntityBase.extend({
     },
 
     step: function (dt) {
-        if (!this.stepLiveliness(dt)) {
-            return false;
-        }
+        if (!this.stepLiveliness(dt)) return false;
+        if (this.state === Defs.UNIT_STATE_DYING) return true;
 
         this._super(dt);
 

@@ -59,16 +59,16 @@ var EntityBase = cc.Node.extend({
         var camRot = Camera.rotate;
         if (value < 0) {
             if (camRot === 0) {
-                this.setScaleX(-1);
+                this.setScaleX(1);
             } else {
-                this.setScaleX(-1);
+                this.setScaleX(1);
                 this.setScaleY(-1);
             }
         } else {
             if (camRot === 0) {
-                this.setScaleX(1);
+                this.setScaleX(-1);
             } else {
-                this.setScaleX(1);
+                this.setScaleX(-1);
                 this.setScaleY(-1);
             }
         }
@@ -148,7 +148,13 @@ var EntityBase = cc.Node.extend({
         } else if (!this.isAlive()) {
             this.state = Defs.UNIT_STATE_DYING;
             this.stateData.time = 0;
-            this.sprite.runAction(this.animAction.die);
+
+            this._departurePosition = this._futurePosition;
+
+            this.currentAction = this.intentAction = this.animAction.die;
+
+            this.sprite.stopAllActions();
+            this.sprite.runAction(this.currentAction);
         }
 
         return true;
