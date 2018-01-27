@@ -42,6 +42,10 @@ var EntityBase = cc.Node.extend({
         return this.logic.HP > 0;
     },
 
+    isActive: function () {
+        return this.logic.HP > 0 || this.stateData.time < 2000;
+    },
+
     damage: function (amount) {
         this.logic.HP -= amount;
     },

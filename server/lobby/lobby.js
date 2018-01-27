@@ -84,7 +84,7 @@ Lobby.prototype.getRoom = function (roomId) {
 Lobby.prototype.update = function () {
     for (var i = this.rooms.length - 1; i >= 0; --i) {
         var room = this.rooms[i];
-        if (!room.isAlive) {
+        if (!room.isAlive || room.isOutdated()) {
             room.destroy();
 
             this.rooms[i] = this.rooms[this.rooms.length - 1];

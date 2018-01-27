@@ -138,14 +138,14 @@ var Presentation = cc.Node.extend({
 
         var leftHQ = this.leftGoals[this.leftGoals.length - 1];
         var rightHQ = this.rightGoals[this.rightGoals.length - 1];
-        if (!leftHQ.isAlive()) {
-            if (!rightHQ.isAlive()) {
+        if (!leftHQ.isActive()) {
+            if (!rightHQ.isActive()) {
                 this.result = { winnerId: -1 };
             } else {
                 this.result = { winnerId: 1 };
             }
-        } else if (!rightHQ.isAlive()) {
-            if (!leftHQ.isAlive()) {
+        } else if (!rightHQ.isActive()) {
+            if (!leftHQ.isActive()) {
                 this.result = { winnerId: -1 };
             } else {
                 this.result = { winnerId: 0 };

@@ -54,7 +54,7 @@ var UNIT_DATA = {
         animation: {
             idle: { name: "tower_idle", count: 1, loop: true },
             attack: { name: "tower_attack", count: 1, loop: false },
-            die: { name: "tower_die", count: 1, loop: false }
+            die: { name: "tower_die", count: 15, loop: false }
         }
     },
     dummy: {

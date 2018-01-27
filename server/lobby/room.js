@@ -4,6 +4,7 @@ var UPDATE_INTERVAL = 200;
 var READY_TIMEOUT = 1000;
 var FINAL_TURN = 3 * 60 * 1000 / UPDATE_INTERVAL;
 var LAGGED_TURN_COUNT = 10;
+var OUTDATED_TIME = 15 * 60 * 1000;
 
 var Room = function (id) {
     this.id = id;
@@ -13,9 +14,14 @@ var Room = function (id) {
     this.deployList = [];
     this.readyCountdown = 0;
     this.turnCount = 0;
+    this.createdTime = Date.now();
 
     this._interval = setInterval(() => this.update(), UPDATE_INTERVAL);
 };
+
+Room.prototype.isOutdated = function () {
+    return !this.isReady && Date.now() - this.createdTime >= OUTDATED_TIME;
+}
 
 Room.prototype.destroy = function () {
     if (this._interval) {

@@ -26,7 +26,7 @@ var EntityEffectBullet = EntityBase.extend({
         this.syncPosition();
 
         this.idleAction = this.createAnimAction({ name: "effect_bullet_idle", count: 5, loop: true });
-        this.hitAction = this.createAnimAction({ name: "effect_bullet_idle", count: 5, loop: true });
+        this.hitAction = this.createAnimAction({ name: "effect_bullet_idle", count: 1, loop: true });
         this.state = Defs.UNIT_STATE_IDLE;
 
         this.sprite.runAction(this.idleAction);
