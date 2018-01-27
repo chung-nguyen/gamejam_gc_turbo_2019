@@ -56,9 +56,9 @@ var EntityEffectBullet = EntityBase.extend({
                     this.logic.x = this.target.logic.x;
                     this.logic.y = this.target.logic.y;
                     isHit = true;
-                } else {
-                    this._futurePosition = this.convertPosition(this.logic.x, this.logic.y);
                 }
+
+                this._futurePosition = this.convertPosition(this.logic.x, this.logic.y);
             } else {
                 isHit = true;
             }
@@ -67,8 +67,6 @@ var EntityEffectBullet = EntityBase.extend({
                 this.sprite.runAction(this.hitAction);
                 this.state = Defs.UNIT_STATE_ATTACK;
                 this.target.damage(this.owner.attr.Damage);
-
-                this._departurePosition = this._futurePosition = this.convertPosition(this.logic.x, this.logic.y);
             }
         } else if (this.state === Defs.UNIT_STATE_ATTACK) {
             this.life -= dt;

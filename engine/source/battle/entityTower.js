@@ -3,6 +3,7 @@ import Defs from "./defs";
 import Camera from "./camera";
 import EntityBase from "./entityBase";
 import EntityEffectHit1 from "./entityEffectHit1";
+import EntityEffectBullet from "./entityEffectBullet";
 
 var EntityTower = EntityBase.extend({
     setUnitData (data) {
@@ -31,7 +32,7 @@ var EntityTower = EntityBase.extend({
                 if (this.logic.cool <= 0) {
                     this.logic.cool = this.attr.Cool;
 
-                    var hit = new EntityEffectHit1(this.team, this.presentation, this, target);
+                    var hit = new EntityEffectBullet(this.team, this.presentation, this, target);
                     this.presentation.addEffect(hit);
                 }
             } else {

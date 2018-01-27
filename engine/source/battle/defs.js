@@ -26,28 +26,28 @@ var ANIMATION_FPS = 30;
 
 var UNIT_DATA = {
     hq: {
-        HP: 100,
-        Damage: 10,
+        HP: 2400,
+        Damage: 50,
         Size: 100,
-        Range: 600,
+        Range: 700,
         Sight: 500,
         Cool: 1000,
         Speed: 0,
         Cost: 0,
         Klass: "entityHQ",
         animation: {
-            idle: { name: "tower_idle", count: 1, loop: true },
-            attack: { name: "tower_attack", count: 1, loop: false },
-            die: { name: "tower_die", count: 1, loop: false }
+            idle: { name: "hq_idle", count: 1, loop: true },
+            attack: { name: "hq_attack", count: 1, loop: false },
+            die: { name: "hq_die", count: 1, loop: false }
         }
     },
     tower: {
-        HP: 100,
-        Damage: 10,
+        HP: 1400,
+        Damage: 50,
         Size: 100,
-        Range: 600,
+        Range: 750,
         Sight: 500,
-        Cool: 1000,
+        Cool: 800,
         Speed: 0,
         Cost: 0,
         Klass: "entityTower",
