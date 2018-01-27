@@ -59,10 +59,6 @@ var ActionBar = cc.Node.extend({
         this.myPlayerIndex = -1;
     },
 
-    setEngineGameId: function (value) {
-        this.engineGameId = value;
-    },
-
     setCurrentCards: function(team, cards) {
         this.clearCardButtons();
 
@@ -137,7 +133,7 @@ var ActionBar = cc.Node.extend({
         var x = Math.floor(pt.x * 100 / Defs.ARENA_CELL_WIDTH);
         var y = Math.floor(pt.y * 100 / Defs.ARENA_CELL_HEIGHT);
 
-        //this.socket.sendBuffer(nativeEngine.createTurnCommand(this.engineGameId, this.myPlayerIndex, Defs.DEPLOY_COMMAND, card.index, x, y, card.ref));
+        this.socket.send({ x, y, type: "deploy", name: card.name, ref: card.ref });
     }
 });
 

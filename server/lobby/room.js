@@ -1,10 +1,15 @@
+var WebSocket = require("ws");
+
+var UPDATE_INTERVAL = 100;
+
 var Room = function (id) {
     this.id = id;
     this.players = [];
     this.isAlive = true;
     this.isReady = false;
+    this.deployList = [];
 
-    this._interval = setInterval(() => this.update(), 100);
+    this._interval = setInterval(() => this.update(), UPDATE_INTERVAL);
 };
 
 Room.prototype.destroy = function () {
@@ -61,6 +66,9 @@ Room.prototype.handleMessage = function (userId, message) {
         case "ready":
             this.handlePlayerReady(p, data);
             break;
+        case "deploy":
+            this.handleDeploy(p, data);
+            break;
     }
 };
 
@@ -71,23 +79,25 @@ Room.prototype.getPlayer = function (userId) {
 Room.prototype.update = function (dt) {
     if (!this.isReady) return;
 
-    var turn = {};
+    var deploy = this.deployList;
+    this.deployList = [];
 
+    var turn = { deploy, type: "turn", dt: UPDATE_INTERVAL };
     this.sendAll(turn);
 };
 
 Room.prototype.sendTo = function (player, message) {
-    try {
+    if (player.ws && player.ws.readyState === WebSocket.OPEN) {
         player.ws.send(JSON.stringify(message));
-    } catch (e) {}
+    }
 };
 
 Room.prototype.sendAll = function (message) {
     var data = JSON.stringify(message);
     this.players.forEach((p) => {
-        try {
+        if (p.ws && p.ws.readyState === WebSocket.OPEN) {
             p.ws.send(data);
-        } catch (e) {}
+        }
     });
 };
 
@@ -105,5 +115,11 @@ Room.prototype.handlePlayerReady = function (p, data) {
         this.sendAll({ type: "ready" });
     }
 };
+
+Room.prototype.handleDeploy = function (p, data) {
+    if (!this.isReady) return;
+
+    this.deployList.push(Object.assign(data, { playerId: p.index }));
+}
 
 module.exports = Room;

@@ -13,6 +13,30 @@ var ARENA_HEIGHT = 576;
 var ARENA_CELL_WIDTH = 32;
 var ARENA_CELL_HEIGHT = 32;
 
+var UNIT_DATA = {
+    hq: {
+        HP: 100,
+        Damage: 10,
+        Size: 1,
+        Range: 5,
+        Cool: 1000
+    },
+    tower: {
+        HP: 100,
+        Damage: 10,
+        Size: 1,
+        Range: 5,
+        Cool: 1000
+    },
+    dummy: {
+        HP: 100,
+        Damage: 10,
+        Size: 1,
+        Range: 1,
+        Cool: 1000
+    }
+}
+
 module.exports = {
     SCREEN_SIZE,
 
@@ -29,10 +53,5 @@ module.exports = {
     ARENA_CELL_WIDTH,
     ARENA_CELL_HEIGHT,
 
-    ENTITY_CLASS_ID_DEFEND_TOWER: 1,
-    ENTITY_CLASS_ID_MELEE_FIGHTER: 2,
-    ENTITY_CLASS_ID_RANGE_FIGHTER: 3,
-    ENTITY_CLASS_ID_PROJECTILE: 4,
-
-    DEPLOY_COMMAND: 1
+    UNIT_DATA
 };

@@ -11,7 +11,6 @@ var ActionTouchpad = cc.Node.extend({
         this._opts = opts;
         this.actionBar = opts.actionBar;
         this.selectedCard = null;
-        this.engineGameId = 0;
     },
 
     onEnter: function() {
@@ -33,10 +32,6 @@ var ActionTouchpad = cc.Node.extend({
     onExit: function() {
         this._super();
         cc.eventManager.removeListener(this._touchListener);
-    },
-
-    setEngineGameId: function (value) {
-        this.engineGameId = value;
     },
 
     setArenaSize: function(width, height) {

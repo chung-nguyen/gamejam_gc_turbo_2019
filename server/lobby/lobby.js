@@ -39,6 +39,8 @@ var Lobby = function (port) {
                         room.handleMessage(ws.userId, message);
                     }
                 });
+
+                ws.on("error", (err) => console.error(err));
             } else {
                 ws.close(1001, "room_unauthorized");
             }

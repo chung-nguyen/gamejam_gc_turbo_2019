@@ -48,8 +48,6 @@ var Battle = cc.Layer.extend({
         this.actionBar.setPosition(ui.relativeTo(this, ui.LEFT_BOTTOM, 0, 0));
         this.addChild(this.actionBar, 40);
 
-        this.actionBar.setCurrentCards(room.playerId, ["dummy"]);
-
         var touchpad = new ActionTouchpad({
             contentSize: cc.size(Defs.SCREEN_SIZE.width, Defs.SCREEN_SIZE.height),
             actionBar: this.actionBar,
@@ -60,6 +58,9 @@ var Battle = cc.Layer.extend({
 
         this.addChild(touchpad, 50);
         this.touchpad = touchpad;
+
+        this.actionBar.setVisible(false);
+        this.touchpad.setVisible(false);
 
         Camera.setRotate(room.playerId === 0 ? 0 : 180);
         this.presentation.rotate(Camera.rotate);
@@ -110,11 +111,26 @@ var Battle = cc.Layer.extend({
     handleReady: function (message) {
         cc.log("Battle ready!");
         this.state = State.RUNNING;
+
+        var room = getStoreState().room;
+        this.actionBar.setCurrentCards(room.playerId, ["dummy"]);
+
+        this.actionBar.setVisible(true);
+        this.touchpad.setVisible(true);
+
+        this.presentation.init();
     },
 
     handleResult: function (message) {},
 
-    handleTurn: function (message) {}
+    handleTurn: function (message) {
+        var deployList = message.deploy;
+        for (var i = 0; i < deployList.length; ++i) {
+            this.presentation.deploy(deployList[i]);
+        }
+
+        this.presentation.step(message.dt);
+    }
 });
 
 module.exports = Battle;

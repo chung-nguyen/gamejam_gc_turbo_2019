@@ -1,7 +1,5 @@
 import Defs from "./defs";
 
-import Camera from "./camera";
-
 var DummyEntity = cc.Node.extend({
     ctor: function() {
         this._super(0);
@@ -14,6 +12,7 @@ var DummyEntity = cc.Node.extend({
 
     snap: function (name, team) {
         this.sprite = new cc.Sprite("#" + name + "_idle_0.png");
+        this.sprite.setOpacity(128);
         this.addChild(this.sprite);
     },
 
