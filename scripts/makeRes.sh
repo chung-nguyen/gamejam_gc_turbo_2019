@@ -13,6 +13,7 @@ $SPRITE_PACK --keepMargin=1 --maxSheetSize=2048 --outdir ../engine/res ../resour
 $SPRITE_PACK --keepMargin=1 --outdir $OUTDIR ../resources/splash
 $SPRITE_PACK --keepMargin=1 --outdir $OUTDIR ../resources/battle
 $SPRITE_PACK --keepMargin=1 --outdir $OUTDIR ../resources/characters
+$SPRITE_PACK --keepMargin=1 --outdir $OUTDIR ../resources/effects
 $SPRITE_PACK --keepMargin=1 --outdir $OUTDIR ../resources/ui
 
 cp -f ../resources/sound/* $OUTDIR/

@@ -11,7 +11,7 @@ import Battle from "../battle";
 var InGameScene = BaseScene.extend({
     ctor: function () {
         this._super({
-            sprites: ["battle.plist", "characters.plist"] 
+            sprites: ["battle.plist", "characters.plist", "effects.plist"]
         });
     },
     onEnter: function () {
@@ -25,7 +25,7 @@ var InGameScene = BaseScene.extend({
         this._super();
         cc.log("Resource ready");
         this.battle = new Battle();
-        
+
         this.addChild(this.battle);
         this.battle.init();
         this.battle.connect();

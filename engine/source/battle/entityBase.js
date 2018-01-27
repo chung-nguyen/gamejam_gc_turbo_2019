@@ -10,7 +10,9 @@ var EntityBase = cc.Node.extend({
         this.logic = {
             HP: 0,
             x: 0,
-            y: 0
+            y: 0,
+            z: 0,
+            cool: 0
         };
 
         this.attr = {};
@@ -21,7 +23,8 @@ var EntityBase = cc.Node.extend({
 
         this.state = Defs.UNIT_STATE_IDLE;
         this.stateData = {
-            target: null
+            target: null,
+            time: 0
         };
 
         this._departurePosition = cc.p(0, 0);
@@ -30,6 +33,10 @@ var EntityBase = cc.Node.extend({
 
     isAlive: function () {
         return this.logic.HP > 0;
+    },
+
+    damage: function (amount) {
+        this.logic.HP -= amount;
     },
 
     setUnitData: function (data) {
@@ -60,11 +67,15 @@ var EntityBase = cc.Node.extend({
         this.logic.x = x;
         this.logic.y = y;
 
-        this.setPosition(this.convertPosition(x, y));
+        this.syncPosition();
     },
 
     convertPosition: function (x, y) {
         return cc.p(x * Defs.ARENA_CELL_WIDTH / 100, y * Defs.ARENA_CELL_HEIGHT / 100);
+    },
+
+    convertZ: function (z) {
+        return z * Defs.ARENA_CELL_HEIGHT / 100;
     },
 
     update: function (dt) {
@@ -72,7 +83,20 @@ var EntityBase = cc.Node.extend({
 
     step: function (dt) {
         this._departurePosition = this.convertPosition(this.logic.x, this.logic.y);
-        this._timeFrameCounter = 0;
+
+        if (this.logic.cool > 0) {
+            this.logic.cool -= dt;
+            if (this.logic.cool < 0) {
+                this.logic.cool = 0;
+            }
+        }
+
+        return true;
+    },
+
+    canAttack: function (target) {
+        // TODO
+        return true;
     },
 
     getDistanceTo: function (target) {
@@ -84,7 +108,32 @@ var EntityBase = cc.Node.extend({
     animatePosition: function () {
         var t = this.presentation.timeFrameCounter / this.presentation.stepTime;
         var pos = cc.p(cc.lerp(this._departurePosition.x, this._futurePosition.x, t), cc.lerp(this._departurePosition.y, this._futurePosition.y, t))
+        this.setLocalZOrder(Defs.ARENA_HEIGHT - pos.y);
+
+        pos.y += (Camera.rotate === 0 ? 1 : -1) * this.convertZ(this.logic.z);
         this.setPosition(pos);
+    },
+
+    syncPosition: function () {
+        var pos = this.convertPosition(this.logic.x, this.logic.y);
+        this.setLocalZOrder(Defs.ARENA_HEIGHT - pos.y);
+
+        pos.y += (Camera.rotate === 0 ? 1 : -1) * this.convertZ(this.logic.z);
+        this.setPosition(pos);
+    },
+
+    stepLiveliness: function (dt) {
+        if (this.state === Defs.UNIT_STATE_DYING) {
+            this.stateData.time += dt;
+            if (this.stateData.time >= 2000) {
+                return false;
+            }
+        } else if (!this.isAlive()) {
+            this.state = Defs.UNIT_STATE_DYING;
+            this.stateData.time = 0;
+        }
+
+        return true;
     }
 });
 

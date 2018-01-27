@@ -1,7 +1,8 @@
 var WebSocket = require("ws");
 
-var UPDATE_INTERVAL = 100;
+var UPDATE_INTERVAL = 200;
 var READY_TIMEOUT = 1000;
+var FINAL_TURN = 3 * 60 * 1000 / UPDATE_INTERVAL;
 
 var Room = function (id) {
     this.id = id;
@@ -20,6 +21,8 @@ Room.prototype.destroy = function () {
         clearInterval(this._interval);
         this._interval = null;
     }
+
+    this.isAlive = false;
 };
 
 Room.prototype.isFull = function () {
@@ -80,7 +83,7 @@ Room.prototype.getPlayer = function (userId) {
 };
 
 Room.prototype.update = function () {
-    if (!this.isReady) return;
+    if (!this.isReady || !this.isAlive) return;
 
     if (this.readyCountdown > 0) {
         this.readyCountdown -= UPDATE_INTERVAL;
@@ -90,8 +93,14 @@ Room.prototype.update = function () {
     var deploy = this.deployList;
     this.deployList = [];
 
-    var turn = { deploy, type: "turn", index: this.turnCount, dt: UPDATE_INTERVAL };
-    ++this.turnCount;
+    var turn;
+    if (this.turnCount >= FINAL_TURN) {
+        this.isAlive = false;
+        turn = { type: "timeOver" };
+    } else {
+        turn = { deploy, type: "turn", index: this.turnCount, dt: UPDATE_INTERVAL };
+        ++this.turnCount;
+    }
 
     this.sendAll(turn);
 };
@@ -131,6 +140,6 @@ Room.prototype.handleDeploy = function (p, data) {
     if (!this.isReady) return;
 
     this.deployList.push(Object.assign(data, { playerId: p.index }));
-}
+};
 
 module.exports = Room;

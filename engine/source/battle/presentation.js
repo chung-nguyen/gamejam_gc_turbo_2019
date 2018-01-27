@@ -24,9 +24,11 @@ var Presentation = cc.Node.extend({
         this.leftGoals = [];
         this.rightGoals = [];
         this.units = [];
+        this.effects = [];
 
         this.timeFrameCounter = 0;
         this.stepTime = 1;
+        this.result = null;
     },
 
     rotate: function (angle) {
@@ -51,6 +53,10 @@ var Presentation = cc.Node.extend({
         for (var i = 0; i < this.units.length; ++i) {
             this.units[i].update(dt);
         }
+
+        for (var i = 0; i < this.effects.length; ++i) {
+            this.effects[i].update(dt);
+        }
     },
 
     deploy: function (deployment) {
@@ -70,6 +76,11 @@ var Presentation = cc.Node.extend({
         return e;
     },
 
+    addEffect: function (effect) {
+        this.effects.push(effect);
+        this.root.addChild(effect);
+    },
+
     step: function (dt) {
         this.timeFrameCounter = 0;
         this.stepTime = dt;
@@ -79,8 +90,38 @@ var Presentation = cc.Node.extend({
             this.energy = 10000;
         }
 
-        for (var i = 0; i < this.units.length; ++i) {
-            this.units[i].step(dt);
+        for (var i = this.units.length - 1; i >= 0; --i) {
+            var u = this.units[i];
+            if (!u.step(dt)) {
+                this.units[i] = this.units[this.units.length - 1];
+                this.units.length--;
+                u.removeFromParent();
+            }
+        }
+
+        for (var i = this.effects.length - 1; i >= 0; --i) {
+            var e = this.effects[i];
+            if (!e.step(dt)) {
+                this.effects[i] = this.effects[this.effects.length - 1];
+                this.effects.length--;
+                e.removeFromParent();
+            }
+        }
+
+        var leftHQ = this.leftGoals[this.leftGoals.length - 1];
+        var rightHQ = this.leftGoals[this.rightGoals.length - 1];
+        if (!leftHQ.isAlive()) {
+            if (!rightHQ.isAlive()) {
+                this.result = { winnerId: -1 };
+            } else {
+                this.result = { winnerId: 1 };
+            }
+        } else if (!rightHQ.isAlive()) {
+            if (!leftHQ.isAlive())    {
+                this.result = { winnerId: -1 };
+            } else {
+                this.result = { winnerId: 0 };
+            }
         }
     },
 
@@ -92,6 +133,23 @@ var Presentation = cc.Node.extend({
         for (var i = 0; i < goals.length; ++i) {
             var g = goals[i];
             if (g.isAlive()) {
+                var d = g.getDistanceTo(entity);
+                if (d < dist) {
+                    res = g;
+                    dist = d;
+                }
+            }
+        }
+
+        return res;
+    },
+
+    findEnemy: function (entity) {
+        var res;
+        var dist = Defs.BIG_DISTANCE;
+        for (var i = 0; i < this.units.length; ++i) {
+            var g = this.units[i];
+            if (g.isAlive() && g.team !== entity.team && entity.canAttack(g)) {
                 var d = g.getDistanceTo(entity);
                 if (d < dist) {
                     res = g;
