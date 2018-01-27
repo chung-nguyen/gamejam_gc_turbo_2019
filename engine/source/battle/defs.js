@@ -159,6 +159,23 @@ var UNIT_DATA = {
             die: { name: "spit_fire_hero_die", count: 15, loop: false }
         }
     },
+    sawman: {
+        HP: 100,
+        Damage: 20,
+        Size: 100,
+        Range: 200,
+        Sight: 500,
+        Cool: 2000,
+        Speed: 80,
+        Cost: 2,
+        Klass: "entityMeleeFighter",
+        animation: {
+            idle: { name: "saw_hero_idle", count: 1, loop: true },
+            walk: { name: "saw_hero_walk", count: 31, loop: true },
+            attack: { name: "saw_hero_attack", count: 30, loop: false },
+            die: { name: "saw_hero_die", count: 21, loop: false }
+        }
+    }
 }
 
 module.exports = {
