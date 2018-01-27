@@ -7,12 +7,11 @@ var EnergyBar = cc.Node.extend({
         opts.maxEnergy = opts.maxEnergy || 10;
 
         // Base
-        var emptyBar = this; 
+        var emptyBar = this;
         ui.makeImageView(emptyBar, {
             sprite: "empty_energy_bar.png",
             anchorPoint: cc.p(0.5, 0.5),
-            position: cc.p(0, 0),
-            contentSize: cc.size(opts.width, opts.height)
+            position: cc.p(0, 0)
         });
 
         var barScale = emptyBar.getScale();
@@ -34,26 +33,11 @@ var EnergyBar = cc.Node.extend({
             percent: 0
         });
 
-        // Separators
-        var gap = opts.width / opts.maxEnergy;
-        var x = -opts.width / 2 + gap;
-        for (var i = 0; i < opts.maxEnergy - 1; ++i) {
-            ui.makeImageView(emptyBar, {
-                sprite: "energy_bar_separator.png",
-                anchorPoint: cc.p(0, 0),
-                position: cc.p(x, 0),
-                scaleX: barScale,
-                scaleY: 1
-            });
-
-            x += gap;
-        }
-
         // Icon
         ui.makeImageView(emptyBar, {
             sprite: "icon_energy_" + opts.team + ".png",
             anchorPoint: cc.p(0.5, 0.5),
-            position: ui.relativeTo(emptyBar, ui.LEFT_MIDDLE, -opts.width / 4 - 100, 0),
+            position: ui.relativeTo(emptyBar, ui.LEFT_MIDDLE, -opts.width / 4 - 200, 0),
             scale: barScale
         });
 
@@ -63,7 +47,7 @@ var EnergyBar = cc.Node.extend({
             font: getBigFontName(),
             fontSize: 48,
             anchorPoint: cc.p(0.5, 0.5),
-            position: ui.relativeTo(emptyBar, ui.LEFT_MIDDLE, -opts.width / 4 - 100, 150),
+            position: ui.relativeTo(emptyBar, ui.LEFT_MIDDLE, -opts.width / 4 - 200, 150),
             shadow: true
         });
 

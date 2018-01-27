@@ -57,11 +57,11 @@ var EntityEffectBullet = EntityBase.extend({
                     this.logic.y = this.target.logic.y;
                     isHit = true;
                 }
-
-                this._futurePosition = this.convertPosition(this.logic.x, this.logic.y);
             } else {
                 isHit = true;
             }
+
+            this._futurePosition = this.convertPosition(this.logic.x, this.logic.y);
 
             if (isHit) {
                 this.sprite.runAction(this.hitAction);

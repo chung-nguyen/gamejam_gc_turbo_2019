@@ -28,15 +28,15 @@ var ActionBar = cc.Node.extend({
         this.energy = 0;
 
         this.energyBar = new EnergyBar({
-            width: Defs.ACTION_BAR_WIDTH*0.75,
+            width: Defs.ACTION_BAR_WIDTH,
             height: 50,
             team: 1,
             maxEnergy: opts.maxEnergy || 10
         });
-        this.energyBar.setAnchorPoint(cc.p(0, 0));
-        this.energyBar.setPosition(ui.relativeTo(panel, ui.CENTER_BOTTOM, -Defs.ACTION_BAR_WIDTH/4+150, 50));
+        this.energyBar.setAnchorPoint(cc.p(0.5, 1));
+        this.energyBar.setPosition(cc.p(Defs.ACTION_BAR_WIDTH / 2, 40));
         this.energyBar.setFill(0);
-        panel.addChild(this.energyBar); 
+        panel.addChild(this.energyBar);
 
         this.buttonRoot = ui.makeNode(panel, {
             anchorPoint: cc.p(0, 0),

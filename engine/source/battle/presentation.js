@@ -54,7 +54,7 @@ var Presentation = cc.Node.extend({
         this.rightGoals.push(this.deploy({ name: "tower", x: 2550, y: 1450, playerId: 1 }));
         this.rightGoals.push(this.deploy({ name: "hq", x: 2900, y: 900, playerId: 1 }));
 
-        this.energy = 5000;
+        this.energy = 1000;
     },
 
     update: function (dt) {
@@ -113,7 +113,7 @@ var Presentation = cc.Node.extend({
         this.timeFrameCounter = 0;
         this.stepTime = dt;
 
-        this.energy += dt * 2;
+        this.energy += dt / 2;
         if (this.energy > 10000) {
             this.energy = 10000;
         }

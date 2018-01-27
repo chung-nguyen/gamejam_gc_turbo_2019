@@ -50,7 +50,6 @@ module.exports = {
         }
 
         img.setAnchorPoint(opts.anchorPoint || cc.p(0.5, 0.5));
-        img.setPosition(opts.position || center);
 
         var imgSize = img.getContentSize();
 
@@ -67,6 +66,8 @@ module.exports = {
                 img.setScale(Math.min(baseSize.width / imgSize.width, baseSize.height / imgSize.height));
                 break;
         }
+
+        img.setPosition(opts.position || center);
 
         root.addChild(img, opts.zOrder || 0);
         return img;
@@ -169,7 +170,7 @@ module.exports = {
         root.addChild(slider);
         return slider;
     },
-    
+
     makeMaskedSprite: function(root, opts) {
         var spr = new cc.Sprite("#" + opts.sprite);
         spr.setScale(opts.scale || 1);
