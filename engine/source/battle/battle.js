@@ -26,6 +26,7 @@ var Battle = cc.Layer.extend({
         this.currentTurn = 0;
         this.receivedTurnCount = 0;
         this.replay = {};
+        this.isLagged = false;
     },
 
     isReady: function () {
@@ -112,10 +113,25 @@ var Battle = cc.Layer.extend({
                 case "turn":
                     this.handleTurn(message);
                     break;
+
+                case "lagged":
+                    this.showLaggedWarning();
+                    this.isLagged = true;
+                    break;
             }
         }
 
-        this.presentation.update(dt);
+        if (!this.isLagged) {
+            this.presentation.update(dt);
+        }
+    },
+
+    showLaggedWarning: function () {
+        // TODO
+    },
+
+    hideLaggedWarning: function () {
+        // TODO
     },
 
     initGameOver: function (result) {
@@ -135,7 +151,7 @@ var Battle = cc.Layer.extend({
 
         var room = getStoreState().room;
 
-        var hand = ["raider", "gunner", "raider", "gunner", "raider", "gunner", "raider", "gunner"];
+        var hand = ["raider", "gunner", "giant", "raider", "gunner", "giant", "raider", "gunner"];
         shuffle(hand);
         this.actionBar.setHand(hand);
 
@@ -159,6 +175,9 @@ var Battle = cc.Layer.extend({
 
         var turn = this.replay[this.currentTurn];
         if (turn && this.receivedTurnCount - this.currentTurn >= Defs.TURN_PADDING) {
+            this.hideLaggedWarning();
+            this.isLagged = false;
+
             var deployList = turn.deploy;
             for (var i = 0; i < deployList.length; ++i) {
                 var deployment = deployList[i];
@@ -172,6 +191,8 @@ var Battle = cc.Layer.extend({
 
             if (this.presentation.result) {
                 this.initGameOver(this.presentation.result);
+            } else {
+                this.send({ type: "ack", turn: this.currentTurn });
             }
         }
     }

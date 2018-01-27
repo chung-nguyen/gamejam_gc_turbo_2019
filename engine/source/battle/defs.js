@@ -78,7 +78,7 @@ var UNIT_DATA = {
         HP: 100,
         Damage: 10,
         Size: 100,
-        Range: 150,
+        Range: 200,
         Sight: 500,
         Cool: 1000,
         Speed: 100,
@@ -107,7 +107,24 @@ var UNIT_DATA = {
             attack: { name: "gun_hero_attack", count: 7, loop: false },
             die: { name: "gun_hero_die", count: 12, loop: false }
         }
-    }
+    },
+    giant: {
+        HP: 1000,
+        Damage: 10,
+        Size: 100,
+        Range: 400,
+        Sight: 500,
+        Cool: 2000,
+        Speed: 80,
+        Cost: 2,
+        Klass: "entityMeleeFighter",
+        animation: {
+            idle: { name: "giant_hero_idle", count: 1, loop: true },
+            walk: { name: "giant_hero_walk", count: 31, loop: true },
+            attack: { name: "giant_hero_attack", count: 26, loop: false },
+            die: { name: "giant_hero_die", count: 21, loop: false }
+        }
+    },
 }
 
 module.exports = {

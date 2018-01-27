@@ -3,6 +3,7 @@ var WebSocket = require("ws");
 var UPDATE_INTERVAL = 200;
 var READY_TIMEOUT = 1000;
 var FINAL_TURN = 3 * 60 * 1000 / UPDATE_INTERVAL;
+var LAGGED_TURN_COUNT = 10;
 
 var Room = function (id) {
     this.id = id;
@@ -37,6 +38,7 @@ Room.prototype.registerPlayer = function (userData) {
 
     var playerId = this.players.length;
     userData.index = playerId;
+    userData.localTurn = 0;
     this.players.push(userData);
     return playerId;
 };
@@ -75,6 +77,9 @@ Room.prototype.handleMessage = function (userId, message) {
         case "deploy":
             this.handleDeploy(p, data);
             break;
+        case "ack":
+            this.handleAck(p, data);
+            break;
     }
 };
 
@@ -87,6 +92,11 @@ Room.prototype.update = function () {
 
     if (this.readyCountdown > 0) {
         this.readyCountdown -= UPDATE_INTERVAL;
+        return;
+    }
+
+    if (this.hasLaggedPlayer()) {
+        this.sendAll({ type: "lagged" });
         return;
     }
 
@@ -104,6 +114,17 @@ Room.prototype.update = function () {
 
     this.sendAll(turn);
 };
+
+Room.prototype.hasLaggedPlayer = function () {
+    for (var i = 0; i < this.players.length; ++i) {
+        var p = this.players[i];
+        if (this.turnCount - p.localTurn >= LAGGED_TURN_COUNT) {
+            return true;
+        }
+    }
+
+    return false;
+}
 
 Room.prototype.sendTo = function (player, message) {
     if (player.ws && player.ws.readyState === WebSocket.OPEN) {
@@ -141,5 +162,9 @@ Room.prototype.handleDeploy = function (p, data) {
 
     this.deployList.push(Object.assign(data, { playerId: p.index }));
 };
+
+Room.prototype.handleAck = function (p, data) {
+    p.localTurn = data.turn;
+}
 
 module.exports = Room;
