@@ -22,39 +22,57 @@ var UNIT_STATE_WALK = 1;
 var UNIT_STATE_ATTACK = 2;
 var UNIT_STATE_DYING = 3;
 
+var ANIMATION_FPS = 30;
+
 var UNIT_DATA = {
     hq: {
         HP: 100,
         Damage: 10,
         Size: 100,
         Range: 600,
-        Sight: 5,
+        Sight: 500,
         Cool: 1000,
         Speed: 0,
         Cost: 0,
-        Klass: "entityHQ"
+        Klass: "entityHQ",
+        animation: {
+            idle: { name: "tower_idle", count: 1, loop: true },
+            attack: { name: "tower_attack", count: 1, loop: false },
+            die: { name: "tower_die", count: 1, loop: false }
+        }
     },
     tower: {
         HP: 100,
         Damage: 10,
         Size: 100,
         Range: 600,
-        Sight: 5,
+        Sight: 500,
         Cool: 1000,
         Speed: 0,
         Cost: 0,
-        Klass: "entityTower"
+        Klass: "entityTower",
+        animation: {
+            idle: { name: "tower_idle", count: 1, loop: true },
+            attack: { name: "tower_attack", count: 1, loop: false },
+            die: { name: "tower_die", count: 1, loop: false }
+        }
     },
     dummy: {
         HP: 100,
         Damage: 100,
         Size: 100,
         Range: 150,
-        Sight: 5,
+        Sight: 500,
         Cool: 1000,
         Speed: 100,
         Cost: 2,
-        Klass: "entityMeleeFighter"
+        Klass: "entityMeleeFighter",
+        animation: {
+            idle: { name: "dummy_idle", count: 1, loop: true },
+            walk: { name: "dummy_walk", count: 4, loop: true },
+            attack: { name: "dummy_attack", count: 4, loop: false },
+            die: { name: "dummy_die", count: 4, loop: false }
+        }
     }
 }
 
@@ -79,6 +97,7 @@ module.exports = {
     TURN_PADDING,
 
     UNIT_DATA,
+    ANIMATION_FPS,
 
     UNIT_STATE_IDLE,
     UNIT_STATE_WALK,

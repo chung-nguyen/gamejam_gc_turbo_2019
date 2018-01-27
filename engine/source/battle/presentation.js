@@ -109,7 +109,7 @@ var Presentation = cc.Node.extend({
         }
 
         var leftHQ = this.leftGoals[this.leftGoals.length - 1];
-        var rightHQ = this.leftGoals[this.rightGoals.length - 1];
+        var rightHQ = this.rightGoals[this.rightGoals.length - 1];
         if (!leftHQ.isAlive()) {
             if (!rightHQ.isAlive()) {
                 this.result = { winnerId: -1 };
@@ -149,7 +149,7 @@ var Presentation = cc.Node.extend({
         var dist = Defs.BIG_DISTANCE;
         for (var i = 0; i < this.units.length; ++i) {
             var g = this.units[i];
-            if (g.isAlive() && g.team !== entity.team && entity.canAttack(g)) {
+            if (g.isAlive() && g.team !== entity.team && entity.canAttack(g) && entity.canSee(g)) {
                 var d = g.getDistanceTo(entity);
                 if (d < dist) {
                     res = g;

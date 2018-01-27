@@ -6,11 +6,9 @@ import EntityEffectHit1 from "./entityEffectHit1";
 import approxDistance from "../utils/approxDistance";
 
 var EntityMeleeFighter = EntityBase.extend({
-    ctor: function (team, presentation) {
-        this._super(team, presentation);
-
-        this.sprite = new cc.Sprite("#dummy_idle_0.png");
-        this.addChild(this.sprite);
+    setUnitData (data) {
+        this._super(data);
+        this.sprite.runAction(this.animAction.idle);
     },
 
     update: function (dt) {
@@ -30,11 +28,13 @@ var EntityMeleeFighter = EntityBase.extend({
             var enemy = this.presentation.findEnemy(this);
             if (enemy) {
                 this.state = Defs.UNIT_STATE_WALK;
+                this.sprite.runAction(this.animAction.walk);
                 this.stateData.target = enemy;
             } else {
                 var goal = this.presentation.findGoal(this);
                 if (goal) {
                     this.state = Defs.UNIT_STATE_WALK;
+                    this.sprite.runAction(this.animAction.walk);
                     this.stateData.target = goal;
                 }
             }
@@ -55,13 +55,17 @@ var EntityMeleeFighter = EntityBase.extend({
                 if (mag > this.attr.Range) {
                     var v = dt * this.attr.Speed / 1000;
 
+                    this.setFacing(dx > 0 ? 1 : -1);
+
                     this.logic.x += dx * v / mag;
                     this.logic.y += dy * v / mag;
                 } else {
                     this.state = Defs.UNIT_STATE_ATTACK;
+                    this.sprite.runAction(this.animAction.attack);
                 }
             } else {
                 this.state = Defs.UNIT_STATE_IDLE;
+                this.sprite.runAction(this.animAction.idle);
             }
         }
 
@@ -76,6 +80,7 @@ var EntityMeleeFighter = EntityBase.extend({
                 }
             } else {
                 this.state = Defs.UNIT_STATE_IDLE;
+                this.sprite.runAction(this.animAction.idle);
             }
         }
 
