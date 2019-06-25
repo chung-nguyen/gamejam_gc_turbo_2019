@@ -17,7 +17,7 @@ var ActionBar = cc.Node.extend({
 
         var panel = ui.makeImageView(this, {
             sprite: "action_bar_panel.png",
-            scale9Size: cc.size(Defs.ACTION_BAR_WIDTH, Defs.ACTION_BAR_HEIGHT),
+            scale9Size: cc.size(Defs.SCREEN_SIZE.width, Defs.SCREEN_SIZE.height / 3),
             anchorPoint: cc.p(0, 0),
             position: ui.relativeTo(this, ui.LEFT_BOTTOM, 0, 0),
             ignoreContentAdaptWithSize: false
@@ -27,22 +27,7 @@ var ActionBar = cc.Node.extend({
         this.team = opts.team;
         this.energy = 0;
 
-        this.energyBar = new EnergyBar({
-            width: Defs.ACTION_BAR_WIDTH,
-            height: 50,
-            team: 1,
-            maxEnergy: opts.maxEnergy || 10
-        });
-        this.energyBar.setAnchorPoint(cc.p(0.5, 1));
-        this.energyBar.setPosition(cc.p(Defs.ACTION_BAR_WIDTH / 2, 40));
-        this.energyBar.setFill(0);
-        panel.addChild(this.energyBar);
-
-        this.buttonRoot = ui.makeNode(panel, {
-            anchorPoint: cc.p(0, 0),
-            position: ui.relativeTo(panel, ui.CENTER_BOTTOM, 0, 60)
-        });
-
+      
         this._opts = opts;
         this.cardButtons = [];
         this.hand = [];
@@ -90,36 +75,7 @@ var ActionBar = cc.Node.extend({
     },
 
     setCard: function (i, name) {
-        var w = Defs.ACTION_BAR_WIDTH - 256;
-        var x = -w / 2 + 64;
-        var gap = w / Defs.MAX_CARDS_PER_ROUND;
-
-        var count = 1;
-
-        var dummyGroup = [];
-        for (var j = 0; j < count; ++j) {
-            var dummy = new DummyEntity();
-            dummy.setOffset(0, 0);
-            dummy.snap(name, this.team);
-            this.battleRoot.addChild(dummy);
-            dummyGroup.push(dummy);
-        }
-
-        var button = this.cardButtons[i];
-        if (!button) {
-            button = this.cardButtonsPool.pop();
-            button.index = i;
-            button.setPosition(ui.relativeTo(this.buttonRoot, ui.LEFT_MIDDLE, x + i * gap, 0));
-            if (!button.getParent()) {
-                this.buttonRoot.addChild(button);
-            }
-
-            this.cardButtons[i] = button;
-        }
-
-        button.setCharacterName(name, this.team);
-        button.setDummies(dummyGroup);
-        return button;
+        
     },
 
     clearCardButtons: function () {
@@ -190,7 +146,6 @@ var ActionBar = cc.Node.extend({
 
     setEnergy: function (value) {
         this.energy = value;
-        this.energyBar.setFill(value);
     },
     update:function(dt)
     {
