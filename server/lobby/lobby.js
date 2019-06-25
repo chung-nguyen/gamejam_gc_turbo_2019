@@ -58,7 +58,7 @@ Lobby.prototype.createRoom = function (user) {
 
         for (var i = this.rooms.length - 1; i >= 0; --i) {
             var it = this.rooms[i];
-            if (!it.isFull()) {
+            if (it.isAlive && !it.isReady && !it.isFull()) {
                 room = it;
             }
         }

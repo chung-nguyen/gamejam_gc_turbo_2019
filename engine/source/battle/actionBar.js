@@ -3,7 +3,6 @@ import ui from "../utils/ui";
 import ObjectPool from "../common/objectPool";
 
 import Defs from "./defs";
-import EnergyBar from "./energyBar";
 import CardButton from "./cardButton";
 
 import DummyEntity from "./dummyEntity";
@@ -25,18 +24,6 @@ var ActionBar = cc.Node.extend({
 
         this.panel = panel;
         this.team = opts.team;
-        this.energy = 0;
-
-        this.energyBar = new EnergyBar({
-            width: Defs.ACTION_BAR_WIDTH,
-            height: 50,
-            team: 1,
-            maxEnergy: opts.maxEnergy || 10
-        });
-        this.energyBar.setAnchorPoint(cc.p(0.5, 1));
-        this.energyBar.setPosition(cc.p(Defs.ACTION_BAR_WIDTH / 2, 40));
-        this.energyBar.setFill(0);
-        panel.addChild(this.energyBar);
 
         this.buttonRoot = ui.makeNode(panel, {
             anchorPoint: cc.p(0, 0),
@@ -135,7 +122,7 @@ var ActionBar = cc.Node.extend({
             var button = this.cardButtons[i];
             if (button && button.isVisible() && button.containsTouchLocation(touch)) {
                 var data = Defs.UNIT_DATA[button.name];
-                if (data && data.Cost * 1000 <= this.energy) {
+                if (data) {
                     return button;
                 }
             }
@@ -188,13 +175,8 @@ var ActionBar = cc.Node.extend({
         }
     },
 
-    setEnergy: function (value) {
-        this.energy = value;
-        this.energyBar.setFill(value);
-    },
-    update:function(dt)
-    {
-        this.cardButtons.map(card=>{
+    update: function (dt) {
+        this.cardButtons.map((card) => {
             card && card.update && card.update(dt);
         });
     }
