@@ -9,9 +9,9 @@ cd ../engine
 
 if [ "$1" = "release" ]; then
 export NODE_ENV=production
-#../node_modules/.bin/webpack -p
+../node_modules/.bin/webpack -p
 else
-#../node_modules/.bin/webpack
+../node_modules/.bin/webpack
 fi
 
 cd ../scripts

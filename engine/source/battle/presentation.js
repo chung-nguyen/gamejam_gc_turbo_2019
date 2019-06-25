@@ -47,13 +47,11 @@ var Presentation = cc.Node.extend({
     },
 
     init: function () {
-        this.leftGoals.push(this.deploy({ name: "tower", x: 650, y: 350, playerId: 0 }));
-        this.leftGoals.push(this.deploy({ name: "tower", x: 650, y: 1450, playerId: 0 }));
-        this.leftGoals.push(this.deploy({ name: "hq", x: 300, y: 900, playerId: 0 }));
+        this.leftGoals.push(this.deploy({ name: "tower", x: 900, y: 650, playerId: 0 }));
+        this.leftGoals.push(this.deploy({ name: "hq", x: 900, y: 100, playerId: 0 }));
 
-        this.rightGoals.push(this.deploy({ name: "tower", x: 2550, y: 350, playerId: 1 }));
-        this.rightGoals.push(this.deploy({ name: "tower", x: 2550, y: 1450, playerId: 1 }));
-        this.rightGoals.push(this.deploy({ name: "hq", x: 2900, y: 900, playerId: 1 }));
+        this.rightGoals.push(this.deploy({ name: "tower", x: 900, y: 2550, playerId: 1 }));
+        this.rightGoals.push(this.deploy({ name: "hq", x: 900, y: 3100, playerId: 1 }));
 
         this.energy = 1000;
     },

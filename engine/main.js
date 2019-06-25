@@ -77,8 +77,8 @@ var getLocalResPath = function() {
 
     _localResPath = '';
     if (cc.sys.isNative) {
-        _localResPath = jsb.fileUtils.getWritablePath() + 'res';        
-    }    
+        _localResPath = jsb.fileUtils.getWritablePath() + 'res';
+    }
 
     return _localResPath;
 }
@@ -109,21 +109,21 @@ if (!cc.log) {
 if (!cc.error) {
     cc.error = function (value) {
         if (console.error) {
-            console.error(typeof (value) === 'string' ? value : JSON.stringify(value));   
+            console.error(typeof (value) === 'string' ? value : JSON.stringify(value));
         } else {
-            cc.log(typeof (value) === 'string' ? value : JSON.stringify(value));   
-        }        
+            cc.log(typeof (value) === 'string' ? value : JSON.stringify(value));
+        }
     }
 }
 
-function downloadBundleJs(cb) {        
+function downloadBundleJs(cb) {
     // download the bundle js file from local dev server
     if (engineSettings.isDevDesktop) {
         var url = "http://localhost:8080/_dist/bundle.js";
         var saveTo = bundleFilePath + '/bundle.js';
-        jsb.saveRemoteFile(url, saveTo, function(downloadedSize) {        
-            cb && cb();        
-        }); 
+        jsb.saveRemoteFile(url, saveTo, function(downloadedSize) {
+            cb && cb();
+        });
     } else {
        cb && cb();
     }
@@ -138,7 +138,7 @@ cc.game.onStart = function(){
     cc.view.enableRetina(sys.os === sys.OS_IOS ? true : false);
 
     // Disable auto full screen on baidu and wechat, you might also want to eliminate sys.BROWSER_TYPE_MOBILE_QQ
-    if (sys.isMobile && 
+    if (sys.isMobile &&
         sys.browserType !== sys.BROWSER_TYPE_BAIDU &&
         sys.browserType !== sys.BROWSER_TYPE_WECHAT) {
         cc.view.enableAutoFullScreen(true);
@@ -152,9 +152,9 @@ cc.game.onStart = function(){
 
     // Setup the resolution policy and design resolution size
     if (cc.sys.isNative) {
-        cc.view.setDesignResolutionSize(1920, 1080, cc.ResolutionPolicy.NO_BORDER);
+        cc.view.setDesignResolutionSize(1080, 1920, cc.ResolutionPolicy.NO_BORDER);
     } else {
-        cc.view.setDesignResolutionSize(1920, 1080, cc.ResolutionPolicy.SHOW_ALL);
+        cc.view.setDesignResolutionSize(1080, 1920, cc.ResolutionPolicy.SHOW_ALL);
     }
 
     // The game will be resized when browser size change
@@ -167,7 +167,7 @@ cc.game.onStart = function(){
     var resToLoad = [
         bootstrapResources.bootstrapUI_plist,
         bootstrapResources.bootstrapUI_png
-    ];  
+    ];
 
     // Preload default resources
     cc.loader.load(resToLoad, function() {}, function() {
@@ -181,12 +181,12 @@ cc.game.onStart = function(){
                     cdnLocation = txt;
                 }
 
-                bootstrap(cdnLocation, function() {  
+                bootstrap(cdnLocation, function() {
                     downloadBundleJs(function() {
                         cc.loader.loadJs(bundleFilePath, ["bundle.js"], function () {
                             // Run the game
                             window.initApp();
-                            cc.director.runScene(new window.SplashScene());        
+                            cc.director.runScene(new window.SplashScene());
                         });
                     });
                 });
@@ -202,10 +202,10 @@ cc.game.onStart = function(){
                 cc.loader.loadJs(bundleFilePath, [bundleFileName], function (err) {
                     // Run the game
                     window.initApp();
-                    cc.director.runScene(new window.SplashScene());        
+                    cc.director.runScene(new window.SplashScene());
                 });
             });
-        }        
+        }
     });
 };
 cc.game.run();

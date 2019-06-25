@@ -156,7 +156,7 @@ Room.prototype.handlePlayerReady = function (p, data) {
         }
     });
 
-    this.isReady = readyCount === 2;
+    this.isReady = readyCount === 1;
     if (this.isReady) {
         this.readyCountdown = READY_TIMEOUT;
         this.sendAll({ type: "ready" });
