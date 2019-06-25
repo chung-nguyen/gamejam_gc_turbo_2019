@@ -1,5 +1,6 @@
 import Defs from "./defs";
 import Camera from "./camera";
+import Formation from "./formation";
 import EntityTower from "./entityTower";
 import EntityHQ from "./entityHQ";
 import EntityMeleeFigher from "./entityMeleeFighter";
@@ -31,7 +32,9 @@ var Presentation = cc.Node.extend({
         this.root.setPosition(cc.p(-Defs.ARENA_WIDTH / 2, -Defs.ARENA_HEIGHT / 2));
         this.addChild(this.root, 0);
 
-        this.energy = 0;
+        this.gold = 0;
+        this.time = 0;
+
         this.leftGoals = [];
         this.rightGoals = [];
         this.units = [];
@@ -40,6 +43,8 @@ var Presentation = cc.Node.extend({
         this.timeFrameCounter = 0;
         this.stepTime = 1;
         this.result = null;
+
+        this.formations = [];
     },
 
     rotate: function (angle) {
@@ -47,13 +52,16 @@ var Presentation = cc.Node.extend({
     },
 
     init: function () {
-        this.leftGoals.push(this.deploy({ name: "tower", x: 900, y: 650, playerId: 0 }));
-        this.leftGoals.push(this.deploy({ name: "hq", x: 900, y: 100, playerId: 0 }));
+        this.leftGoals.push(this.build({ name: "tower", x: 900, y: 650, playerId: 0 }));
+        this.leftGoals.push(this.build({ name: "hq", x: 900, y: 50, playerId: 0 }));
 
-        this.rightGoals.push(this.deploy({ name: "tower", x: 900, y: 2550, playerId: 1 }));
-        this.rightGoals.push(this.deploy({ name: "hq", x: 900, y: 3100, playerId: 1 }));
+        this.rightGoals.push(this.build({ name: "tower", x: 900, y: 2550, playerId: 1 }));
+        this.rightGoals.push(this.build({ name: "hq", x: 900, y: 3150, playerId: 1 }));
 
-        this.energy = 1000;
+        this.gold = 200000;
+        this.time = 10000;
+
+        this.formations = [];
     },
 
     update: function (dt) {
@@ -68,32 +76,30 @@ var Presentation = cc.Node.extend({
         }
     },
 
-    deploy: function (deployment) {
+    build: function (deployment) {
         var unitData = Defs.UNIT_DATA[deployment.name];
         if (!unitData) return;
 
         var Klass = ENTITY_KLASS_MAP[unitData.Klass];
         if (!Klass) return;
 
-        var e;
-        if (unitData.Count === 3) {
-            for (var i = 0; i < unitData.Count; ++i) {
-                e = this.spawnUnit(
-                    Klass,
-                    deployment.playerId,
-                    deployment.x + TRIPLE_FORMATION[i].dx,
-                    deployment.y + TRIPLE_FORMATION[i].dy,
-                    unitData
-                );
-            }
-        } else {
-            e = this.spawnUnit(Klass, deployment.playerId, deployment.x, deployment.y, unitData);
+        var e = this.spawnUnit(Klass, deployment.playerId, deployment.x, deployment.y, unitData);
+        return e;
+    },
+
+    deploy: function (deployment) {
+        var team = deployment.playerId;
+        var formation = this.formations[team];
+        if (!formation) {
+            formation = new Formation(team);
+            this.formations[team] = formation;
         }
 
-        if (deployment.playerId === this.team) {
-            this.energy -= unitData.Cost * 1000;
-        }
-        return e;
+        var unitData = Defs.UNIT_DATA[deployment.name];
+        if (!unitData || this.gold < unitData.Cost) return;
+
+        this.gold -= unitData.Cost * 1000;
+        formation.add(deployment);
     },
 
     spawnUnit: function (Klass, team, x, y, unitData) {
@@ -114,9 +120,12 @@ var Presentation = cc.Node.extend({
         this.timeFrameCounter = 0;
         this.stepTime = dt;
 
-        this.energy += dt / 2;
-        if (this.energy > 10000) {
-            this.energy = 10000;
+        this.gold += dt * 7;
+        this.time -= dt;
+
+        if (this.time <= 0) {
+            this.time = 10000;
+            this.deployAllFormations();
         }
 
         for (var i = this.units.length - 1; i >= 0; --i) {
@@ -203,6 +212,26 @@ var Presentation = cc.Node.extend({
         }
 
         return res;
+    },
+
+    deployAllFormations: function () {
+        for (let i = 0; i < this.formations.length; ++i) {
+            this.deployFormation(this.formations[i])
+        }
+    },
+
+    deployFormation: function (formation) {
+        for (let i = 0; i < formation.units.length; ++i) {
+            var unit = formation.units[i];
+
+            var unitData = Defs.UNIT_DATA[unit.name];
+            if (!unitData) return;
+
+            var Klass = ENTITY_KLASS_MAP[unitData.Klass];
+            if (!Klass) return;
+
+            this.spawnUnit(Klass, formation.team, unit.x, unit.y + formation.getOffsetY(), unitData);
+        }
     }
 });
 

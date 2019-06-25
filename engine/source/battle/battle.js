@@ -10,6 +10,7 @@ import ui from "../utils/ui";
 import shuffle from "../utils/shuffle";
 import alertLayer from "../common/alertLayer";
 import NotifyLayer from "../common/notifyLayer";
+import TopBar from "./topBar";
 
 var config = require("config");
 
@@ -74,6 +75,15 @@ var Battle = cc.Layer.extend({
 
         this.addChild(touchpad, 50);
         this.touchpad = touchpad;
+
+        var topBar = new TopBar({
+
+        });
+
+        topBar.setAnchorPoint(0, 0);
+        topBar.setPosition(ui.relativeTo(this, ui.LEFT_TOP, 0, 0));
+        this.addChild(topBar, 60);
+        this.topBar = topBar;
 
         this.actionBar.setVisible(false);
         this.touchpad.setVisible(false);
@@ -207,7 +217,7 @@ var Battle = cc.Layer.extend({
             }
 
             this.presentation.step(turn.dt);
-            this.actionBar.setEnergy(this.presentation.energy);
+            this.topBar.setInfo(this.presentation.gold, this.presentation.time);
             ++this.currentTurn;
 
             if (this.presentation.result) {

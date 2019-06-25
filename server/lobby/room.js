@@ -6,6 +6,8 @@ var FINAL_TURN = 3 * 60 * 1000 / UPDATE_INTERVAL;
 var LAGGED_TURN_COUNT = 10;
 var OUTDATED_TIME = 1500 * 60 * 1000;
 
+var MAX_PLAYERS = 1;
+
 var Room = function (id) {
     this.id = id;
     this.players = [];
@@ -21,7 +23,7 @@ var Room = function (id) {
 
 Room.prototype.isOutdated = function () {
     return !this.isReady && Date.now() - this.createdTime >= OUTDATED_TIME;
-}
+};
 
 Room.prototype.destroy = function () {
     if (this._interval) {
@@ -33,7 +35,7 @@ Room.prototype.destroy = function () {
 };
 
 Room.prototype.isFull = function () {
-    return this.players.length >= 2;
+    return this.players.length >= MAX_PLAYERS;
 };
 
 Room.prototype.registerPlayer = function (userData) {
@@ -60,7 +62,12 @@ Room.prototype.addConnection = function (ws) {
 };
 
 Room.prototype.handleDisconnection = function (userId) {
-    var p = this.getPlayer(userId);
+    for (let i = this.players.length - 1; i >= 0; --i) {
+        if (this.players[i].id === userId) {
+            this.players[i] = this.players[this.players.length - 1];
+            this.players.length -= 1;
+        }
+    }
 };
 
 Room.prototype.handleMessage = function (userId, message) {
@@ -130,11 +137,15 @@ Room.prototype.hasLaggedPlayer = function () {
     }
 
     return false;
-}
+};
 
 Room.prototype.sendTo = function (player, message) {
     if (player.ws && player.ws.readyState === WebSocket.OPEN) {
-        player.ws.send(JSON.stringify(message));
+        try {
+            player.ws.send(JSON.stringify(message));
+        } catch (ex) {
+            console.error(ex);
+        }
     }
 };
 
@@ -142,7 +153,11 @@ Room.prototype.sendAll = function (message) {
     var data = JSON.stringify(message);
     this.players.forEach((p) => {
         if (p.ws && p.ws.readyState === WebSocket.OPEN) {
-            p.ws.send(data);
+            try {
+                p.ws.send(data);
+            } catch (ex) {
+                console.error(ex);
+            }
         }
     });
 };
@@ -156,7 +171,7 @@ Room.prototype.handlePlayerReady = function (p, data) {
         }
     });
 
-    this.isReady = readyCount === 1;
+    this.isReady = readyCount === MAX_PLAYERS;
     if (this.isReady) {
         this.readyCountdown = READY_TIMEOUT;
         this.sendAll({ type: "ready" });
@@ -171,6 +186,6 @@ Room.prototype.handleDeploy = function (p, data) {
 
 Room.prototype.handleAck = function (p, data) {
     p.localTurn = data.turn;
-}
+};
 
 module.exports = Room;

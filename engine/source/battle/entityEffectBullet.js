@@ -14,8 +14,8 @@ var EntityEffectBullet = EntityBase.extend({
 
         this.target = target;
 
-        this.logic.x = this.owner.logic.x + this.owner.facing * this.owner.attr.Size;
-        this.logic.y = this.owner.logic.y;
+        this.logic.x = this.owner.logic.x;
+        this.logic.y = this.owner.logic.y + this.owner.facing * this.owner.attr.Size;
         this.logic.z = this.owner.attr.Size;
 
         this.startX = this.logic.x;

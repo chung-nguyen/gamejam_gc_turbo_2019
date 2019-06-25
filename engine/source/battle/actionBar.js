@@ -3,7 +3,6 @@ import ui from "../utils/ui";
 import ObjectPool from "../common/objectPool";
 
 import Defs from "./defs";
-import EnergyBar from "./energyBar";
 import CardButton from "./cardButton";
 
 import DummyEntity from "./dummyEntity";
@@ -28,6 +27,12 @@ var ActionBar = cc.Node.extend({
         this.energy = 0;
 
       
+
+        this.buttonRoot = ui.makeNode(panel, {
+            anchorPoint: cc.p(0, 0),
+            position: ui.relativeTo(panel, ui.CENTER_BOTTOM, 0, 60)
+        });
+
         this._opts = opts;
         this.cardButtons = [];
         this.hand = [];
@@ -91,7 +96,7 @@ var ActionBar = cc.Node.extend({
             var button = this.cardButtons[i];
             if (button && button.isVisible() && button.containsTouchLocation(touch)) {
                 var data = Defs.UNIT_DATA[button.name];
-                if (data && data.Cost * 1000 <= this.energy) {
+                if (data) {
                     return button;
                 }
             }
