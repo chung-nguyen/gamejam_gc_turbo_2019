@@ -4,7 +4,7 @@ var UPDATE_INTERVAL = 200;
 var READY_TIMEOUT = 1000;
 var FINAL_TURN = 3 * 60 * 1000 / UPDATE_INTERVAL;
 var LAGGED_TURN_COUNT = 10;
-var OUTDATED_TIME = 15 * 60 * 1000;
+var OUTDATED_TIME = 1500 * 60 * 1000;
 
 var Room = function (id) {
     this.id = id;
