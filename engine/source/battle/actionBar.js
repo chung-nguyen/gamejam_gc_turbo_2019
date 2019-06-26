@@ -5,158 +5,121 @@ import ObjectPool from "../common/objectPool";
 import Defs from "./defs";
 import CardButton from "./cardButton";
 
-import DummyEntity from "./dummyEntity";
-
 var ActionBar = cc.Node.extend({
     ctor: function (opts) {
         this._super();
 
-        this.battleRoot = opts.battleRoot;
-        this.socket = opts.socket;
-
-        var panel = ui.makeImageView(this, {
+        this.frame = ui.makeImageView(this, {
             sprite: "action_bar_panel.png",
-            scale9Size: cc.size(Defs.SCREEN_SIZE.width, Defs.SCREEN_SIZE.height / 3),
+            scale9Size: cc.size(Defs.ACTION_FIELD_WIDTH, Defs.ACTION_FIELD_HEIGHT),
             anchorPoint: cc.p(0, 0),
-            position: ui.relativeTo(this, ui.LEFT_BOTTOM, 0, 0),
+            position: ui.relativeTo(this, ui.LEFT_BOTTOM, (Defs.SCREEN_SIZE.width - Defs.ACTION_FIELD_WIDTH) / 2, Defs.ACTION_BAR_HEIGHT + 64),
             ignoreContentAdaptWithSize: false
         });
 
-        this.panel = panel;
+        this.socket = opts.socket;
         this.team = opts.team;
-        this.energy = 0;
-
-      
-
-        this.buttonRoot = ui.makeNode(panel, {
-            anchorPoint: cc.p(0, 0),
-            position: ui.relativeTo(panel, ui.CENTER_BOTTOM, 0, 60)
-        });
 
         this._opts = opts;
         this.cardButtons = [];
         this.hand = [];
-        this.handIndex = 0;
+        this.selectingCard = null;
+        this.referenceCount = 1;
 
-        this.cardButtonsPool = new ObjectPool({
-            onCreate: function () {
-                return new CardButton();
-            },
-            onHide: function () {
-                this.clearDummies();
-                this.setVisible(false);
-            },
-            onShow: function () {
-                this.setVisible(true);
-                this.sprite.setVisible(true);
-                this.unselect();
-            },
-            onDestroy: function () {
-                this.clearDummies();
-                this.removeFromParent();
-            }
+        this.formation = [];
+
+        var self = this;
+        this._touchListener = cc.EventListener.create({
+            event: cc.EventListener.TOUCH_ONE_BY_ONE,
+            swallowTouches: true,
+            onTouchBegan: self.onTouchBegan.bind(self),
+            onTouchMoved: self.onTouchMoved.bind(self),
+            onTouchEnded: self.onTouchEnded.bind(self),
+            onTouchCancelled: self.onTouchCancelled(self)
         });
 
-        this.pendingButtons = [];
-        this.refCounter = 0;
-        this.myPlayerIndex = -1;
+        cc.eventManager.addListener(self._touchListener, self);
     },
 
     setHand: function (hand) {
-        this.clearCardButtons();
-
-        this.cardButtons = [];
-        for (var i = 0; i < Defs.MAX_CARDS_PER_ROUND; ++i) {
-            this.cardButtons[i] = null;
-        }
-
         this.hand = hand;
-        for (var i = 0; i < Defs.MAX_CARDS_PER_ROUND; ++i) {
-            var name = hand[i];
-            this.setCard(i, name);
+        for (var i = 0; i < hand.length; ++i) {
+            var pokemon = Defs.POKEMONS.find((it) => it.pokedex === hand[i]);
+            this.addCard(i, pokemon);
         }
 
-        this.handIndex = i;
+        this.selectingCard = this.cardButtons[0];
     },
 
-    setCard: function (i, name) {
-        
-    },
-
-    clearCardButtons: function () {
-        for (var i = 0; i < this.cardButtons.length; ++i) {
-            var button = this.cardButtons[i];
-            this.cardButtonsPool.push(button);
-            this.cardButtons[i] = null;
-        }
-    },
-
-    getSelectedCardByTouch: function (touch) {
-        for (var i = 0; i < this.cardButtons.length; ++i) {
-            var button = this.cardButtons[i];
-            if (button && button.isVisible() && button.containsTouchLocation(touch)) {
-                var data = Defs.UNIT_DATA[button.name];
-                if (data) {
-                    return button;
-                }
-            }
-        }
-
-        return null;
-    },
-
-    throwCardAt: function (card, touch) {
-        for (var i = 0; i < this.cardButtons.length; ++i) {
-            if (this.cardButtons[i] === card) {
-                this.cardButtons[i] = null;
-                break;
-            }
-        }
-
-        ++this.refCounter;
-        card.ref = this.refCounter;
-        card.throwAt(touch);
-        this.pendingButtons.push(card);
-
-        var pt = this.convertToNodeSpace(touch.getLocation());
-        pt = this.battleRoot.convertToNodeSpace(pt);
-
-        var x = Math.floor(pt.x * 100 / Defs.ARENA_CELL_WIDTH);
-        var y = Math.floor(pt.y * 100 / Defs.ARENA_CELL_HEIGHT);
-
-        this.socket.send({ x, y, type: "deploy", name: card.name, ref: card.ref });
-    },
-
-    recycleCardButton: function (ref) {
-        for (var i = this.pendingButtons.length - 1; i >= 0; --i) {
-            var btn = this.pendingButtons[i];
-            if (btn.ref === ref) {
-                this.cardButtonsPool.push(btn);
-
-                this.pendingButtons[i] = this.pendingButtons[this.pendingButtons.length - 1];
-                this.pendingButtons.length--;
-            }
-        }
-
-        for (var i = 0; i < this.cardButtons.length; ++i) {
-            if (this.cardButtons[i] == null) {
-                if (this.handIndex >= this.hand.length) {
-                    this.handIndex = 0;
-                }
-                this.setCard(i, this.hand[this.handIndex]);
-                this.handIndex++;
-            }
-        }
-    },
-
-    setEnergy: function (value) {
-        this.energy = value;
-    },
-    update:function(dt)
-    {
-        this.cardButtons.map(card=>{
-            card && card.update && card.update(dt);
+    addCard: function (index, pokemon) {
+        var button = new CardButton({
+            actionBar: this
         });
+        button.setPosition(index * (Defs.ACTION_BAR_HEIGHT * 0.75 + 20) + 20, Defs.ACTION_BAR_HEIGHT * 0.25);
+        button.setPokemon(pokemon, this.team);
+
+        this.cardButtons.push(button);
+        this.addChild(button, 0);
+    },
+
+    select: function (card) {
+        this.selectingCard = card;
+
+        for (let i = 0; i < this.cardButtons.length; ++i) {
+            this.cardButtons[i].unselect();
+        }
+
+        card.select();
+    },
+
+    setFormation: function (formation) {
+        for (let i = 0; i < formation.units.length; ++i) {
+            const unit = formation.units[i];
+            let deployed = this.formation.find((it) => it.ref === unit.ref);
+            if (!deployed) {
+                const pokemon = Defs.POKEMONS.find((it) => it.pokedex === unit.name);
+
+                deployed = ui.makeSprite(this.frame, {
+                    sprite: pokemon.name.toLowerCase() + '.png'
+                });
+
+                this.formation.push(deployed);
+            }
+
+            deployed.setPosition(unit.x * 64 + Defs.ACTION_FIELD_WIDTH / 2 + 32, unit.y * 64 + 32);
+        }
+    },
+
+    onTouchEnded: function (touch, event) {
+    },
+
+    onTouchBegan: function (touch, event) {
+        if (this.containsTouchLocation(touch)) {
+            var origin = this.frame.getPosition();
+            var pt = touch.getLocation();
+            var x = pt.x - origin.x;
+            var y = pt.y - origin.y;
+
+            x -= Defs.ACTION_FIELD_WIDTH / 2;
+
+            x = Math.floor(x / 64);
+            y = Math.floor(y / 64);
+
+            this.socket.send({ x, y, type: "deploy", name: this.selectingCard.pokedex, ref: this.referenceCount++ });
+        }
+    },
+
+    onTouchMoved: function (touch, event) {
+    },
+
+    onTouchCancelled: function (touch, event) {
+    },
+
+    containsTouchLocation: function(touch) {
+        var pt = touch.getLocation();
+        var sz = this.frame.getContentSize();
+        var bb = cc.rect(0, 0, sz.width, sz.height);
+        return cc.rectContainsPoint(bb, this.frame.convertToNodeSpace(pt));
     }
 });
 

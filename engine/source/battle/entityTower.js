@@ -30,7 +30,7 @@ var EntityTower = EntityBase.extend({
             var target = this.stateData.target;
             if (target && target.isAlive()) {
                 if (this.logic.cool <= 0) {
-                    this.logic.cool = this.attr.Cool;
+                    this.logic.cool = this.getAttackCool();
 
                     var hit = new EntityEffectBullet(this.team, this.presentation, this, target);
                     this.presentation.addEffect(hit);

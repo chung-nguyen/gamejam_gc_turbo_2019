@@ -11,7 +11,7 @@ import Battle from "../battle";
 var InGameScene = BaseScene.extend({
     ctor: function () {
         this._super({
-            sprites: ["battle.plist", "characters.plist", "effects.plist"]
+            sprites: ["battle.plist", "buildings.plist", "pokemons.plist", "effects.plist"]
         });
     },
     onEnter: function () {

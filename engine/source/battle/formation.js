@@ -10,8 +10,12 @@ class Formation {
         this.units.push(deployment);
     }
 
+    getOffsetX () {
+        return (Defs.ARENA_WIDTH / 2) * 100 / Defs.ARENA_CELL_WIDTH;
+    }
+
     getOffsetY () {
-        var h = (Defs.BATTLE_HEIGHT / 3) * 100 / Defs.ARENA_CELL_HEIGHT;
+        var h = (Defs.ARENA_HEIGHT / 2) * 100 / Defs.ARENA_CELL_HEIGHT;
         return this.team === 0 ? -h : h;
     }
 }

@@ -16,7 +16,7 @@ var EntitySplashHit = EntityBase.extend({
 
         this.logic.x = target.logic.x;
         this.logic.y = target.logic.y;
-        this.logic.z = owner.attr.Size;
+        this.logic.z = owner.getSize();
 
         this.zShift = 10;
         this.syncPosition();
@@ -34,7 +34,7 @@ var EntitySplashHit = EntityBase.extend({
 
             var enemies = this.presentation.findEnemyInArea(this.owner, this.logic.x, this.logic.y, this.owner.attr.SplashRange);
             for (var i = 0; i < enemies.length; ++i) {
-                enemies[i].damage(this.owner.attr.Damage);
+                enemies[i].damage(this.owner.getAttack());
             }
         }
 

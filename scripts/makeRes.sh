@@ -9,10 +9,11 @@ echo Packing sprites...
 
 mkdir -p $OUTDIR
 
-$SPRITE_PACK --maxSheetSize=2048 --outdir ../engine/res ../resources/bootstrap 
+$SPRITE_PACK --maxSheetSize=2048 --outdir ../engine/res ../resources/bootstrap
 $SPRITE_PACK --outdir $OUTDIR ../resources/splash
 $SPRITE_PACK --outdir $OUTDIR ../resources/battle
-$SPRITE_PACK --outdir $OUTDIR ../resources/characters
+$SPRITE_PACK --outdir $OUTDIR ../resources/pokemons
+$SPRITE_PACK --outdir $OUTDIR ../resources/buildings
 $SPRITE_PACK --outdir $OUTDIR ../resources/effects
 $SPRITE_PACK --outdir $OUTDIR ../resources/ui
 

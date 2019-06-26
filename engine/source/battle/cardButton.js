@@ -5,17 +5,15 @@ var CardButton = cc.Node.extend({
     ctor: function(opts) {
         this._super();
 
-        
-
-        this.dummies = [];
-
+        this.pokedex = "";
         this.name = "";
         this.team = 0;
         this.index = 0;
-        this.ref = 0;
+
+        this.actionBar = opts.actionBar;
 
         this.frame = ui.makeImageView(this, {
-            sprite: "popup_frame.png",
+            sprite: "action_bar_panel.png",
             scale9Size: cc.size(Defs.ACTION_BAR_HEIGHT*0.75, Defs.ACTION_BAR_HEIGHT*0.75),
             anchorPoint: cc.p(0, 0),
             position: ui.relativeTo(this, ui.CENTER, 0, 0),
@@ -25,90 +23,56 @@ var CardButton = cc.Node.extend({
         var spr = new cc.Sprite();
         this.sprite = spr;
         this.frame.addChild(spr);
-        
-        
+
+        var self = this;
+        this._touchListener = cc.EventListener.create({
+            event: cc.EventListener.TOUCH_ONE_BY_ONE,
+            swallowTouches: true,
+            onTouchBegan: self.onTouchBegan.bind(self),
+            onTouchMoved: self.onTouchMoved.bind(self),
+            onTouchEnded: self.onTouchEnded.bind(self),
+            onTouchCancelled: self.onTouchCancelled(self)
+        });
+
+        cc.eventManager.addListener(self._touchListener, self);
 
         this.isSelected = false;
     },
 
-    setCharacterName: function(name, team) {
-        if (this.name !== name || this.team !== team) {
-            this.name = name;
+    setPokemon: function(pokemon, team) {
+        var pokedex = pokemon.pokedex;
+        if (this.pokedex !== pokedex || this.team !== team) {
+            this.pokedex = pokemon.pokedex;
+            this.name = pokemon.name;
             this.team = team;
-            this.sprite.setSpriteFrame(name + "_portrait.png");
-            this.sprite.setScaleX(-1);
+            this.sprite.setSpriteFrame(this.name.toLowerCase() + '.png');
             this.sprite.setAnchorPoint(cc.p(0.5, 0.5));
-            this.sprite.setPosition(ui.relativeTo(this.frame, ui.CENTER_BOTTOM, 0, 20));
-            this.createAnimAction();
-            
+            this.sprite.setPosition(ui.relativeTo(this.frame, ui.CENTER, 0, 0));
         }
     },
 
-
-
-    removeDummies: function () {
-        for (var i = 0; i < this.dummies.length; ++i) {
-            var dummy = this.dummies[i];
-            dummy.cleanUp();
-        }
-
-        this.dummies.length = 0;
-    },
-
-    setDummies: function(dummies) {
-        this.removeDummies();
-
-        this.dummies = dummies;
-        for (var i = 0; i < this.dummies.length; ++i) {
-            var dummy = this.dummies[i];
-            dummy.setVisible(false);
-        }
-        
-    },
 
     unselect: function() {
         this.isSelected = false;
-        this.sprite.stopAllActions();
     },
 
     select: function() {
         this.isSelected = true;
-        this.sprite.runAction(this.animAction);
-        for (var i = 0; i < this.dummies.length; ++i) {
-            var dummy = this.dummies[i];
-            dummy.setFacing(this.team === 0 ? 1 : -1);
+    },
+
+    onTouchEnded: function (touch, event) {
+    },
+
+    onTouchBegan: function (touch, event) {
+        if (this.containsTouchLocation(touch)) {
+            this.actionBar.select(this);
         }
     },
 
-    moveAt: function(touch) {
-        for (var i = 0; i < this.dummies.length; ++i) {
-            var dummy = this.dummies[i];
-            var pt = touch.getLocation();
-            var pos = dummy.getParent().convertToNodeSpace(pt);
-            pos.x += dummy.offsetX * 0.01 * Defs.ARENA_CELL_WIDTH;
-            pos.y += dummy.offsetY * 0.01 * Defs.ARENA_CELL_HEIGHT;
-            dummy.setPosition(pos);
-            dummy.setVisible(true);
-        }
+    onTouchMoved: function (touch, event) {
     },
 
-    throwAt: function(touch) {
-        this.sprite.setVisible(false);
-    },
-
-    hideDummies: function() {
-        for (var i = 0; i < this.dummies.length; ++i) {
-            var dummy = this.dummies[i];
-            dummy.setVisible(false);
-        }
-    },
-
-    clearDummies: function () {
-        for (var i = 0; i < this.dummies.length; ++i) {
-            var dummy = this.dummies[i];
-            dummy.removeFromParent();
-        }
-        this.dummies = [];
+    onTouchCancelled: function (touch, event) {
     },
 
     containsTouchLocation: function(touch) {
@@ -116,24 +80,6 @@ var CardButton = cc.Node.extend({
         var sz = this.frame.getContentSize();
         var bb = cc.rect(0, 0, sz.width, sz.height);
         return cc.rectContainsPoint(bb, this.frame.convertToNodeSpace(pt));
-    },
-    createAnimAction: function () {
-        var animationName = Defs.UNIT_DATA[this.name].animation.attack.name;
-        var i = 0;
-        var animFrames = [];
-        var frame = cc.spriteFrameCache.getSpriteFrame(animationName + "_" + i + ".png");
-        while(frame)
-        {
-            animFrames.push(frame);
-            i++;
-            frame = cc.spriteFrameCache.getSpriteFrame(animationName + "_" + i + ".png");
-        }
-        this.animAction = new cc.Animation(animFrames, 1.0 / Defs.ANIMATION_FPS);
-        this.animAction = new cc.RepeatForever(new cc.Animate(this.animAction));
-        return this.animAction;
-    },
-    update: function (dt) {
-        this._super(dt);
     }
 });
 

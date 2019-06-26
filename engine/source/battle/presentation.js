@@ -4,19 +4,13 @@ import Formation from "./formation";
 import EntityTower from "./entityTower";
 import EntityHQ from "./entityHQ";
 import EntityMeleeFigher from "./entityMeleeFighter";
-import EntityFlameThrower from "./entityFlameThrower";
 import EntityGunner from "./entityGunner";
 import EntityGiant from "./entityGiant";
 import EntityAxeman from "./entityAxeman";
 
 var ENTITY_KLASS_MAP = {
     entityHQ: EntityHQ,
-    entityTower: EntityTower,
-    entityMeleeFighter: EntityMeleeFigher,
-    entityFlameThrower: EntityFlameThrower,
-    entityGunner: EntityGunner,
-    entityGiant: EntityGiant,
-    entityAxeman: EntityAxeman
+    entityTower: EntityTower
 };
 
 var TRIPLE_FORMATION = [ { dx: 0, dy: 0 }, { dx: -120, dy: -120 }, { dx: -120, dy: 120 } ];
@@ -27,6 +21,7 @@ var Presentation = cc.Node.extend({
 
         this.entities = [];
         this.team = opts.team;
+        this.actionBar = opts.actionBar;
 
         this.root = new cc.Node();
         this.root.setPosition(cc.p(-Defs.ARENA_WIDTH / 2, -Defs.ARENA_HEIGHT / 2));
@@ -95,11 +90,14 @@ var Presentation = cc.Node.extend({
             this.formations[team] = formation;
         }
 
-        var unitData = Defs.UNIT_DATA[deployment.name];
-        if (!unitData || this.gold < unitData.Cost) return;
+        var unitData = Defs.POKEMONS.find((it) => it.pokedex === deployment.name);
+        var cost = unitData.cost || 100;
+        if (!unitData || this.gold < cost * 1000) return;
 
-        this.gold -= unitData.Cost * 1000;
+        this.gold -= cost * 1000;
         formation.add(deployment);
+
+        this.actionBar.setFormation(formation);
     },
 
     spawnUnit: function (Klass, team, x, y, unitData) {
@@ -224,13 +222,16 @@ var Presentation = cc.Node.extend({
         for (let i = 0; i < formation.units.length; ++i) {
             var unit = formation.units[i];
 
-            var unitData = Defs.UNIT_DATA[unit.name];
+            var unitData = Defs.POKEMONS.find((it) => it.pokedex === unit.name);
             if (!unitData) return;
 
-            var Klass = ENTITY_KLASS_MAP[unitData.Klass];
+            var Klass = EntityMeleeFigher;
+            Klass = EntityGunner;
             if (!Klass) return;
 
-            this.spawnUnit(Klass, formation.team, unit.x, unit.y + formation.getOffsetY(), unitData);
+            var x = unit.x * 64 * 100 / Defs.ARENA_CELL_WIDTH;
+            var y = unit.y * 64 * 100 / Defs.ARENA_CELL_HEIGHT;
+            this.spawnUnit(Klass, formation.team, x + formation.getOffsetX(), y + formation.getOffsetY(), unitData);
         }
     }
 });

@@ -40,8 +40,8 @@ var EntityMeleeFighter = EntityBase.extend({
                 var dy = target.logic.y - this.logic.y;
                 var mag = approxDistance(dx, dy);
 
-                if (mag > this.attr.Range) {
-                    var v = dt * this.attr.Speed / 1000;
+                if (mag > this.getRange()) {
+                    var v = dt * this.getMoveSpeed() / 1000;
 
                     this.setFacing(dx > 0 ? 1 : -1);
 
@@ -60,12 +60,12 @@ var EntityMeleeFighter = EntityBase.extend({
             if (target && target.isAlive()) {
                 if (this.logic.cool <= 0) {
                     var dist = this.getDistanceTo(target);
-                    if (dist > this.attr.Range) {
+                    if (dist > this.getRange()) {
                         this.state = Defs.UNIT_STATE_WALK;
                     } else {
                         this.intentAction = this.animAction.attack;
                         this.currentAction = null;
-                        this.logic.cool = this.attr.Cool;
+                        this.logic.cool = this.getAttackCool();
 
                         this.createEffect(target);
                     }

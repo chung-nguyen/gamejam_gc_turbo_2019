@@ -15,8 +15,8 @@ var EntityEffectBullet = EntityBase.extend({
         this.target = target;
 
         this.logic.x = this.owner.logic.x;
-        this.logic.y = this.owner.logic.y + this.owner.facing * this.owner.attr.Size;
-        this.logic.z = this.owner.attr.Size;
+        this.logic.y = this.owner.logic.y;
+        this.logic.z = this.owner.getSize() / 2;
 
         this.startX = this.logic.x;
         this.startY = this.logic.y;
@@ -46,13 +46,13 @@ var EntityEffectBullet = EntityBase.extend({
             var dx = this.target.logic.x - this.logic.x;
             var dy = this.target.logic.y - this.logic.y;
             var mag = approxDistance(dx, dy);
-            if (mag > this.target.attr.Size) {
+            if (mag > this.target.getSize()) {
                 var v = dt * 1.5;
                 this.logic.x += dx / mag * v;
                 this.logic.y += dy / mag * v;
 
                 var awayDistance = approxDistance(this.logic.x - this.startX, this.logic.y - this.startY);
-                if (awayDistance >= this.startDistance - this.target.attr.Size) {
+                if (awayDistance >= this.startDistance - this.target.getSize()) {
                     this.logic.x = this.target.logic.x;
                     this.logic.y = this.target.logic.y;
                     isHit = true;
@@ -66,7 +66,7 @@ var EntityEffectBullet = EntityBase.extend({
             if (isHit) {
                 this.sprite.runAction(this.hitAction);
                 this.state = Defs.UNIT_STATE_ATTACK;
-                this.target.damage(this.owner.attr.Damage);
+                this.target.damage(this.owner.getAttack());
             }
         } else if (this.state === Defs.UNIT_STATE_ATTACK) {
             this.life -= dt;

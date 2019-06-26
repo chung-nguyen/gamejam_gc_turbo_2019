@@ -16,7 +16,7 @@ var EntityEffectHit1 = EntityBase.extend({
 
         this.logic.x = target.logic.x;
         this.logic.y = target.logic.y;
-        this.logic.z = target.attr.Size;
+        this.logic.z = target.getSize();
 
         this.zShift = 10;
         this.syncPosition();
@@ -32,7 +32,7 @@ var EntityEffectHit1 = EntityBase.extend({
             this.sprite.runAction(this.animAction);
             this.state = Defs.UNIT_STATE_ATTACK;
 
-            this.target.damage(this.owner.attr.Damage);
+            this.target.damage(this.owner.getAttack());
         }
 
         this.life -= dt;

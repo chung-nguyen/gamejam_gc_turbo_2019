@@ -46,17 +46,27 @@ var EntityBase = cc.Node.extend({
         return this.logic.HP > 0 || this.stateData.time < 2000;
     },
 
-    damage: function (amount) {
+    damage: function (attack) {
+        var amount = Math.max(attack - this.getDefense(), 1);
         this.logic.HP -= amount;
     },
 
     setUnitData: function (data) {
-        this.logic.HP = data.HP;
+        this.logic.HP = data.hp;
         this.attr = data;
 
         this.animAction = {};
-        for (var k in data.animation) {
-            this.animAction[k] = this.createAnimAction(data.animation[k]);
+
+        var name = (data.name || "").toLowerCase();
+        const animation = data.animation || {
+            idle: { name: name, count: 1, loop: true },
+            attack: { name: name, count: 1, loop: false },
+            die: { name: name, count: 1, loop: false },
+            walk: { name: name, count: 1, loop: false }
+        };
+
+        for (var k in animation) {
+            this.animAction[k] = this.createAnimAction(animation[k], data.animation == null);
         }
     },
 
@@ -117,7 +127,7 @@ var EntityBase = cc.Node.extend({
     },
 
     canSee: function (target) {
-        return this.getDistanceTo(target) < this.attr.Sight;
+        return this.getDistanceTo(target) < this.getSight();
     },
 
     getDistanceToPos: function (x, y) {
@@ -173,7 +183,7 @@ var EntityBase = cc.Node.extend({
         return true;
     },
 
-    createAnimAction: function (data) {
+    createAnimAction: function (data, isSingleFrame) {
         var animationName = data.name;
         var framesCount = data.count;
         var animation = ANIMATION_CACHE[animationName];
@@ -182,13 +192,17 @@ var EntityBase = cc.Node.extend({
             var animFrames = [];
             var i = 0;
             var frame;
-            do {
-                frame = cc.spriteFrameCache.getSpriteFrame(animationName + "_" + i + ".png");
+            for (i = 0; i < framesCount; ++i) {
+                if (isSingleFrame) {
+                    frame = cc.spriteFrameCache.getSpriteFrame(animationName + ".png");
+                } else {
+                    frame = cc.spriteFrameCache.getSpriteFrame(animationName + "_" + i + ".png");
+                }
+
                 if (frame) {
                     animFrames.push(frame);
                 }
-                ++i;
-            } while (frame);
+            }
 
             animation = new cc.Animation(animFrames, 1.0 / Defs.ANIMATION_FPS);
             ANIMATION_CACHE[animationName] = animation;
@@ -199,6 +213,34 @@ var EntityBase = cc.Node.extend({
         }
 
         return new cc.Animate(animation);
+    },
+
+    getSize: function () {
+        return this.attr.Size || 32;
+    },
+
+    getAttack: function () {
+        return this.attr.attack;
+    },
+
+    getDefense: function () {
+        return this.attr.defense;
+    },
+
+    getRange: function () {
+        return this.attr.Range || 500;
+    },
+
+    getSight: function () {
+        return this.attr.Sight || 200;
+    },
+
+    getAttackCool: function () {
+        return this.attr.Cool || 1000;
+    },
+
+    getMoveSpeed: function () {
+        return this.attr.Speed || 300;
     }
 });
 

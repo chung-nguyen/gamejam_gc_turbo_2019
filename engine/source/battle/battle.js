@@ -5,7 +5,6 @@ import Defs from "./defs";
 import Camera from "./camera";
 import Presentation from "./presentation";
 import ActionBar from "./actionBar";
-import ActionTouchpad from "./actionTouchpad";
 import ui from "../utils/ui";
 import shuffle from "../utils/shuffle";
 import alertLayer from "../common/alertLayer";
@@ -41,22 +40,12 @@ var Battle = cc.Layer.extend({
 
         this.ground = new cc.Sprite("#ground.png");
         this.ground.setPosition(
-            cc.p(
-                Defs.SCREEN_CENTER.x + Defs.BATTLE_POSITION.x,
-                Defs.SCREEN_CENTER.y + Defs.BATTLE_POSITION.y
-            )
+            cc.p(Defs.SCREEN_CENTER.x + Defs.BATTLE_POSITION.x, Defs.SCREEN_CENTER.y + Defs.BATTLE_POSITION.y)
         );
         this.ground.setScale(Defs.BATTLE_SCALE);
         this.addChild(this.ground);
 
-        var groundSize = this.ground.getContentSize();
-        this.presentation = new Presentation({ team: room.playerId });
-        this.presentation.setPosition(groundSize.width / 2, groundSize.height / 2);
-        this.ground.addChild(this.presentation, 10);
-
         this.actionBar = new ActionBar({
-            maxEnergy: 10,
-            battleRoot: this.presentation.root,
             socket: this.socket,
             team: room.playerId
         });
@@ -64,21 +53,7 @@ var Battle = cc.Layer.extend({
         this.actionBar.setPosition(ui.relativeTo(this, ui.LEFT_BOTTOM, 0, 0));
         this.addChild(this.actionBar, 40);
 
-        var touchpad = new ActionTouchpad({
-            contentSize: cc.size(Defs.SCREEN_SIZE.width, Defs.SCREEN_SIZE.height),
-            actionBar: this.actionBar,
-            battleRoot: this.presentation.root,
-            team: room.playerId
-        });
-
-        touchpad.setArenaSize(32, 18);
-
-        this.addChild(touchpad, 50);
-        this.touchpad = touchpad;
-
-        var topBar = new TopBar({
-
-        });
+        var topBar = new TopBar({});
 
         topBar.setAnchorPoint(0, 0);
         topBar.setPosition(ui.relativeTo(this, ui.LEFT_TOP, 0, 0));
@@ -86,7 +61,11 @@ var Battle = cc.Layer.extend({
         this.topBar = topBar;
 
         this.actionBar.setVisible(false);
-        this.touchpad.setVisible(false);
+
+        var groundSize = this.ground.getContentSize();
+        this.presentation = new Presentation({ team: room.playerId, actionBar: this.actionBar });
+        this.presentation.setPosition(groundSize.width / 2, groundSize.height / 2);
+        this.ground.addChild(this.presentation, 10);
 
         Camera.setRotate(room.playerId === 0 ? 0 : 180);
         this.presentation.rotate(Camera.rotate);
@@ -127,8 +106,6 @@ var Battle = cc.Layer.extend({
             this.state = State.WAITING;
         }
 
-        this.actionBar.update(dt);
-
         var message = this.socket.popMessage();
         if (message) {
             switch (message.type) {
@@ -166,9 +143,7 @@ var Battle = cc.Layer.extend({
 
     initGameOver: function (result) {
         this.battleResult.setError(
-            result.winnerId == getStoreState().room.playerId
-                ? "YOU WIN!"
-                : result.winnerId < 0 ? "DRAW!" : "YOU LOSE!",
+            result.winnerId == getStoreState().room.playerId ? "YOU WIN!" : result.winnerId < 0 ? "DRAW!" : "YOU LOSE!",
             (_) => {
                 cc.director.runScene(new window.SplashScene());
             }
@@ -182,12 +157,10 @@ var Battle = cc.Layer.extend({
 
         var room = getStoreState().room;
 
-        var hand = [ "raider", "gunner", "giant", "axeman", "flamer", "sawman" ];
-        shuffle(hand);
+        var hand = [ "001", "002", "003", "004", "005", "006" ];
         this.actionBar.setHand(hand);
 
         this.actionBar.setVisible(true);
-        this.touchpad.setVisible(true);
 
         this.presentation.init();
     },
@@ -212,7 +185,6 @@ var Battle = cc.Layer.extend({
             var deployList = turn.deploy;
             for (var i = 0; i < deployList.length; ++i) {
                 var deployment = deployList[i];
-                this.actionBar.recycleCardButton(deployment.ref);
                 this.presentation.deploy(deployment);
             }
 
