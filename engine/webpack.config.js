@@ -28,5 +28,5 @@ module.exports = {
         }
     },
     devtool: 'source-map',
-    watch:true
+    watch: !!process.env.NODE_ENV.match(/development/i)
 };

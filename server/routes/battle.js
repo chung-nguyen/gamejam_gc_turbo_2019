@@ -1,12 +1,10 @@
 var express = require("express");
 var router = express.Router();
 var AsyncLock = require("node-async-locks").AsyncLock;
-var Lobby = require("../lobby");
-
 var asyncLock = new AsyncLock();
-var lobby = new Lobby(9000);
 
 router.post("/start", function (req, res, next) {
+    var lobby = require("../lobby")();
     asyncLock.enter((token) => {
         lobby
             .createRoom(req.body)

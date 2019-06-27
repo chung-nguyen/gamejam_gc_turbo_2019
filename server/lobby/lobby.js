@@ -1,15 +1,15 @@
-var Settings = require('./settings');
+var Settings = require("./settings");
 
-var url = require('url');
-var WebSocket = require('ws');
+var url = require("url");
 
-var Room = require('./room');
 
-var Lobby = function (port) {
+var Room = require("./room");
+
+var Lobby = function(ws) {
     this.rooms = [];
     this.idCounter = 0;
 
-    this.wss = new WebSocket.Server({ port });
+    this.wss = ws;
 
     this.wss.on("connection", (ws, req) => {
         var location = url.parse(req.url, true);
@@ -40,7 +40,7 @@ var Lobby = function (port) {
                     }
                 });
 
-                ws.on("error", (err) => console.error(err));
+                ws.on("error", err => console.error(err));
             } else {
                 ws.close(1001, "room_unauthorized");
             }
@@ -50,9 +50,9 @@ var Lobby = function (port) {
     });
 
     setInterval(() => this.update(), 5000);
-}
+};
 
-Lobby.prototype.createRoom = function (user) {
+Lobby.prototype.createRoom = function(user) {
     return new Promise((resolve, reject) => {
         var room;
 
@@ -76,13 +76,13 @@ Lobby.prototype.createRoom = function (user) {
             roomId
         });
     });
-}
+};
 
-Lobby.prototype.getRoom = function (roomId) {
+Lobby.prototype.getRoom = function(roomId) {
     return this.rooms.find(it => it.id === roomId);
-}
+};
 
-Lobby.prototype.update = function () {
+Lobby.prototype.update = function() {
     for (var i = this.rooms.length - 1; i >= 0; --i) {
         var room = this.rooms[i];
         if (!room.isAlive || room.isOutdated()) {
@@ -92,6 +92,13 @@ Lobby.prototype.update = function () {
             this.rooms.length--;
         }
     }
-}
+};
 
-module.exports = Lobby;
+const createLobby = ws => new Lobby(ws);
+let lobby = null;
+module.exports = ws => {
+    if (!lobby) {
+        lobby = new Lobby(ws);
+    }
+    return lobby;
+};
