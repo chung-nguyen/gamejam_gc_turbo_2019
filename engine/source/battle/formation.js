@@ -16,7 +16,7 @@ class Formation {
 
     getOffsetY () {
         var h = (Defs.ARENA_HEIGHT / 2) * 100 / Defs.ARENA_CELL_HEIGHT;
-        return this.team === 0 ? -h : h;
+        return this.team === 0 ? -h : (Defs.ARENA_HEIGHT * 100 / Defs.ARENA_CELL_HEIGHT + h);
     }
 }
 

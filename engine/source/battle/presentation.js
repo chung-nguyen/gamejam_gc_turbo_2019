@@ -22,6 +22,7 @@ var Presentation = cc.Node.extend({
         this.entities = [];
         this.team = opts.team;
         this.actionBar = opts.actionBar;
+        this.actionBar.presentation = this;
 
         this.root = new cc.Node();
         this.root.setPosition(cc.p(-Defs.ARENA_WIDTH / 2, -Defs.ARENA_HEIGHT / 2));
@@ -91,13 +92,15 @@ var Presentation = cc.Node.extend({
         }
 
         var unitData = Defs.POKEMONS.find((it) => it.pokedex === deployment.name);
-        var cost = unitData.cost || 100;
-        if (!unitData || this.gold < cost * 1000) return;
+        if (!unitData) return;
 
-        this.gold -= cost * 1000;
+        var cost = unitData.total || 100;
+
         formation.add(deployment);
 
-        this.actionBar.setFormation(formation);
+        if (formation.team === this.team) {
+            this.actionBar.setFormation(formation);
+        }
     },
 
     spawnUnit: function (Klass, team, x, y, unitData) {
@@ -118,7 +121,7 @@ var Presentation = cc.Node.extend({
         this.timeFrameCounter = 0;
         this.stepTime = dt;
 
-        this.gold += dt * 7;
+        this.gold += dt * 100;
         this.time -= dt;
 
         if (this.time <= 0) {
@@ -219,6 +222,10 @@ var Presentation = cc.Node.extend({
     },
 
     deployFormation: function (formation) {
+        if (!formation) {
+            return;
+        }
+
         for (let i = 0; i < formation.units.length; ++i) {
             var unit = formation.units[i];
 
@@ -231,6 +238,10 @@ var Presentation = cc.Node.extend({
 
             var x = unit.x * 64 * 100 / Defs.ARENA_CELL_WIDTH;
             var y = unit.y * 64 * 100 / Defs.ARENA_CELL_HEIGHT;
+            if (formation.team === 1) {
+                y = -y;
+            }
+
             this.spawnUnit(Klass, formation.team, x + formation.getOffsetX(), y + formation.getOffsetY(), unitData);
         }
     }

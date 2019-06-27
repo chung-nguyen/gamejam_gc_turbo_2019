@@ -232,7 +232,7 @@ var EntityBase = cc.Node.extend({
     },
 
     getSight: function () {
-        return this.attr.Sight || 200;
+        return this.attr.Sight || 1000;
     },
 
     getAttackCool: function () {

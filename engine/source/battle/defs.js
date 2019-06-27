@@ -36,7 +36,7 @@ var ANIMATION_FPS = 30;
 var UNIT_DATA = {
     hq: {
         hp: 2400,
-        attack: 80,
+        attack: 8,
         defense: 10,
         Size: 100,
         Range: 700,
@@ -53,7 +53,7 @@ var UNIT_DATA = {
     },
     tower: {
         hp: 1400,
-        attack: 240,
+        attack: 24,
         defense: 10,
         Size: 100,
         Range: 750,

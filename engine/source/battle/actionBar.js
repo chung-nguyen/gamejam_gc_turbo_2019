@@ -19,6 +19,7 @@ var ActionBar = cc.Node.extend({
 
         this.socket = opts.socket;
         this.team = opts.team;
+        this.presentation = null;
 
         this._opts = opts;
         this.cardButtons = [];
@@ -26,7 +27,8 @@ var ActionBar = cc.Node.extend({
         this.selectingCard = null;
         this.referenceCount = 1;
 
-        this.formation = [];
+        this.formationLayout = [];
+        this.formation = null;
 
         var self = this;
         this._touchListener = cc.EventListener.create({
@@ -73,9 +75,11 @@ var ActionBar = cc.Node.extend({
     },
 
     setFormation: function (formation) {
+        this.formation = formation;
+
         for (let i = 0; i < formation.units.length; ++i) {
             const unit = formation.units[i];
-            let deployed = this.formation.find((it) => it.ref === unit.ref);
+            let deployed = this.formationLayout.find((it) => it.ref === unit.ref);
             if (!deployed) {
                 const pokemon = Defs.POKEMONS.find((it) => it.pokedex === unit.name);
 
@@ -83,7 +87,7 @@ var ActionBar = cc.Node.extend({
                     sprite: pokemon.name.toLowerCase() + '.png'
                 });
 
-                this.formation.push(deployed);
+                this.formationLayout.push(deployed);
             }
 
             deployed.setPosition(unit.x * 64 + Defs.ACTION_FIELD_WIDTH / 2 + 32, unit.y * 64 + 32);
@@ -105,7 +109,28 @@ var ActionBar = cc.Node.extend({
             x = Math.floor(x / 64);
             y = Math.floor(y / 64);
 
-            this.socket.send({ x, y, type: "deploy", name: this.selectingCard.pokedex, ref: this.referenceCount++ });
+            var unitData = Defs.POKEMONS.find((it) => it.pokedex === this.selectingCard.pokedex);
+            if (!unitData) return;
+
+            var cost = unitData.total || 100;
+            if (this.presentation.gold < cost * 1000) return;
+
+            let isCancelled = false;
+            var formation = this.formation;
+            if (formation) {
+                for (let i = 0; i < formation.units.length; ++i) {
+                    const unit = formation.units[i];
+                    if (unit.x === x && unit.y === y) {
+                        isCancelled = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!isCancelled) {
+                this.presentation.gold -= cost * 1000;
+                this.socket.send({ x, y, type: "deploy", name: this.selectingCard.pokedex, ref: this.referenceCount++ });
+            }
         }
     },
 
