@@ -241,6 +241,14 @@ var EntityBase = cc.Node.extend({
 
     getMoveSpeed: function () {
         return this.attr.Speed || 300;
+    },
+
+    isOfflane: function () {
+        if (this.team === 0) {
+            return this.y > Defs.BATTLE_HEIGHT * (2 * Defs.ARENA_CELL_HEIGHT) / 100;
+        }
+
+        return this.y < Defs.BATTLE_HEIGHT * (2 * Defs.ARENA_CELL_HEIGHT) / 100;
     }
 });
 

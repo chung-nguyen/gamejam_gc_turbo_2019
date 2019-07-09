@@ -13,8 +13,8 @@ var CardButton = cc.Node.extend({
         this.actionBar = opts.actionBar;
 
         this.frame = ui.makeImageView(this, {
-            sprite: "action_bar_panel.png",
-            scale9Size: cc.size(Defs.ACTION_BAR_HEIGHT * 0.75, Defs.ACTION_BAR_HEIGHT * 0.75),
+            sprite: "blue_button.png",
+            scale9Size: cc.size(Defs.ACTION_BUTTON_WIDTH, Defs.ACTION_BUTTON_HEIGHT),
             anchorPoint: cc.p(0, 0),
             position: ui.relativeTo(this, ui.CENTER, 0, 0),
             ignoreContentAdaptWithSize: false
@@ -23,9 +23,9 @@ var CardButton = cc.Node.extend({
         this.costText = ui.makeText(this.frame, {
             text: "0",
             font: getNormalFontName(),
-            fontSize: 24,
+            fontSize: 32,
             anchorPoint: cc.p(0.5, 0.5),
-            position: ui.relativeTo(this.frame, ui.CENTER_BOTTOM, 0, 0),
+            position: ui.relativeTo(this.frame, ui.CENTER_BOTTOM, 0, 40),
             shadow: true,
             zOrder: 10
         });
@@ -57,7 +57,7 @@ var CardButton = cc.Node.extend({
             this.team = team;
             this.sprite.setSpriteFrame(this.name.toLowerCase() + ".png");
             this.sprite.setAnchorPoint(cc.p(0.5, 0.5));
-            this.sprite.setPosition(ui.relativeTo(this.frame, ui.CENTER, 0, 0));
+            this.sprite.setPosition(ui.relativeTo(this.frame, ui.CENTER, 0, 20));
 
             this.costText.setString(pokemon.total);
         }
@@ -65,10 +65,12 @@ var CardButton = cc.Node.extend({
 
     unselect: function () {
         this.isSelected = false;
+        this.frame.loadTexture('blue_button.png', ccui.Widget.PLIST_TEXTURE);
     },
 
     select: function () {
         this.isSelected = true;
+        this.frame.loadTexture('yellow_button.png', ccui.Widget.PLIST_TEXTURE);
     },
 
     onTouchEnded: function (touch, event) {},

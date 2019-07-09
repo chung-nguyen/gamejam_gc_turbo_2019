@@ -35,6 +35,12 @@ var Battle = cc.Layer.extend({
         return this.state === State.RUNNING;
     },
 
+    onOpenActionBar: function (sender, type) {
+        if (type === ccui.Widget.TOUCH_ENDED) {
+            this.actionBar.setVisible(!this.actionBar.isVisible());
+        }
+    },
+
     init: function () {
         var room = getStoreState().room;
 
@@ -44,6 +50,23 @@ var Battle = cc.Layer.extend({
         );
         this.ground.setScale(Defs.BATTLE_SCALE);
         this.addChild(this.ground);
+
+        this.openButton = ui.makeButton(this, {
+            normal: "blue_button.png",
+            pressed: "blue_button.png",
+            anchorPoint: cc.p(1, 0),
+            listener: this.onOpenActionBar,
+            listenerTarget: this,
+            scale: 1.5,
+            position: ui.relativeTo(this, ui.RIGHT_BOTTOM, 5, 5)
+        });
+
+        ui.makeImageView(this.openButton, {
+            sprite: "badge_cyber.png",
+            anchorPoint: cc.p(0.5, 0.5),
+            scale: 0.5,
+            position: ui.relativeTo(this.openButton, ui.CENTER, 0, 0)
+        });
 
         this.actionBar = new ActionBar({
             socket: this.socket,
@@ -160,7 +183,7 @@ var Battle = cc.Layer.extend({
         var hand = [ "001", "002", "003", "004", "005", "006" ];
         this.actionBar.setHand(hand);
 
-        this.actionBar.setVisible(true);
+        this.actionBar.setVisible(false);
 
         this.presentation.init();
     },

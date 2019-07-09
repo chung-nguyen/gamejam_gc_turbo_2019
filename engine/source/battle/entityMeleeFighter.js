@@ -51,7 +51,17 @@ var EntityMeleeFighter = EntityBase.extend({
                     this.state = Defs.UNIT_STATE_ATTACK;
                 }
             } else {
-                this.state = Defs.UNIT_STATE_IDLE;
+                if (this.isOfflane()) {
+                    this.state = Defs.UNIT_STATE_IDLE;
+                } else
+                {
+                    var v = dt * this.getMoveSpeed() / 1000;
+                    if (this.team === 0) {
+                        this.logic.y += v;
+                    } else {
+                        this.logic.y -= v;
+                    }
+                }
             }
         }
 
@@ -103,10 +113,16 @@ var EntityMeleeFighter = EntityBase.extend({
             this.state = Defs.UNIT_STATE_WALK;
             this.stateData.target = enemy;
         } else {
-            var goal = this.presentation.findGoal(this);
-            if (goal) {
+            if (this.isOfflane()) {
+                var goal = this.presentation.findGoal(this);
+                if (goal) {
+                    this.state = Defs.UNIT_STATE_WALK;
+                    this.stateData.target = goal;
+                }
+            } else
+            {
                 this.state = Defs.UNIT_STATE_WALK;
-                this.stateData.target = goal;
+                this.stateData.target = null;
             }
         }
     }

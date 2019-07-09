@@ -6,7 +6,7 @@ var FINAL_TURN = 3 * 60 * 1000 / UPDATE_INTERVAL;
 var LAGGED_TURN_COUNT = 10;
 var OUTDATED_TIME = 1500 * 60 * 1000;
 
-var MAX_PLAYERS = 2;
+var MAX_PLAYERS = 1;
 
 var Room = function (id) {
     this.id = id;

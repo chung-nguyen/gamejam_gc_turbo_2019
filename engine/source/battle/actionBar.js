@@ -13,7 +13,7 @@ var ActionBar = cc.Node.extend({
             sprite: "action_bar_panel.png",
             scale9Size: cc.size(Defs.ACTION_FIELD_WIDTH, Defs.ACTION_FIELD_HEIGHT),
             anchorPoint: cc.p(0, 0),
-            position: ui.relativeTo(this, ui.LEFT_BOTTOM, (Defs.SCREEN_SIZE.width - Defs.ACTION_FIELD_WIDTH) / 2, Defs.ACTION_BAR_HEIGHT + 64),
+            position: ui.relativeTo(this, ui.LEFT_BOTTOM, (Defs.SCREEN_SIZE.width - Defs.ACTION_FIELD_WIDTH) / 2, Defs.ACTION_BUTTON_HEIGHT + 48),
             ignoreContentAdaptWithSize: false
         });
 
@@ -57,7 +57,7 @@ var ActionBar = cc.Node.extend({
         var button = new CardButton({
             actionBar: this
         });
-        button.setPosition(index * (Defs.ACTION_BAR_HEIGHT * 0.75 + 20) + 20, Defs.ACTION_BAR_HEIGHT * 0.25);
+        button.setPosition(index * (Defs.ACTION_BUTTON_WIDTH + Defs.ACTION_BUTTON_GAP) + Defs.ACTION_BUTTON_GAP, Defs.ACTION_BUTTON_GAP);
         button.setPokemon(pokemon, this.team);
 
         this.cardButtons.push(button);

@@ -1,6 +1,10 @@
 var path = require('path');
 var webpack = require('webpack');
 
+if (!process.env.NODE_ENV) {
+    process.env.NODE_ENV = 'development';
+}
+
 console.log(process.env.NODE_ENV);
 
 module.exports = {
@@ -24,7 +28,7 @@ module.exports = {
     },
     resolve: {
         alias: {
-            config: path.join(__dirname, 'source', 'config', process.env.NODE_ENV || 'development')
+            config: path.join(__dirname, 'source', 'config', process.env.NODE_ENV)
         }
     },
     devtool: 'source-map',
