@@ -4,12 +4,12 @@ import Camera from "./camera";
 import EntityBase from "./entityBase";
 import approxDistance from "../utils/approxDistance";
 
-var EntityEffectBullet = EntityBase.extend({
+var EntityEffectRocket = EntityBase.extend({
     ctor: function (team, presentation, owner, target, spriteName) {
         this._super(team, presentation);
 
         this.target = null;
-        this.life = 300;
+        this.life = 1000;
         this.owner = owner;
 
         this.target = target;
@@ -26,7 +26,7 @@ var EntityEffectBullet = EntityBase.extend({
         this.syncPosition();
 
         this.idleAction = this.createAnimAction({ name: spriteName || "effect_bulleta_idle", count: 1, loop: true });
-        this.hitAction = this.createAnimAction({ name: spriteName || "effect_bulleta_idle", count: 1, loop: true });
+        this.hitAction = this.createAnimAction({ name: "effect_bulletf_hit", count: 6, loop: false });
         this.state = Defs.UNIT_STATE_IDLE;
 
         this.sprite.runAction(this.idleAction);
@@ -69,7 +69,11 @@ var EntityEffectBullet = EntityBase.extend({
             if (isHit) {
                 this.sprite.runAction(this.hitAction);
                 this.state = Defs.UNIT_STATE_ATTACK;
-                this.target.damage(this.owner.getAttackFor(this.target.attr));
+
+                var enemies = this.presentation.findEnemyInArea(this.owner, this.logic.x, this.logic.y, this.owner.attr.SplashRange || 200);
+                for (var i = 0; i < enemies.length; ++i) {
+                    enemies[i].damage(this.owner.getAttackFor(enemies[i].attr));
+                }
             }
 
             this.sprite.setRotation(Math.atan2(dx, dy) * 180 / Math.PI);
@@ -81,4 +85,4 @@ var EntityEffectBullet = EntityBase.extend({
     }
 });
 
-module.exports = EntityEffectBullet;
+module.exports = EntityEffectRocket;

@@ -23,7 +23,6 @@ var EntityBase = cc.Node.extend({
 
         this.team = team;
         this.presentation = presentation;
-        this.setFacing(team === 0 ? 1 : -1);
 
         this.state = Defs.UNIT_STATE_IDLE;
         this.stateData = {
@@ -36,10 +35,16 @@ var EntityBase = cc.Node.extend({
 
         this.sprite = new cc.Sprite();
         this.addChild(this.sprite);
+
+        this.setFacing(this.team === 0 ? 1 : -1);
     },
 
     isAlive: function () {
         return this.logic.HP > 0;
+    },
+
+    isWounded: function () {
+        return this.logic.HP < this.attr.hp;
     },
 
     isActive: function () {
@@ -49,6 +54,13 @@ var EntityBase = cc.Node.extend({
     damage: function (attack) {
         var amount = Math.max(attack - this.getDefense(), 1);
         this.logic.HP -= amount;
+    },
+
+    heal: function (attack) {
+        this.logic.HP += attack;
+        if (this.logic.HP > this.attr.hp) {
+            this.logic.HP = this.attr.hp;
+        }
     },
 
     setUnitData: function (data) {
@@ -223,6 +235,23 @@ var EntityBase = cc.Node.extend({
         return this.attr.attack;
     },
 
+    getAttackFor: function (targetAttr) {
+        var armor = targetAttr.armor || 'none';
+        var baseAttack = this.getAttack();
+
+        if (armor === 'heavy') {
+            var heavyAttack = this.attr.attackHeavy || 0;
+            return baseAttack + heavyAttack;
+        }
+
+        if (armor === 'light') {
+            var lightAttack = this.attr.attackLight || 0;
+            return baseAttack + lightAttack;
+        }
+
+        return baseAttack;
+    },
+
     getDefense: function () {
         return this.attr.defense;
     },
@@ -245,10 +274,10 @@ var EntityBase = cc.Node.extend({
 
     isOfflane: function () {
         if (this.team === 0) {
-            return this.y > Defs.BATTLE_HEIGHT * (2 * Defs.ARENA_CELL_HEIGHT) / 100;
+            return this.logic.y > Defs.BATTLE_HEIGHT * (2 * Defs.ARENA_CELL_HEIGHT) / 100;
         }
 
-        return this.y < Defs.BATTLE_HEIGHT * (2 * Defs.ARENA_CELL_HEIGHT) / 100;
+        return this.logic.y < Defs.BATTLE_HEIGHT * (2 * Defs.ARENA_CELL_HEIGHT) / 100;
     }
 });
 

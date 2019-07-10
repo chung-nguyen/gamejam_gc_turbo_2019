@@ -2,14 +2,14 @@ import Defs from "./defs";
 
 import Camera from "./camera";
 import EntityMeleeFighter from "./entityMeleeFighter";
-import EntityEffectBullet from "./entityEffectBullet";
+import EntityEffectRocket from "./entityEffectRocket";
 import approxDistance from "../utils/approxDistance";
 
-var EntityGunner = EntityMeleeFighter.extend({
+var EntitySiege = EntityMeleeFighter.extend({
     createEffect: function (target) {
-        var hit = new EntityEffectBullet(this.team, this.presentation, this, target, this.attr.bulletName);
+        var hit = new EntityEffectRocket(this.team, this.presentation, this, target, this.attr.bulletName);
         this.presentation.addEffect(hit);
     }
 });
 
-module.exports = EntityGunner;
+module.exports = EntitySiege;

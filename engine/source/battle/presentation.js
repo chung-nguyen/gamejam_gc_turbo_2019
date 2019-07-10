@@ -5,8 +5,9 @@ import EntityTower from "./entityTower";
 import EntityHQ from "./entityHQ";
 import EntityMeleeFigher from "./entityMeleeFighter";
 import EntityGunner from "./entityGunner";
-import EntityGiant from "./entityGiant";
-import EntityAxeman from "./entityAxeman";
+import EntityHealer from "./entityHealer";
+import EntitySiege from "./entitySiege";
+import EntityDual from "./entityDual";
 
 var ENTITY_KLASS_MAP = {
     entityHQ: EntityHQ,
@@ -121,7 +122,7 @@ var Presentation = cc.Node.extend({
         this.timeFrameCounter = 0;
         this.stepTime = dt;
 
-        this.gold += dt * 100;
+        this.gold += dt * 1000;
         this.time -= dt;
 
         if (this.time <= 0) {
@@ -200,6 +201,22 @@ var Presentation = cc.Node.extend({
         return res;
     },
 
+    findEnemies: function (entity, count) {
+        var res = [];
+        for (var i = 0; i < this.units.length; ++i) {
+            var g = this.units[i];
+            if (g.isAlive() && g.team !== entity.team && entity.canAttack(g) && entity.canSee(g)) {
+                res.push(g);
+                count--;
+                if (count <= 0) {
+                    break;
+                }
+            }
+        }
+
+        return res;
+    },
+
     findEnemyInArea: function (entity, x, y, r) {
         var res = [];
         for (var i = 0; i < this.units.length; ++i) {
@@ -215,9 +232,26 @@ var Presentation = cc.Node.extend({
         return res;
     },
 
+    findWoundedAlly: function (entity) {
+        var res;
+        var dist = Defs.BIG_DISTANCE;
+        for (var i = 0; i < this.units.length; ++i) {
+            var g = this.units[i];
+            if (g.isAlive() && g.isWounded() && g.team === entity.team && entity.canAttack(g) && entity.canSee(g)) {
+                var d = g.getDistanceTo(entity);
+                if (d < dist) {
+                    res = g;
+                    dist = d;
+                }
+            }
+        }
+
+        return res;
+    },
+
     deployAllFormations: function () {
         for (let i = 0; i < this.formations.length; ++i) {
-            this.deployFormation(this.formations[i])
+            this.deployFormation(this.formations[i]);
         }
     },
 
@@ -232,8 +266,22 @@ var Presentation = cc.Node.extend({
             var unitData = Defs.POKEMONS.find((it) => it.pokedex === unit.name);
             if (!unitData) return;
 
-            var Klass = EntityMeleeFigher;
-            Klass = EntityGunner;
+            var Klass = null;
+            switch (unitData.klass) {
+                case "gunner":
+                    Klass = EntityGunner;
+                    break;
+                case "healer":
+                    Klass = EntityHealer;
+                    break;
+                case "siege":
+                    Klass = EntitySiege;
+                    break;
+                case "dual":
+                    Klass = EntityDual;
+                    break;
+            }
+
             if (!Klass) return;
 
             var x = unit.x * 64 * 100 / Defs.ARENA_CELL_WIDTH;

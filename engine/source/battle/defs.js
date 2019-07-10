@@ -39,13 +39,13 @@ var ACTION_BUTTON_GAP = 30;
 
 var UNIT_DATA = {
     hq: {
-        hp: 2400,
-        attack: 8,
-        defense: 10,
+        hp: 6000,
+        attack: 80,
+        defense: 0,
         Size: 100,
         Range: 700,
-        Sight: 500,
-        Cool: 1000,
+        Sight: 700,
+        Cool: 880,
         Speed: 0,
         Cost: 0,
         Klass: "entityHQ",
@@ -53,16 +53,17 @@ var UNIT_DATA = {
             idle: { name: "hq_idle", count: 1, loop: true },
             attack: { name: "hq_attack", count: 1, loop: false },
             die: { name: "hq_die", count: 1, loop: false }
-        }
+        },
+        armor: 'heavy'
     },
     tower: {
-        hp: 1400,
-        attack: 24,
-        defense: 10,
+        hp: 4000,
+        attack: 20,
+        defense: 0,
         Size: 100,
-        Range: 750,
-        Sight: 500,
-        Cool: 200,
+        Range: 700,
+        Sight: 700,
+        Cool: 220,
         Speed: 0,
         Cost: 0,
         Klass: "entityTower",
@@ -70,7 +71,8 @@ var UNIT_DATA = {
             idle: { name: "tower_idle", count: 1, loop: true },
             attack: { name: "tower_attack", count: 1, loop: false },
             die: { name: "tower_die", count: 15, loop: false }
-        }
+        },
+        armor: 'heavy'
     }
 }
 

@@ -1,21 +1,14 @@
 import Defs from "./defs";
 
 import Camera from "./camera";
-import EntityBase from "./entityBase";
-import EntityEffectHit1 from "./entityEffectHit1";
+import EntityMeleeFighter from "./entityMeleeFighter";
+import EntityEffectHeal from "./entityEffectHeal";
 import approxDistance from "../utils/approxDistance";
 
-var EntityMeleeFighter = EntityBase.extend({
-    setUnitData (data) {
-        this._super(data);
-        this.currentAction = this.animAction.idle;
-        this.sprite.runAction(this.currentAction);
-    },
-
-    update: function (dt) {
-        this._super(dt);
-
-        this.animatePosition();
+var EntityHealer = EntityMeleeFighter.extend({
+    createEffect: function (target) {
+        var hit = new EntityEffectHeal(this.team, this.presentation, this, target, this.attr.bulletName);
+        this.presentation.addEffect(hit);
     },
 
     step: function (dt) {
@@ -39,7 +32,7 @@ var EntityMeleeFighter = EntityBase.extend({
 
         if (this.state === Defs.UNIT_STATE_WALK) {
             this.intentAction = this.animAction.walk;
-            this.lookForEnemy();
+            this.lookForAlly();
 
             var target = this.stateData.target;
             if (target && target.isAlive()) {
@@ -58,15 +51,11 @@ var EntityMeleeFighter = EntityBase.extend({
                     this.state = Defs.UNIT_STATE_ATTACK;
                 }
             } else {
-                if (this.isOfflane()) {
-                    this.state = Defs.UNIT_STATE_IDLE;
+                var v = dt * this.getMoveSpeed() / 1000;
+                if (this.team === 0) {
+                    this.logic.y += v;
                 } else {
-                    var v = dt * this.getMoveSpeed() / 1000;
-                    if (this.team === 0) {
-                        this.logic.y += v;
-                    } else {
-                        this.logic.y -= v;
-                    }
+                    this.logic.y -= v;
                 }
             }
         }
@@ -101,36 +90,23 @@ var EntityMeleeFighter = EntityBase.extend({
         return true;
     },
 
-    createEffect: function (target) {
-        var hit = new EntityEffectHit1(this.team, this.presentation, this, target);
-        this.presentation.addEffect(hit);
-    },
-
-    lookForEnemy: function () {
-        var enemy = this.presentation.findEnemy(this);
-        if (enemy) {
-            this.stateData.target = enemy;
-        }
-    },
-
     updateIdle: function () {
-        var enemy = this.presentation.findEnemy(this);
+        var enemy = this.presentation.findWoundedAlly(this);
         if (enemy) {
             this.state = Defs.UNIT_STATE_WALK;
             this.stateData.target = enemy;
         } else {
-            if (this.isOfflane()) {
-                var goal = this.presentation.findGoal(this);
-                if (goal) {
-                    this.state = Defs.UNIT_STATE_WALK;
-                    this.stateData.target = goal;
-                }
-            } else {
-                this.state = Defs.UNIT_STATE_WALK;
-                this.stateData.target = null;
-            }
+            this.state = Defs.UNIT_STATE_WALK;
+            this.stateData.target = null;
         }
-    }
+    },
+
+    lookForAlly: function () {
+        var enemy = this.presentation.findWoundedAlly(this);
+        if (enemy) {
+            this.stateData.target = enemy;
+        }
+    },
 });
 
-module.exports = EntityMeleeFighter;
+module.exports = EntityHealer;

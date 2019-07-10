@@ -1,23 +1,15 @@
 import Defs from "./defs";
 
 import Camera from "./camera";
-import EntityBase from "./entityBase";
-import EntityEffectHit1 from "./entityEffectHit1";
+import EntityMeleeFighter from "./entityMeleeFighter";
+import EntityEffectBullet from "./entityEffectBullet";
 import approxDistance from "../utils/approxDistance";
 
-var EntityMeleeFighter = EntityBase.extend({
-    setUnitData (data) {
-        this._super(data);
-        this.currentAction = this.animAction.idle;
-        this.sprite.runAction(this.currentAction);
+var EntityDual = EntityMeleeFighter.extend({
+    createEffect: function (target) {
+        var hit = new EntityEffectBullet(this.team, this.presentation, this, target, this.attr.bulletName);
+        this.presentation.addEffect(hit);
     },
-
-    update: function (dt) {
-        this._super(dt);
-
-        this.animatePosition();
-    },
-
     step: function (dt) {
         if (!this.stepLiveliness(dt)) return false;
         if (this.state === Defs.UNIT_STATE_DYING) return true;
@@ -84,6 +76,11 @@ var EntityMeleeFighter = EntityBase.extend({
                         this.logic.cool = this.getAttackCool();
 
                         this.createEffect(target);
+
+                        var secondTarget = this.lookForSecondTarget();
+                        if (secondTarget && secondTarget.isAlive()) {
+                            this.createEffect(secondTarget);
+                        }
                     }
                 }
             } else {
@@ -101,36 +98,14 @@ var EntityMeleeFighter = EntityBase.extend({
         return true;
     },
 
-    createEffect: function (target) {
-        var hit = new EntityEffectHit1(this.team, this.presentation, this, target);
-        this.presentation.addEffect(hit);
-    },
-
-    lookForEnemy: function () {
-        var enemy = this.presentation.findEnemy(this);
-        if (enemy) {
-            this.stateData.target = enemy;
+    lookForSecondTarget: function () {
+        var enemies = this.presentation.findEnemies(this, 2);
+        if (enemies[0] !== this.target) {
+            return enemies[0];
         }
-    },
 
-    updateIdle: function () {
-        var enemy = this.presentation.findEnemy(this);
-        if (enemy) {
-            this.state = Defs.UNIT_STATE_WALK;
-            this.stateData.target = enemy;
-        } else {
-            if (this.isOfflane()) {
-                var goal = this.presentation.findGoal(this);
-                if (goal) {
-                    this.state = Defs.UNIT_STATE_WALK;
-                    this.stateData.target = goal;
-                }
-            } else {
-                this.state = Defs.UNIT_STATE_WALK;
-                this.stateData.target = null;
-            }
-        }
+        return enemies[1];
     }
 });
 
-module.exports = EntityMeleeFighter;
+module.exports = EntityDual;

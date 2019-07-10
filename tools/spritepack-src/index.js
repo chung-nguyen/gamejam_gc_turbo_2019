@@ -32,7 +32,8 @@ argv._.forEach(function (dirname) {
 					return p;
 				}			
 				return null;		
-			});			
+			});	
+			list = list.filter((it) => it !== null);
 
 			spriter.loadImages(list, scale).then(function (res) {				
 				if (keepMargin) {

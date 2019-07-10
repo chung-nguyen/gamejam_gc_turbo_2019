@@ -32,7 +32,7 @@ var EntityTower = EntityBase.extend({
                 if (this.logic.cool <= 0) {
                     this.logic.cool = this.getAttackCool();
 
-                    var hit = new EntityEffectBullet(this.team, this.presentation, this, target);
+                    var hit = new EntityEffectBullet(this.team, this.presentation, this, target, 'effect_bulletc_idle');
                     this.presentation.addEffect(hit);
                 }
             } else {

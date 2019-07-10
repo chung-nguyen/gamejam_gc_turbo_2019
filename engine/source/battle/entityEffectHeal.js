@@ -4,7 +4,7 @@ import Camera from "./camera";
 import EntityBase from "./entityBase";
 import approxDistance from "../utils/approxDistance";
 
-var EntityEffectBullet = EntityBase.extend({
+var EntityEffectHeal = EntityBase.extend({
     ctor: function (team, presentation, owner, target, spriteName) {
         this._super(team, presentation);
 
@@ -25,8 +25,8 @@ var EntityEffectBullet = EntityBase.extend({
         this.zShift = 10;
         this.syncPosition();
 
-        this.idleAction = this.createAnimAction({ name: spriteName || "effect_bulleta_idle", count: 1, loop: true });
-        this.hitAction = this.createAnimAction({ name: spriteName || "effect_bulleta_idle", count: 1, loop: true });
+        this.idleAction = this.createAnimAction({ name: "effect_heala_idle", count: 1, loop: true });
+        this.hitAction = this.createAnimAction({ name: "effect_heala_hit", count: 10, loop: false });
         this.state = Defs.UNIT_STATE_IDLE;
 
         this.sprite.runAction(this.idleAction);
@@ -69,7 +69,7 @@ var EntityEffectBullet = EntityBase.extend({
             if (isHit) {
                 this.sprite.runAction(this.hitAction);
                 this.state = Defs.UNIT_STATE_ATTACK;
-                this.target.damage(this.owner.getAttackFor(this.target.attr));
+                this.target.heal(this.owner.getAttackFor(this.target.attr));
             }
 
             this.sprite.setRotation(Math.atan2(dx, dy) * 180 / Math.PI);
@@ -81,4 +81,4 @@ var EntityEffectBullet = EntityBase.extend({
     }
 });
 
-module.exports = EntityEffectBullet;
+module.exports = EntityEffectHeal;
