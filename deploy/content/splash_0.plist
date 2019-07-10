@@ -9,11 +9,11 @@
         <key>offset</key>
         <string>{0,0}</string>
         <key>sourceSize</key>
-        <string>{422,267}</string>
+        <string>{504,286}</string>
         <key>frame</key>
-        <string>{{0,0},{420,263}}</string>
+        <string>{{0,0},{504,286}}</string>
         <key>sourceColorRect</key>
-        <string>{{1,2},{420,263}}</string>
+        <string>{{0,0},{504,286}}</string>
         <key>textureRotated</key>
         <false/>
       </dict>
@@ -23,7 +23,7 @@
       <key>format</key>
       <integer>2</integer>
       <key>size</key>
-      <string>{420,263}</string>
+      <string>{504,286}</string>
       <key>realTextureFileName</key>
       <string>splash_0.png</string>
       <key>textureFileName</key>
@@ -31,7 +31,7 @@
       <key>hashes</key>
       <dict>
         <key>logo.png</key>
-        <string>e46b01bd37c02f2d56d295b0cff709a7</string>
+        <string>e3fd059153d53c1dd4d18872dfa5e659</string>
       </dict>
     </dict>
   </dict>

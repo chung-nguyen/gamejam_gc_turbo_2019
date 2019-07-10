@@ -9,11 +9,11 @@
         <key>offset</key>
         <string>{0,0}</string>
         <key>sourceSize</key>
-        <string>{1080,1408}</string>
+        <string>{1080,1480}</string>
         <key>frame</key>
-        <string>{{0,0},{1080,1408}}</string>
+        <string>{{0,0},{1080,1480}}</string>
         <key>sourceColorRect</key>
-        <string>{{0,0},{1080,1408}}</string>
+        <string>{{0,0},{1080,1480}}</string>
         <key>textureRotated</key>
         <false/>
       </dict>
@@ -82,7 +82,7 @@
         <key>textureRotated</key>
         <false/>
       </dict>
-      <key>button_exit.png</key>
+      <key>button_speed_x1.png</key>
       <dict>
         <key>offset</key>
         <string>{0,0}</string>
@@ -95,7 +95,7 @@
         <key>textureRotated</key>
         <false/>
       </dict>
-      <key>button_speed_x1.png</key>
+      <key>button_pause.png</key>
       <dict>
         <key>offset</key>
         <string>{0,0}</string>
@@ -108,7 +108,7 @@
         <key>textureRotated</key>
         <false/>
       </dict>
-      <key>button_pause.png</key>
+      <key>button_exit.png</key>
       <dict>
         <key>offset</key>
         <string>{0,0}</string>
@@ -121,14 +121,53 @@
         <key>textureRotated</key>
         <false/>
       </dict>
-      <key>empty_energy_bar.png</key>
+      <key>blue_button.png</key>
+      <dict>
+        <key>offset</key>
+        <string>{0,-6.5}</string>
+        <key>sourceSize</key>
+        <string>{92,127}</string>
+        <key>frame</key>
+        <string>{{1462,486},{92,114}}</string>
+        <key>sourceColorRect</key>
+        <string>{{0,13},{92,114}}</string>
+        <key>textureRotated</key>
+        <false/>
+      </dict>
+      <key>yellow_button.png</key>
+      <dict>
+        <key>offset</key>
+        <string>{0,-6.5}</string>
+        <key>sourceSize</key>
+        <string>{92,127}</string>
+        <key>frame</key>
+        <string>{{1558,504},{92,114}}</string>
+        <key>sourceColorRect</key>
+        <string>{{0,13},{92,114}}</string>
+        <key>textureRotated</key>
+        <false/>
+      </dict>
+      <key>badge_cyber.png</key>
+      <dict>
+        <key>offset</key>
+        <string>{0,0}</string>
+        <key>sourceSize</key>
+        <string>{103,93}</string>
+        <key>frame</key>
+        <string>{{1654,504},{103,93}}</string>
+        <key>sourceColorRect</key>
+        <string>{{0,0},{103,93}}</string>
+        <key>textureRotated</key>
+        <false/>
+      </dict>
+      <key>half_fill_energy_bar.png</key>
       <dict>
         <key>offset</key>
         <string>{0,0}</string>
         <key>sourceSize</key>
         <string>{956,29}</string>
         <key>frame</key>
-        <string>{{1084,612},{956,29}}</string>
+        <string>{{1084,622},{956,29}}</string>
         <key>sourceColorRect</key>
         <string>{{0,0},{956,29}}</string>
         <key>textureRotated</key>
@@ -141,20 +180,20 @@
         <key>sourceSize</key>
         <string>{956,29}</string>
         <key>frame</key>
-        <string>{{1084,646},{956,29}}</string>
+        <string>{{1084,656},{956,29}}</string>
         <key>sourceColorRect</key>
         <string>{{0,0},{956,29}}</string>
         <key>textureRotated</key>
         <false/>
       </dict>
-      <key>half_fill_energy_bar.png</key>
+      <key>empty_energy_bar.png</key>
       <dict>
         <key>offset</key>
         <string>{0,0}</string>
         <key>sourceSize</key>
         <string>{956,29}</string>
         <key>frame</key>
-        <string>{{1084,680},{956,29}}</string>
+        <string>{{1084,690},{956,29}}</string>
         <key>sourceColorRect</key>
         <string>{{0,0},{956,29}}</string>
         <key>textureRotated</key>
@@ -167,7 +206,7 @@
         <key>sourceSize</key>
         <string>{956,29}</string>
         <key>frame</key>
-        <string>{{1084,714},{956,29}}</string>
+        <string>{{1084,724},{956,29}}</string>
         <key>sourceColorRect</key>
         <string>{{0,0},{956,29}}</string>
         <key>textureRotated</key>
@@ -180,7 +219,7 @@
         <key>sourceSize</key>
         <string>{1117,224}</string>
         <key>frame</key>
-        <string>{{0,1412},{1117,224}}</string>
+        <string>{{0,1484},{1117,224}}</string>
         <key>sourceColorRect</key>
         <string>{{0,0},{1117,224}}</string>
         <key>textureRotated</key>
@@ -192,7 +231,7 @@
       <key>format</key>
       <integer>2</integer>
       <key>size</key>
-      <string>{2047,1636}</string>
+      <string>{2047,1708}</string>
       <key>realTextureFileName</key>
       <string>battle_0.png</string>
       <key>textureFileName</key>
@@ -200,7 +239,7 @@
       <key>hashes</key>
       <dict>
         <key>ground.png</key>
-        <string>f83700926908f693f4520468ab2b78e8</string>
+        <string>603228cdadea3b6b798edc8c9e0e1487</string>
         <key>icon_coin.png</key>
         <string>ad7504be61e5f32a5cfc8ea55b3c250f</string>
         <key>icon_time.png</key>
@@ -211,18 +250,24 @@
         <string>65d96ccea9a726095891ba8dfec3d74a</string>
         <key>energy_bar_separator.png</key>
         <string>e1eb67c46c7ab359a0891d5182faff7b</string>
-        <key>button_exit.png</key>
-        <string>8165b7047fb738ea792c60f000435030</string>
         <key>button_speed_x1.png</key>
         <string>590ab378b103e232a7ab9267ecc07712</string>
         <key>button_pause.png</key>
         <string>68290386de33fd3d03ffdd2fb612bb6b</string>
-        <key>empty_energy_bar.png</key>
-        <string>61007c1d4c423dee2137e711d4faafea</string>
-        <key>full_energy_bar_1.png</key>
-        <string>769d39820e272c0df0ba63d9dd96d48e</string>
+        <key>button_exit.png</key>
+        <string>8165b7047fb738ea792c60f000435030</string>
+        <key>blue_button.png</key>
+        <string>ebbbb0e7394fda4877029f82d9357ad0</string>
+        <key>yellow_button.png</key>
+        <string>946589c9755bb654aff957e91b7026bb</string>
+        <key>badge_cyber.png</key>
+        <string>12ffdc27266d2ddc6755dbf086ae132f</string>
         <key>half_fill_energy_bar.png</key>
         <string>3d61cae6388264c69e0dd83b1efa47ea</string>
+        <key>full_energy_bar_1.png</key>
+        <string>769d39820e272c0df0ba63d9dd96d48e</string>
+        <key>empty_energy_bar.png</key>
+        <string>61007c1d4c423dee2137e711d4faafea</string>
         <key>full_energy_bar_2.png</key>
         <string>4cd124617ea0e1307abdf9f1def0fc39</string>
         <key>action_bar_panel.png</key>

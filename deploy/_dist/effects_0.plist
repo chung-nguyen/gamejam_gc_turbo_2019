@@ -4,263 +4,302 @@
   <dict>
     <key>frames</key>
     <dict>
-      <key>effect_fire_idle_7.png</key>
+      <key>effect_heala_hit_0.png</key>
       <dict>
         <key>offset</key>
-        <string>{1,0}</string>
+        <string>{0,-2.5}</string>
         <key>sourceSize</key>
-        <string>{162,114}</string>
+        <string>{520,520}</string>
         <key>frame</key>
-        <string>{{0,0},{152,100}}</string>
+        <string>{{0,0},{180,177}}</string>
         <key>sourceColorRect</key>
-        <string>{{6,7},{152,100}}</string>
+        <string>{{170,174},{180,177}}</string>
         <key>textureRotated</key>
         <false/>
       </dict>
-      <key>effect_fire_idle_9.png</key>
+      <key>effect_heala_hit_9.png</key>
       <dict>
         <key>offset</key>
-        <string>{1,0}</string>
+        <string>{0,-0.5}</string>
         <key>sourceSize</key>
-        <string>{162,114}</string>
+        <string>{520,520}</string>
         <key>frame</key>
-        <string>{{156,0},{152,100}}</string>
+        <string>{{184,0},{174,173}}</string>
         <key>sourceColorRect</key>
-        <string>{{6,7},{152,100}}</string>
+        <string>{{173,174},{174,173}}</string>
         <key>textureRotated</key>
         <false/>
       </dict>
-      <key>effect_fire_idle_10.png</key>
+      <key>effect_heala_hit_8.png</key>
       <dict>
         <key>offset</key>
-        <string>{1,0}</string>
+        <string>{0,2.5}</string>
         <key>sourceSize</key>
-        <string>{162,114}</string>
+        <string>{520,520}</string>
         <key>frame</key>
-        <string>{{312,0},{152,100}}</string>
+        <string>{{362,0},{170,175}}</string>
         <key>sourceColorRect</key>
-        <string>{{6,7},{152,100}}</string>
+        <string>{{175,170},{170,175}}</string>
         <key>textureRotated</key>
         <false/>
       </dict>
-      <key>effect_fire_idle_0.png</key>
+      <key>effect_heala_hit_1.png</key>
       <dict>
         <key>offset</key>
-        <string>{59.5,5}</string>
+        <string>{-0.5,-0.5}</string>
         <key>sourceSize</key>
-        <string>{162,114}</string>
+        <string>{520,520}</string>
         <key>frame</key>
-        <string>{{468,0},{23,24}}</string>
+        <string>{{536,0},{171,171}}</string>
         <key>sourceColorRect</key>
-        <string>{{129,40},{23,24}}</string>
+        <string>{{174,175},{171,171}}</string>
         <key>textureRotated</key>
         <false/>
       </dict>
-      <key>effect_fire_idle_13.png</key>
-      <dict>
-        <key>offset</key>
-        <string>{59.5,5}</string>
-        <key>sourceSize</key>
-        <string>{162,114}</string>
-        <key>frame</key>
-        <string>{{468,0},{23,24}}</string>
-        <key>sourceColorRect</key>
-        <string>{{129,40},{23,24}}</string>
-        <key>textureRotated</key>
-        <false/>
-      </dict>
-      <key>effect_fire_idle_14.png</key>
-      <dict>
-        <key>offset</key>
-        <string>{80.5,-56.5}</string>
-        <key>sourceSize</key>
-        <string>{162,114}</string>
-        <key>frame</key>
-        <string>{{496,0},{1,1}}</string>
-        <key>sourceColorRect</key>
-        <string>{{161,113},{1,1}}</string>
-        <key>textureRotated</key>
-        <false/>
-      </dict>
-      <key>effect_fire_idle_8.png</key>
-      <dict>
-        <key>offset</key>
-        <string>{1,0}</string>
-        <key>sourceSize</key>
-        <string>{162,114}</string>
-        <key>frame</key>
-        <string>{{0,104},{152,100}}</string>
-        <key>sourceColorRect</key>
-        <string>{{6,7},{152,100}}</string>
-        <key>textureRotated</key>
-        <false/>
-      </dict>
-      <key>effect_fire_idle_6.png</key>
+      <key>effect_heala_hit_6.png</key>
       <dict>
         <key>offset</key>
         <string>{0,0}</string>
         <key>sourceSize</key>
-        <string>{162,114}</string>
+        <string>{520,520}</string>
         <key>frame</key>
-        <string>{{156,104},{150,100}}</string>
+        <string>{{712,0},{170,172}}</string>
         <key>sourceColorRect</key>
-        <string>{{6,7},{150,100}}</string>
+        <string>{{175,174},{170,172}}</string>
         <key>textureRotated</key>
         <false/>
       </dict>
-      <key>effect_fire_idle_5.png</key>
+      <key>effect_bulletf_hit_5.png</key>
+      <dict>
+        <key>offset</key>
+        <string>{0.5,0}</string>
+        <key>sourceSize</key>
+        <string>{94,94}</string>
+        <key>frame</key>
+        <string>{{886,0},{93,94}}</string>
+        <key>sourceColorRect</key>
+        <string>{{1,0},{93,94}}</string>
+        <key>textureRotated</key>
+        <false/>
+      </dict>
+      <key>effect_bullete_idle_0.png</key>
       <dict>
         <key>offset</key>
         <string>{0,0}</string>
         <key>sourceSize</key>
-        <string>{162,114}</string>
+        <string>{28,36}</string>
         <key>frame</key>
-        <string>{{310,104},{150,100}}</string>
+        <string>{{984,0},{28,36}}</string>
         <key>sourceColorRect</key>
-        <string>{{6,7},{150,100}}</string>
+        <string>{{0,0},{28,36}}</string>
         <key>textureRotated</key>
         <false/>
       </dict>
-      <key>effect_bullet_idle_0.png</key>
-      <dict>
-        <key>offset</key>
-        <string>{-3.5,0}</string>
-        <key>sourceSize</key>
-        <string>{58,70}</string>
-        <key>frame</key>
-        <string>{{464,104},{45,62}}</string>
-        <key>sourceColorRect</key>
-        <string>{{3,4},{45,62}}</string>
-        <key>textureRotated</key>
-        <false/>
-      </dict>
-      <key>effect_fire_idle_4.png</key>
+      <key>effect_bulletc_idle_0.png</key>
       <dict>
         <key>offset</key>
         <string>{0,0}</string>
         <key>sourceSize</key>
-        <string>{162,114}</string>
+        <string>{20,36}</string>
         <key>frame</key>
-        <string>{{0,208},{150,100}}</string>
+        <string>{{984,40},{20,36}}</string>
         <key>sourceColorRect</key>
-        <string>{{6,7},{150,100}}</string>
+        <string>{{0,0},{20,36}}</string>
         <key>textureRotated</key>
         <false/>
       </dict>
-      <key>effect_fire_idle_3.png</key>
+      <key>effect_bulletd_idle_0.png</key>
       <dict>
         <key>offset</key>
         <string>{0,0}</string>
         <key>sourceSize</key>
-        <string>{162,114}</string>
+        <string>{12,30}</string>
         <key>frame</key>
-        <string>{{154,208},{150,100}}</string>
+        <string>{{1008,40},{12,30}}</string>
         <key>sourceColorRect</key>
-        <string>{{6,7},{150,100}}</string>
+        <string>{{0,0},{12,30}}</string>
         <key>textureRotated</key>
         <false/>
       </dict>
-      <key>effect_fire_idle_2.png</key>
+      <key>effect_bulletb_idle_0.png</key>
       <dict>
         <key>offset</key>
         <string>{0,0}</string>
         <key>sourceSize</key>
-        <string>{162,114}</string>
+        <string>{17,35}</string>
         <key>frame</key>
-        <string>{{308,208},{150,100}}</string>
+        <string>{{984,80},{17,35}}</string>
         <key>sourceColorRect</key>
-        <string>{{6,7},{150,100}}</string>
+        <string>{{0,0},{17,35}}</string>
         <key>textureRotated</key>
         <false/>
       </dict>
-      <key>effect_bullet_idle_4.png</key>
+      <key>effect_bulletf_hit_2.png</key>
       <dict>
         <key>offset</key>
-        <string>{-1,0}</string>
+        <string>{1,1}</string>
         <key>sourceSize</key>
-        <string>{58,70}</string>
+        <string>{94,94}</string>
         <key>frame</key>
-        <string>{{462,208},{50,62}}</string>
+        <string>{{886,98},{92,92}}</string>
         <key>sourceColorRect</key>
-        <string>{{3,4},{50,62}}</string>
+        <string>{{2,0},{92,92}}</string>
         <key>textureRotated</key>
         <false/>
       </dict>
-      <key>effect_fire_idle_12.png</key>
+      <key>effect_heala_idle_0.png</key>
       <dict>
         <key>offset</key>
-        <string>{0.5,-0.5}</string>
+        <string>{0,0.5}</string>
         <key>sourceSize</key>
-        <string>{162,114}</string>
+        <string>{90,90}</string>
         <key>frame</key>
-        <string>{{0,312},{151,99}}</string>
+        <string>{{982,120},{42,65}}</string>
         <key>sourceColorRect</key>
-        <string>{{6,8},{151,99}}</string>
+        <string>{{24,12},{42,65}}</string>
         <key>textureRotated</key>
         <false/>
       </dict>
-      <key>effect_fire_idle_1.png</key>
-      <dict>
-        <key>offset</key>
-        <string>{1.5,-2.5}</string>
-        <key>sourceSize</key>
-        <string>{162,114}</string>
-        <key>frame</key>
-        <string>{{156,312},{147,97}}</string>
-        <key>sourceColorRect</key>
-        <string>{{9,11},{147,97}}</string>
-        <key>textureRotated</key>
-        <false/>
-      </dict>
-      <key>effect_fire_idle_11.png</key>
-      <dict>
-        <key>offset</key>
-        <string>{22.5,4}</string>
-        <key>sourceSize</key>
-        <string>{162,114}</string>
-        <key>frame</key>
-        <string>{{308,312},{109,74}}</string>
-        <key>sourceColorRect</key>
-        <string>{{49,16},{109,74}}</string>
-        <key>textureRotated</key>
-        <false/>
-      </dict>
-      <key>effect_bullet_idle_2.png</key>
-      <dict>
-        <key>offset</key>
-        <string>{1.5,0}</string>
-        <key>sourceSize</key>
-        <string>{58,70}</string>
-        <key>frame</key>
-        <string>{{422,312},{55,62}}</string>
-        <key>sourceColorRect</key>
-        <string>{{3,4},{55,62}}</string>
-        <key>textureRotated</key>
-        <false/>
-      </dict>
-      <key>effect_bullet_idle_3.png</key>
+      <key>effect_heala_hit_2.png</key>
       <dict>
         <key>offset</key>
         <string>{0,0}</string>
         <key>sourceSize</key>
-        <string>{58,70}</string>
+        <string>{520,520}</string>
         <key>frame</key>
-        <string>{{422,378},{52,62}}</string>
+        <string>{{536,176},{168,168}}</string>
         <key>sourceColorRect</key>
-        <string>{{3,4},{52,62}}</string>
+        <string>{{176,176},{168,168}}</string>
         <key>textureRotated</key>
         <false/>
       </dict>
-      <key>effect_bullet_idle_1.png</key>
+      <key>effect_heala_hit_7.png</key>
       <dict>
         <key>offset</key>
-        <string>{-0.5,0}</string>
+        <string>{-0.5,-0.5}</string>
         <key>sourceSize</key>
-        <string>{58,70}</string>
+        <string>{520,520}</string>
         <key>frame</key>
-        <string>{{308,390},{51,62}}</string>
+        <string>{{708,176},{167,167}}</string>
         <key>sourceColorRect</key>
-        <string>{{3,4},{51,62}}</string>
+        <string>{{176,177},{167,167}}</string>
+        <key>textureRotated</key>
+        <false/>
+      </dict>
+      <key>effect_heala_hit_4.png</key>
+      <dict>
+        <key>offset</key>
+        <string>{-2,1.5}</string>
+        <key>sourceSize</key>
+        <string>{520,520}</string>
+        <key>frame</key>
+        <string>{{184,178},{166,167}}</string>
+        <key>sourceColorRect</key>
+        <string>{{175,175},{166,167}}</string>
+        <key>textureRotated</key>
+        <false/>
+      </dict>
+      <key>effect_heala_hit_3.png</key>
+      <dict>
+        <key>offset</key>
+        <string>{0,-0.5}</string>
+        <key>sourceSize</key>
+        <string>{520,520}</string>
+        <key>frame</key>
+        <string>{{354,180},{166,165}}</string>
+        <key>sourceColorRect</key>
+        <string>{{177,178},{166,165}}</string>
+        <key>textureRotated</key>
+        <false/>
+      </dict>
+      <key>effect_heala_hit_5.png</key>
+      <dict>
+        <key>offset</key>
+        <string>{0,-0.5}</string>
+        <key>sourceSize</key>
+        <string>{520,520}</string>
+        <key>frame</key>
+        <string>{{0,182},{160,159}}</string>
+        <key>sourceColorRect</key>
+        <string>{{180,181},{160,159}}</string>
+        <key>textureRotated</key>
+        <false/>
+      </dict>
+      <key>effect_bulleta_idle_0.png</key>
+      <dict>
+        <key>offset</key>
+        <string>{0,0}</string>
+        <key>sourceSize</key>
+        <string>{19,25}</string>
+        <key>frame</key>
+        <string>{{982,190},{19,25}}</string>
+        <key>sourceColorRect</key>
+        <string>{{0,0},{19,25}}</string>
+        <key>textureRotated</key>
+        <false/>
+      </dict>
+      <key>effect_bulletf_hit_0.png</key>
+      <dict>
+        <key>offset</key>
+        <string>{-0.5,-0.5}</string>
+        <key>sourceSize</key>
+        <string>{94,94}</string>
+        <key>frame</key>
+        <string>{{880,194},{91,89}}</string>
+        <key>sourceColorRect</key>
+        <string>{{1,3},{91,89}}</string>
+        <key>textureRotated</key>
+        <false/>
+      </dict>
+      <key>effect_bulletf_hit_3.png</key>
+      <dict>
+        <key>offset</key>
+        <string>{-1,2}</string>
+        <key>sourceSize</key>
+        <string>{94,94}</string>
+        <key>frame</key>
+        <string>{{880,288},{92,82}}</string>
+        <key>sourceColorRect</key>
+        <string>{{0,4},{92,82}}</string>
+        <key>textureRotated</key>
+        <false/>
+      </dict>
+      <key>effect_bulletf_hit_1.png</key>
+      <dict>
+        <key>offset</key>
+        <string>{2,1}</string>
+        <key>sourceSize</key>
+        <string>{94,94}</string>
+        <key>frame</key>
+        <string>{{0,346},{90,80}}</string>
+        <key>sourceColorRect</key>
+        <string>{{4,6},{90,80}}</string>
+        <key>textureRotated</key>
+        <false/>
+      </dict>
+      <key>effect_bulletf_hit_4.png</key>
+      <dict>
+        <key>offset</key>
+        <string>{3,1}</string>
+        <key>sourceSize</key>
+        <string>{94,94}</string>
+        <key>frame</key>
+        <string>{{94,346},{66,60}}</string>
+        <key>sourceColorRect</key>
+        <string>{{17,16},{66,60}}</string>
+        <key>textureRotated</key>
+        <false/>
+      </dict>
+      <key>effect_bulletf_idle_0.png</key>
+      <dict>
+        <key>offset</key>
+        <string>{0,0}</string>
+        <key>sourceSize</key>
+        <string>{54,53}</string>
+        <key>frame</key>
+        <string>{{524,348},{54,53}}</string>
+        <key>sourceColorRect</key>
+        <string>{{0,0},{54,53}}</string>
         <key>textureRotated</key>
         <false/>
       </dict>
@@ -271,7 +310,7 @@
         <key>sourceSize</key>
         <string>{52,46}</string>
         <key>frame</key>
-        <string>{{364,390},{52,46}}</string>
+        <string>{{582,348},{52,46}}</string>
         <key>sourceColorRect</key>
         <string>{{0,0},{52,46}}</string>
         <key>textureRotated</key>
@@ -283,53 +322,59 @@
       <key>format</key>
       <integer>2</integer>
       <key>size</key>
-      <string>{512,452}</string>
+      <string>{1024,426}</string>
       <key>realTextureFileName</key>
       <string>effects_0.png</string>
       <key>textureFileName</key>
       <string>effects_0.png</string>
       <key>hashes</key>
       <dict>
-        <key>effect_fire_idle_7.png</key>
-        <string>b1f6f6d1c76aed53f89159b808e87ad5</string>
-        <key>effect_fire_idle_9.png</key>
-        <string>2a15f4863ec045748a2bc7fb8980a14e</string>
-        <key>effect_fire_idle_10.png</key>
-        <string>2d0494d041a08a0148f81f4378f5099a</string>
-        <key>effect_fire_idle_0.png</key>
-        <string>3cce8c0fa578bf521fe162eb795cf481</string>
-        <key>effect_fire_idle_13.png</key>
-        <string>3cce8c0fa578bf521fe162eb795cf481</string>
-        <key>effect_fire_idle_14.png</key>
-        <string>f450dd618c07e7efaec668cef910b88a</string>
-        <key>effect_fire_idle_8.png</key>
-        <string>4906313a0fdb789ddccd7e434e45e6ed</string>
-        <key>effect_fire_idle_6.png</key>
-        <string>cdb1a18ae35190e639b491b41b60dfce</string>
-        <key>effect_fire_idle_5.png</key>
-        <string>f30e4ac371f0607385510ff7925ea1f0</string>
-        <key>effect_bullet_idle_0.png</key>
-        <string>c5881009d1c618f7b9dd9d1191f629fb</string>
-        <key>effect_fire_idle_4.png</key>
-        <string>a05f532aef50bd26ce8b89eacd998c4f</string>
-        <key>effect_fire_idle_3.png</key>
-        <string>42adc3c94ed9977dd4a65c4f88d18d6d</string>
-        <key>effect_fire_idle_2.png</key>
-        <string>0153b0e037dfdc40460025c6d4bd06ff</string>
-        <key>effect_bullet_idle_4.png</key>
-        <string>31f01af3a8aab98b42ca32376441b1f7</string>
-        <key>effect_fire_idle_12.png</key>
-        <string>f8e66364ab4b4aa313e9517fc9d9cfc1</string>
-        <key>effect_fire_idle_1.png</key>
-        <string>758c4fc22eb9d5ff33ba855c595a1a8e</string>
-        <key>effect_fire_idle_11.png</key>
-        <string>919b7f8c55e3b2d6d7e9b442b13ba83c</string>
-        <key>effect_bullet_idle_2.png</key>
-        <string>c952f53533879083b700d0131174c77a</string>
-        <key>effect_bullet_idle_3.png</key>
-        <string>dbedb1e6c5f8d8a0296fdc71b0f10f31</string>
-        <key>effect_bullet_idle_1.png</key>
-        <string>652af0f2c3b7c3183417d17d310fc4ad</string>
+        <key>effect_heala_hit_0.png</key>
+        <string>0b24767091e832aac85ac366619cc439</string>
+        <key>effect_heala_hit_9.png</key>
+        <string>541c8ef62b4dc7f7422fcfdc6a9ecc9f</string>
+        <key>effect_heala_hit_8.png</key>
+        <string>7613cb3f828168f58b8e0317fc7831bd</string>
+        <key>effect_heala_hit_1.png</key>
+        <string>f46f9705a130fe90e05d73e8341dd2cb</string>
+        <key>effect_heala_hit_6.png</key>
+        <string>8f9289f6c6197c337cd64f3e5bd01055</string>
+        <key>effect_bulletf_hit_5.png</key>
+        <string>f1e0d4b6e27248fa8dff79fe08197009</string>
+        <key>effect_bullete_idle_0.png</key>
+        <string>b145232dfba5d292f97a70b81192bd22</string>
+        <key>effect_bulletc_idle_0.png</key>
+        <string>1ace924e6ac9893b2563a50ae6a2f48d</string>
+        <key>effect_bulletd_idle_0.png</key>
+        <string>57184e21a717eb8788dca223de0e9016</string>
+        <key>effect_bulletb_idle_0.png</key>
+        <string>77e6ca25febce7524d09ce32fb384653</string>
+        <key>effect_bulletf_hit_2.png</key>
+        <string>f0d831400d6c16cd8c4aceeb78ab8028</string>
+        <key>effect_heala_idle_0.png</key>
+        <string>6deea38f4bf82bbd3fed816de59828ca</string>
+        <key>effect_heala_hit_2.png</key>
+        <string>fed5e83811c3ccd704cc9a5614a4ed87</string>
+        <key>effect_heala_hit_7.png</key>
+        <string>125ad9e4007480121fcae3752d496f76</string>
+        <key>effect_heala_hit_4.png</key>
+        <string>8979aa57d3179ee0efb76c935076da35</string>
+        <key>effect_heala_hit_3.png</key>
+        <string>dba474ece02373bb6c39beb694247a1d</string>
+        <key>effect_heala_hit_5.png</key>
+        <string>ab1c26a37be7fe43bbbc15d2d823b2b3</string>
+        <key>effect_bulleta_idle_0.png</key>
+        <string>9a2a449f19f5d8ca1e2fb7825cd92ab9</string>
+        <key>effect_bulletf_hit_0.png</key>
+        <string>ea2413d9a25e0c448ef98e4207096014</string>
+        <key>effect_bulletf_hit_3.png</key>
+        <string>5184efcad6b91899cd907b83070f7199</string>
+        <key>effect_bulletf_hit_1.png</key>
+        <string>28f90bfcbe3e0f54bcacaa3f86482f4e</string>
+        <key>effect_bulletf_hit_4.png</key>
+        <string>6f7d95d9792922126d9145a0e9918594</string>
+        <key>effect_bulletf_idle_0.png</key>
+        <string>a4b20dcb1fab06cd45a895ca48019af7</string>
         <key>hit1_idle_0.png</key>
         <string>2f6613ddbb8e788057efbcaa3b595f5e</string>
       </dict>
