@@ -122,7 +122,7 @@ var Presentation = cc.Node.extend({
         this.timeFrameCounter = 0;
         this.stepTime = dt;
 
-        this.gold += dt * 1000;
+        this.gold += dt * 10;
         this.time -= dt;
 
         if (this.time <= 0) {
