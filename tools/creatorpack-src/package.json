@@ -2,6 +2,6 @@
   "name": "spritepack",
   "dependencies": {
     "fs-extra": "^1.0.0",
-    "minimist": "^1.2.0"
+    "minimist": "^1.2.3"
   }
 }
