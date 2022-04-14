@@ -1,7 +1,7 @@
 {
   "name": "spritepack",
   "dependencies": {
-    "async": "^2.0.1",
+    "async": "^3.2.2",
     "bluebird": "^3.4.7",
     "graceful-fs": "^4.1.11",
     "jimp": "^0.2.27",
